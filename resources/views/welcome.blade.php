@@ -84,7 +84,13 @@
                     Willkommen!
                 </div>
 
-                <p>Hier kommt noch was schönes hin.</p>
+               <div class="row">
+                <div class="col-md-6">
+                    <a href="{{url('/home')}}"
+                </div>
+                <div class="col-md-6">
+                </div>
+               </div>
             </div>
         </div>
     </body>
