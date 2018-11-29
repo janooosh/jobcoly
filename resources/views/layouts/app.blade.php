@@ -155,15 +155,17 @@
 
 
         <div id="page-wrapper" style="min-height: 301px;">
-            @yield('content')     
+            @yield('content')   
         </div>
                     
 
         
 
-    <footer>
-                    
-    </footer>
+    <footer class="fixed-bottom">
+    <div style="background-color:#f5f5f5; border: 1px solid #e3e3e3; text-align:center; color:#777;">
+    &copy; 2018 Studenten im Olympiazentrum e.V. | Impressum | Datenschutz
+    </div>
+    </footer> 
    
     </div> <!-- Ends wrapper -->
 

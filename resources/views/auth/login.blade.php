@@ -34,6 +34,6 @@
                 {{ __('Passwort vergessen?') }}
         </a>
         <a class="btn btn-link" href="{{ route('register') }}">{{ __('Noch kein Account?') }}</a></p>
-        <p class="mt-5 mb-3 text-muted">&copy; 2018 | Studenten im Olympiazentrum e.V.</p>
+        <p class="mt-3 mb-5 text-muted">&copy; 2018 | Studenten im Olympiazentrum e.V. <br /> <a href="{{route('impressum')}}" target="_blank">Impressum</a> | <a href="{{route('datenschutz')}}" target="_blank">Datenschutz</a></p>
 </form>
 @endsection

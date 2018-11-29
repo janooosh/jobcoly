@@ -13,6 +13,14 @@
 
 Route::get('/','HomeController@index');
 
+Route::get('/impressum', function() {
+    return view('impressum');
+})->name('impressum');
+
+Route::get('/datenschutz', function() {
+    return view('datenschutz');
+})->name('datenschutz');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
