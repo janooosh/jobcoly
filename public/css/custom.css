@@ -1,0 +1,24 @@
+.smallpad {
+    padding:10px !important;
+}
+
+.nomarg {
+    margin:0 !important;
+}
+
+.nopad-left {
+    padding-left:0!important;
+}
+
+.zelle {
+    margin-right: 10px;
+}
+
+.jrb-white {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding-top: 10px;
+    background-color:white!important;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}

@@ -1,0 +1,67 @@
+.jobmarket h5 {
+    color: rgb(37, 37, 37);
+    margin: 0!important;
+}
+
+/*.jobmarket {
+    position: relative!important;
+    height: 830px;
+    margin: -10px!important;
+    width: auto!important;
+    overflow: hidden!important;
+    display: flex;
+    box-sizing: border-box;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+
+    padding: 10px!important;
+    -webkit-box-flex: 0;
+}
+
+.layers {
+    -webkit-box-direction: normal;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #e2e3e5;
+  }
+
+.gap {
+    margin: -10px!important;
+}
+
+.hovx {
+    background-color:#ffffff;
+    color:#72777a!important;
+}
+
+.hovx:hover {
+    background-color: #e2e3e5!important;
+    border-color: #d6d8db!important;
+    color:#585b5c!important;
+  } 
+  
+.jobtitel {
+    margin-bottom: 5px;
+}
+
+.aktivebewerber {
+    font-weight: 600 !important;
+}
+
+.freiestellen {
+    float: right;
+    font-size: .87rem!important;
+    display: inline-block;
+    font-weight: 700;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    background-color: #e8f5e9!important;
+    color: #388e3c!important;
+    padding:10px;
+    line-height: 0!important;
+    text-transform: capitalize!important;
+    border-radius: 10rem;
+} */
