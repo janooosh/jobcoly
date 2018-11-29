@@ -32,6 +32,7 @@
     <body>
         <div id='app'></div>
         <div id='wrapper'>
+
                 <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
                         <div class="navbar-header">
                             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -80,7 +81,6 @@
                         <div class="navbar-default sidebar" role="navigation">
                             <div class="sidebar-nav navbar-collapse">
                                 <ul class="nav" id="side-menu">
-                                   @if(Auth::user()) 
                                     <li>
                                         <a href="{{ route('home') }}"><i class="fa fa-home"></i> Dashboard</a>
                                     </li>
@@ -144,14 +144,7 @@
 
                                     @endif
                                     {{-- ENDE ADMIN --}}
-                                @else
-                                    <li>
-                                        <a href="{{ route('login') }}"><i class="fa fa-home"></i> Login</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('register') }}"><i class="fa fa-beer"></i> Registrieren</a>
-                                    </li>
-                                @endif
+
                                 </ul>
                             </div>
                             <!-- /.sidebar-collapse -->
@@ -169,10 +162,8 @@
 
     <footer class="fixed-bottom">
     <div style="background-color:#f5f5f5; border: 1px solid #e3e3e3; text-align:center; color:#777;">
-    &copy; 2018 Studenten im Olympiazentrum e.V. | <a href="{{route('impressum')}}" title="Impressum">Impressum</a> | Datenschutz
-    <br /><small><i class="fa fa-heart"></i> <i class="fa fa-beer"></i> ~ jobcly v.0.1</small>
+    &copy; 2018 Studenten im Olympiazentrum e.V. | Impressum | Datenschutz
     </div>
-    
     </footer> 
    
     </div> <!-- Ends wrapper -->
