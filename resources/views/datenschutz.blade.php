@@ -16,7 +16,6 @@
     80809 München<br>
     Gesetzliche Vertreter: Maximilian Lehmann, Luca Del Grande, Madeleine Kimmig<br>
     vorstand@oly-dorf.de</span></p><h3 id="dsg-general-datatype">Arten der verarbeiteten Daten</h3><p>-	Bestandsdaten (z.B., Personen-Stammdaten, Namen oder Adressen).<br>
-    -   Persönliche Daten (Vorname, Nachname, Geburtsdatum (freiwillige Angabe), Adresse)
     -	Kontaktdaten (z.B., E-Mail, Telefonnummern).<br>
     -	Inhaltsdaten (z.B., Texteingaben, Fotografien, Videos).<br>
     -	Nutzungsdaten (z.B., besuchte Webseiten, Interesse an Inhalten, Zugriffszeiten).<br>
