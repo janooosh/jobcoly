@@ -39,7 +39,7 @@
                                             </div>
 
                                             <div class="form-group row">
-                                                <div class="col-md-6">
+                                                <div class="col-md-12">
                                                     <input id="password-confirm" type="password" placeholder="{{ __('Passwort bestätigen') }}" class="form-control" name="password_confirmation" required>
                                                 </div>
                                             </div>
