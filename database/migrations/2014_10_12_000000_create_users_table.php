@@ -54,6 +54,7 @@ class CreateUsersTable extends Migration
             $table->integer('gutscheine')->default(0);
             $table->boolean('has_shirt')->default(0);
             $table->boolean('is_admin')->default(0);
+            $table->boolean('is_vegetarian')->nullable();
 
         });
     }
