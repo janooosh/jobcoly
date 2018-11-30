@@ -40,7 +40,8 @@
 @if(count($applications)>0)
 <div class="col-ld-10">
 <input type="text" class="form-control" id="searchactives" oninput="searchTable('searchactives','myapplications')" placeholder="Durchsuchen"/>
-<table class="table table-hover" id="myapplications">
+<div class=".table-responsive">
+<table class="table table-hover " id="myapplications">
         <thead>
             <tr>
                 <th scope="col">ID</th>
@@ -65,6 +66,7 @@
             @endforeach
         </tbody>
 </table>
+</div>
 </div>
 @else
 <div class="col-lg-12">

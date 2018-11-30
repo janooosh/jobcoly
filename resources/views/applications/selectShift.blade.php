@@ -69,5 +69,6 @@ use Carbon\Carbon;
     </div>
     Es werden die noch freien Plätze angegeben (Frei / Verfügbar).
 @endif
-
+<br /><br />
+Falls keine Schichten erscheinen, hast du zu den Zeitpunkten entweder schon Schichten akzeptiert, oder bewirbst dich gerade auf eine Schicht in diesem Zeitraum. <br />
 @endsection

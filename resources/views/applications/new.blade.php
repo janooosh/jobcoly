@@ -11,26 +11,31 @@ use Carbon\Carbon;
     </div>
 </div>
 
-<div class="row">
-    <div class="col-md-12">
-        <p>Es werden nur Schichten angezeigt, falls du an diesen auch Zeit hast (keine bereits zugesagte Schicht oder beworbene Schicht). <br />Auch nach einer Absage deiner Bewerbung kannst du dich auf die Schicht erneut bewerben.</p>
-    </div>
-</div>
 
-
+<?php
+$zaehler = 0;
+?>
 @foreach($shiftgroups as $shiftgroup) 
 @if(count($shiftgroup->shifts)>0 && ApplicationsController::FreeShiftsInGroup($shiftgroup->id) > 0)
 <div class="row">
+    <div class="col-md-12">
 <h3>{{$shiftgroup->name}} <small>{{$shiftgroup->subtitle}}</small></h3>
+    </div>
 </div>
-
+<?php
+$c = 0;
+?>
 <div class="row">
     @foreach($jobs as $job)
     {{-- Only show this job if applicant is still free AND more than 0 but less than max possible places are still left --}}
     {{-- Check if group, then create link --}}
 
     @if(count($job->shifts->where('shiftgroup_id',$shiftgroup->id))>0 && ApplicationsController::countBuisyShifts($shiftgroup->id,$job->id) < ApplicationsController::countAvailableJobs($shiftgroup->id, $job->id) && !ApplicationsController::alreadyBuisyGroup(Auth::user()->id,$shiftgroup->id,$job->id))
-        <a href="@if(count($job->shifts->where('shiftgroup_id',$shiftgroup->id))>1)new/{{$shiftgroup->id}}/{{$job->id}}
+    <?php
+        $c++;
+        $zaehler++;
+    ?>
+    <a href="@if(count($job->shifts->where('shiftgroup_id',$shiftgroup->id))>1)new/{{$shiftgroup->id}}/{{$job->id}}
             @else create/{{$job->shifts->where('shiftgroup_id',$shiftgroup->id)->first()->id}}@endif" style="text-decoration:none!important;">  
     
             <div class="col-md-3">
@@ -77,7 +82,25 @@ use Carbon\Carbon;
     @endif
     @endforeach
 </div>
+@if($c<1)
+Keine Schichten verfügbar.
+@endif
 @endif
 @endforeach
+@if($zaehler<1)
+<div class="row">
+    <div class="col-md-12">
+        <div class="alert alert-info">
+    <p><b>Aktuell sind keine freien Schichten verfügbar.</b></p>
+</div>
+    </div>
+</div>
 
+@endif
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <p>Es werden nur Schichten angezeigt, falls du an diesen auch Zeit hast (keine bereits zugesagte Schicht oder beworbene Schicht). <br />Auch nach einer Absage deiner Bewerbung kannst du dich auf die Schicht erneut bewerben.</p>
+    </div>
+</div>
 @endsection
