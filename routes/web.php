@@ -21,7 +21,7 @@ Route::get('/datenschutz', function() {
     return view('datenschutz');
 })->name('datenschutz');
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/profil', 'HomeController@profil')->name('profil');

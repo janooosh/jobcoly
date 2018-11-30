@@ -375,7 +375,7 @@ function drawAdress() {
     var names=ids;
     var types=["text","text","text","text","select"];
     var phs = ["Spiridon-Louis-Weg","27","80809","München",""];
-    var labelTexts = ["Straße *","Nr. *","PLZ *","Ort *","Ehemalige/r?"];
+    var labelTexts = ["Straße *","Nr. *","PLZ *","Ort *","Ehemalige/r?*"];
     var requireds = [1,1,1,1,1];
     var cl="form-control";
     for(var x=0;x<containers.length;x++) {
@@ -383,7 +383,7 @@ function drawAdress() {
         c.classList.add("mb-3");
         var label = makeLabel(ids[x],labelTexts[x]); 
         if(types[x]=="select") {
-            var feld=makeSelect(ids[x],names[x],selecterClass,true,["Bitte auswählen","Ja","Nein"],[null,1,0]);
+            var feld=makeSelect(ids[x],names[x],selecterClass,'required',["Bitte auswählen","Ja","Nein"],[0,1,0]);
         }
         else {                  
             var feld=makeInput(ids[x],names[x],types[x],phs[x],cl,requireds[x]);
