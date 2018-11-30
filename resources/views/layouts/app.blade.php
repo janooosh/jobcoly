@@ -80,7 +80,8 @@
                         <div class="navbar-default sidebar" role="navigation">
                             <div class="sidebar-nav navbar-collapse">
                                 <ul class="nav" id="side-menu">
-                                   @if(Auth::user()) 
+                                   @if(Auth::user())
+                                   @if(Auth::user()->email_verified_at) 
                                     <li>
                                         <a href="{{ route('home') }}"><i class="fa fa-home"></i> Dashboard</a>
                                     </li>
@@ -141,9 +142,10 @@
                                         <a href="{{route('users')}}"><i class="fa fa-user"></i> Benutzer verwalten</a>
                                     </li>
 
-
+                                    @endif{{-- ENDE ADMIN --}}
                                     @endif
-                                    {{-- ENDE ADMIN --}}
+                                    
+                                    
                                 @else
                                     <li>
                                         <a href="{{ route('login') }}"><i class="fa fa-home"></i> Login</a>

@@ -157,14 +157,14 @@
               <div class="row">
                   <div class="col-md-4 mb-3">
                       <label for="password">Passwort *</label>
-                      <input id="password" type="password" placeholder="" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+                      <input id="password" type="password" placeholder="Mindestens 6 Zeichen" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
                       <div class="invalid-feedback">
                           {{ $errors->first('password') }}
                       </div>
                   </div> 
                   <div class="col-md-4 mb-3">
                       <label for="password-confirm">Passwort bestätigen *</label>
-                      <input id="password-confirm" type="password" placeholder="" class="form-control" name="password_confirmation" required>
+                      <input id="password-confirm" type="password" placeholder="Mindestens 6 Zeichen" class="form-control" name="password_confirmation" required>
                   </div>
                   <div class="col-md-4 mb-3">
                       <label for="gesundheitszeugnis">Hast du ein Gesundheitszeugnis?</label>
