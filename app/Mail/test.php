@@ -26,13 +26,13 @@ class test extends Mailable
      *
      * @return $this
      */
-    public function build($p)
+    public function build()
     {
         return $this->from('olylust2019@gmail.com', 'OlyLust')
         ->subject('OlyLust')
         ->markdown('mails.exmpl')
         ->with([
-            'was' => $p,
+            'was' => 'jo',
             'link' => 'http://www.bryceandy.com'
         ]);
     }
