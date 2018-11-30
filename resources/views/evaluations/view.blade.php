@@ -137,11 +137,11 @@ use Carbon\Carbon;
 
             <div class="row" id="shiftReference">
                 <div class="col-md-12">
-                    <i class="fa fa-time"></i>Automatische Zusage: {{$a->ablauf}} (<span id="ablaufApplication"></span>)<br />
+                    {{--<i class="fa fa-time"></i>Automatische Zusage: {{$a->ablauf}} (<span id="ablaufApplication"></span>)<br />--}}
                     <i class="fa fa-clock"></i>{{$a->applicant->firstname}} arbeitet bereits {{$a->otherassignmentsduration}} Stunden an der OlyLust.
-                    <script>
+                    {{--<script>
                         jayCounter("{{$a->expiration}}", "ablaufApplication");
-                    </script>
+                    </script> --}}
                 </div>
                 <div class="col-md-12">
                     <h5>Motivation</h5>

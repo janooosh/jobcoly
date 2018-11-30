@@ -68,7 +68,7 @@ use Carbon\Carbon;
     @endif
 
     <div class="alert alert-info">
-    Deine Bewerbung wird von unserem Team innerhalb von 72 Stunden bearbeitet. Du kannst den Status hier einsehen und erhälst natürlich E-Mail Benachrichtigungen bei allen Updates :)
+    Deine Bewerbung wird von unserem Team in der Regel innerhalb von wenigen Tagen bearbeitet. Du kannst den Status hier einsehen und erhälst natürlich E-Mail Benachrichtigungen bei allen Updates :)
     Bitte beachte, dass deine Zusage zur Schicht bindend ist, eine Absage ist nicht möglich. Auch wenn es bei der ersten Bewerbung nicht klappt, kannst du dich später jederzeit erneut für die Schicht bewerben.
     </div>
 

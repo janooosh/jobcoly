@@ -52,6 +52,7 @@ class EvaluationsController extends Controller
         foreach($applicationsRaw as $app) {
             //Correct dates
             $app->expirationFunction = Carbon::parse($app->expiration)->format('MMM D, GGGG H:m:s'); //For countdown function
+            $app->beworben_am = Carbon::parse($app->created_at)->format('D, d.m.Y H:i');
             //Get Managers
             $managers = $app->shift->managers;
             //Is current logged in user manager?

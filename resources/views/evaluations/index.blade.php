@@ -83,7 +83,7 @@
                 <th>Job</th>
                 <th>Gruppe</th>
                 <th>Area</th>
-                <th>Läuft ab</th>
+                <th>Beworben</th>
                 <th>Bearbeiten</th>
             </tr>
         </thead>
@@ -96,14 +96,15 @@
                 <td>{{$active->shift->shiftgroup->name}}</td>
                 <td>{{$active->shift->area==''?'-':$active->shift->area}}</td>
                 {{--<td>{{$active->expirationString}}</td>--}}
-                <td id="timer{{$active->id}}"></td>
+                {{--<td id="timer{{$active->id}}"></td>--}}
+                <td>{{$active->beworben_am}}</td>
                 <td>
                     <a href="/applications/evaluate/view/{{$active->id}}" type="button" class="btn btn-default"><i class="fa fa-rocket"></i> Bearbeiten</a>
                 </td>
             </tr>
-            <script>
+            {{--<script>
                 jayCounter("{{$active->expiration}}", "timer{{$active->id}}");
-            </script>
+            </script>--}}
         @endforeach
         </tbody>    
 </table>

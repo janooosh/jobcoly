@@ -6,7 +6,7 @@ vielen Dank für deine Bewerbung! Wir freuen uns, dass du die OlyLust unterstüt
 <br />
 <b>Wie geht es jetzt weiter?</b>
 <br />
-Wir schauen ob du an der gewünschten Stelle ins Team passt und melden uns in <b>spätestens 3 Tagen</b> zurück.
+Wir schauen ob du an der gewünschten Stelle ins Team passt und melden uns schnellstmöglich zurück!
 Du kannst den Status deiner Bewerbungen jederzeit unter www.crew.olylust.de verfolgen. <br />
 
 @component('mail::button', ['url' => $link])

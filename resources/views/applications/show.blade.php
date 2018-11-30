@@ -47,13 +47,13 @@
 
             <div class="row" id="shiftReference">
                 @if($a->status=="Aktiv")
-                <div class="col-md-12">
+                {{--<div class="col-md-12">
                     
                     <i class="fa fa-time"></i>Ablauf der Bewerbung (Automatische Zusage): {{$a->ablauf}} (<span id="ablaufApplication"></span>)<br />
                     <script>
                         jayCounter("{{$a->expiration}}", "ablaufApplication");
                     </script>
-                </div>
+                </div> --}}
                 @endif
                 <div class="col-md-12">
                     <h5>Meine Motivation</h5>
