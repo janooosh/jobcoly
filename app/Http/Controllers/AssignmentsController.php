@@ -53,7 +53,7 @@ class AssignmentsController extends Controller
      */
     public function index()
     {
-        echo("passt");
+        return redirect('assignments/my');
     }
 
     /**
