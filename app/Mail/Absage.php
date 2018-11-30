@@ -8,7 +8,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Auth;
 
-class Annahme extends Mailable
+class Absage extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -30,7 +30,7 @@ class Annahme extends Mailable
     public function build()
     {
         return $this->from('olylust2019@gmail.com', 'OlyLust')
-        ->subject('Zusage deiner Schicht')
+        ->subject('Deine Schicht auf der OlyLust')
         ->markdown('mails.annahme')
         ->with([
             'user' => Auth::user()->firstname,

@@ -212,7 +212,7 @@ class ApplicationsController extends Controller
 
         $application->status='Cancelled';
         $application->save();
-
+        
         return redirect('applications')->with('success', 'Deine Bewerbung wurde zurückgezogen.');
     }
 

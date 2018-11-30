@@ -11,6 +11,9 @@ use App\Application;
 use App\Assignment;
 use Carbon\Carbon;
 
+use App\Mail\Absage;
+use Illuminate\Support\Facades\Mail;
+
 class EvaluationsController extends Controller
 {
     //Require authenticated user
@@ -226,7 +229,7 @@ class EvaluationsController extends Controller
         //Ändere Status
         $application->status='Rejected';
         $application->save();
-
+        Mail::to(Auth::user()->email)->send(new Absage()); 
         return redirect('applications/evaluate')->with('success','Absage gespeichert');
     }
 
