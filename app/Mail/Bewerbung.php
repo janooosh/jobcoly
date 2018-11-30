@@ -33,7 +33,7 @@ class Bewerbung extends Mailable
         ->subject('OlyLust')
         ->markdown('mails.bewerbung')
         ->with([
-            'name' => Auth::user()->firstname,
+            'user' => Auth::user()->firstname,
             'link' => 'http://crew.olylust.de/applications'
         ]);
     }
