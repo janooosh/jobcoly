@@ -171,7 +171,7 @@
 
     <footer class="fixed-bottom">
     <div style="background-color:#f5f5f5; border: 1px solid #e3e3e3; text-align:center; color:#777;">
-    &copy; 2018 Studenten im Olympiazentrum e.V. | <a href="{{route('impressum')}}" title="Impressum">Impressum</a> | Datenschutz
+    &copy; 2018 Studenten im Olympiazentrum e.V. | <a href="{{route('impressum')}}" title="Impressum">Impressum</a> | <a href="{{route('dateschutz')}}">Datenschutz</a>
     <br /><small><i class="fa fa-heart"></i> <i class="fa fa-beer"></i> ~ <a href="https://github.com/janooosh/jobcoly" target="_blank">jobcly v.0.1</a></small>
     </div>
     

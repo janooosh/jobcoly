@@ -82,10 +82,3 @@ Route::get('/send-mail', function () {
     Mail::to('haehl.jan@gmail.com')->send(new test()); 
     return view('home');
 });
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
