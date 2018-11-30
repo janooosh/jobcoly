@@ -264,7 +264,7 @@ class ApplicationsController extends Controller
         foreach($shifts as $shift) {
             if(!ApplicationsController::alreadyBuisyShift(Auth::user()->id,$shift->id)) {
                 $shiftsSum = $shiftsSum + count($shift->activeAssignments);
-                $shiftsSum = $shiftsSum + count($shift->activeApplications);
+                //$shiftsSum = $shiftsSum + count($shift->activeApplications);
             }
 
         }
@@ -279,7 +279,7 @@ class ApplicationsController extends Controller
         $shift = Shift::find($shift_id);
         $counter = 0;
         $counter += count($shift->activeAssignments);
-        $counter += count($shift->activeApplications);
+        //$counter += count($shift->activeApplications);
         return $counter;
     }
 
@@ -293,7 +293,7 @@ class ApplicationsController extends Controller
         foreach($shifts as $shift) {
             if(!ApplicationsController::alreadyBuisyShift(Auth::user()->id,$shift->id)) {
                 $shiftsSum = $shiftsSum + count($shift->activeAssignments);
-                $shiftsSum = $shiftsSum + count($shift->activeApplications);
+                //$shiftsSum = $shiftsSum + count($shift->activeApplications);
             }
 
         }

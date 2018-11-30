@@ -339,7 +339,6 @@ class ShiftsController extends Controller
 
         $n = $shift->job['short']." Schicht entfernt.";
 
-       
 
         return redirect('shifts')->with('success', $n);
     }
@@ -369,7 +368,8 @@ class ShiftsController extends Controller
         $anzahl = $shift->anzahl;
         //Get bewerber & aktive zuweisungen
         $assignments = count($shift->activeAssignments);
-        $bewerber = count($shift->activeApplications);
+        //$bewerber = count($shift->activeApplications);
+        $bewerber=0; 
         //Calculate free shifts & return
         return $anzahl-($assignments+$bewerber);
     }
