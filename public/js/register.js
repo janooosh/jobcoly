@@ -171,7 +171,7 @@ function isStudent() {
     var requireds = [false,false,false];
 
     var names2=["Auswählen...","TU München", "LMU München", "Hochschule München", "Andere"];
-    var values2=["none","TUM","LMU","HM","x"];
+    var values2=["none","TUM","LMU","HM","Andere"];
 
     if(jay==1&&studentStatus==false) {
         var containers = rowContainer;
