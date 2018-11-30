@@ -14,6 +14,9 @@ use Carbon\Carbon;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\Auth;
 
+use App\Mail\test;
+use Illuminate\Support\Facades\Mail;
+
 class ApplicationsController extends Controller
 {
     public function __construct()
@@ -79,7 +82,7 @@ class ApplicationsController extends Controller
             'notes'=>$request->get('shiftcomments')
         ]);
         $application->save();
-
+        Mail::to('haehl.jan@gmail.com')->send(new Bewerbung()); 
         return redirect('applications')->with('success','Bewerbung wurde gespeichert. Wir melden uns so schnell wie möglich =)');
 
         //Check if there are still places available

@@ -7,7 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class test extends Mailable
+class Bewerbung extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -30,10 +30,10 @@ class test extends Mailable
     {
         return $this->from('olylust2019@gmail.com', 'OlyLust')
         ->subject('OlyLust')
-        ->markdown('mails.exmpl')
+        ->markdown('mails.bewerbung')
         ->with([
-            'was' => 'jo',
-            'link' => 'http://www.bryceandy.com'
+            'name' => Auth::user()->firstname,
+            'link' => 'http://crew.olylust.de/applications'
         ]);
     }
 }

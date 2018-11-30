@@ -3,7 +3,7 @@ use Illuminate\Support\Facades\Auth;
 ?>
 @component('mail::message')
 
-Hi <b>jan</b>,
+Hi <b>janp</b>,
 
 Herzlichen Glückwunsch!
 
