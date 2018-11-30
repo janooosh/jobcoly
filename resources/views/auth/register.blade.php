@@ -181,6 +181,14 @@
                       <textarea id="aboutyou" name="aboutyou" placeholder ="Erzähl uns etwas über dich! Warst du bereits auf früheren OlyLüsten?" class="form-control" rows="3"></textarea>
                   </div>
               </div>
+              <div class="row">
+                <div class="col-md-12 form-group">
+                            <label for="confirmsec">
+                            <input type="checkbox" id="confirmsec" name="confirmsec" value="1" required autofocus/>
+                                Ich habe die <a href="{{route('datenschutz')}}" target="_blank"> Datenschutzerklärung </a> gelesen und verstanden.
+                            </label>
+                </div>
+              </div>
               <button type="submit" class="btn btn-primary">
                     {{ __('Registrieren') }}
                 </button><p><small>* = Pflichtangaben</small></p>
