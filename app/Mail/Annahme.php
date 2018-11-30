@@ -8,7 +8,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Auth;
 
-class Bewerbung extends Mailable
+class Annahme extends Mailable
 {
     use Queueable, SerializesModels;
 
