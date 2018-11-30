@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\Auth;
 class AssignmentsController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware(['auth', 'verified']);
+    }
+
     /**
      * View for all of my assignments
      */

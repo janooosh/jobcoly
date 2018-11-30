@@ -22,6 +22,7 @@ Route::get('/datenschutz', function() {
 })->name('datenschutz');
 
 Auth::routes(['verify' => true]);
+Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/profil', 'HomeController@profil')->name('profil');
@@ -68,12 +69,23 @@ Route::get('rewards','BenutzerController@rewards')->name('rewards');
 
 //Mail
 use App\Mail\Gmail;
+use App\Mail\test;
 use Illuminate\Support\Facades\Mail;
 
-Route::get('/send-mail', function () {
+/*Route::get('/send-mail', function () {
 
     Mail::to('haehl.jan@gmail.com')->send(new Gmail()); 
-
     return view('home');
+}); */
 
+Route::get('/send-mail', function () {
+    Mail::to('haehl.jan@gmail.com')->send(new test()); 
+    return view('home');
 });
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

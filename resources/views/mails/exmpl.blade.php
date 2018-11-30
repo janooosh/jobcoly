@@ -1,10 +1,15 @@
+<?php
+use Illuminate\Support\Facades\Auth;
+?>
 @component('mail::message')
 
-Hi <b>{{$name}}</b>,
+Hi <b>{{$Auth::user()->firstname}}</b>,
 
-Congrats for delivering this email!
+Herzlichen Glückwunsch!
 
 It looks neat, no?<br />
+
+Was: {{$was}} <br />
 
 @component('mail::button', ['url' => $link])
 

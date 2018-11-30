@@ -7,7 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class Gmail extends Mailable
+class test extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -18,7 +18,7 @@ class Gmail extends Mailable
      */
     public function __construct()
     {
-        $this->middleware(['auth', 'verified']);
+        //
     }
 
     /**
@@ -26,13 +26,13 @@ class Gmail extends Mailable
      *
      * @return $this
      */
-    public function build()
+    public function build($p)
     {
         return $this->from('olylust2019@gmail.com', 'OlyLust')
         ->subject('OlyLust')
         ->markdown('mails.exmpl')
         ->with([
-            'name' => 'Joe Doe',
+            'was' => $p,
             'link' => 'http://www.bryceandy.com'
         ]);
     }

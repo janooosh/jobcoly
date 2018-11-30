@@ -16,7 +16,7 @@ class EvaluationsController extends Controller
     //Require authenticated user
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth', 'verified']);
     }
 
     /**
