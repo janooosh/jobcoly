@@ -14,7 +14,7 @@ use Carbon\Carbon;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\Auth;
 
-use App\Mail\test;
+use App\Mail\Bewerbung;
 use Illuminate\Support\Facades\Mail;
 
 class ApplicationsController extends Controller
