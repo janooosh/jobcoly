@@ -31,7 +31,7 @@ class Absage extends Mailable
     {
         return $this->from('olylust2019@gmail.com', 'OlyLust')
         ->subject('Deine Schicht auf der OlyLust')
-        ->markdown('mails.annahme')
+        ->markdown('mails.absage')
         ->with([
             'user' => Auth::user()->firstname,
             'link' => 'http://crew.olylust.de/assignments/my'
