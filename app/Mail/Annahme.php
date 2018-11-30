@@ -30,11 +30,11 @@ class Bewerbung extends Mailable
     public function build()
     {
         return $this->from('olylust2019@gmail.com', 'OlyLust')
-        ->subject('Vielen Dank für deine Bewerbung!')
+        ->subject('Deine Schicht auf der OlyLust')
         ->markdown('mails.bewerbung')
         ->with([
             'user' => Auth::user()->firstname,
-            'link' => 'http://crew.olylust.de/applications'
+            'link' => 'http://crew.olylust.de/assignments/my'
         ]);
     }
 }

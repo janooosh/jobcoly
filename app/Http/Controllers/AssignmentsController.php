@@ -11,6 +11,9 @@ use Carbon\Carbon;
 use App\Privilege;
 use Illuminate\Support\Facades\Auth;
 
+use App\Mail\Annahme;
+use Illuminate\Support\Facades\Mail;
+
 class AssignmentsController extends Controller
 {
 
@@ -120,6 +123,7 @@ class AssignmentsController extends Controller
             $assignment->save();
             //Set Application to accepted
             ApplicationsController::changeStatus($request->get('application'),'Accepted');
+            Mail::to(Auth::user()->email)->send(new Annahme()); 
             return redirect('applications/evaluate/active')->with('success','Bewerbung akzeptiert, '.$applicant->firstname.' als '.$shift->job->name.' zugelassen.');
         }
         else 

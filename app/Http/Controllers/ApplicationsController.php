@@ -82,7 +82,7 @@ class ApplicationsController extends Controller
             'notes'=>$request->get('shiftcomments')
         ]);
         $application->save();
-        Mail::to('haehl.jan@gmail.com')->send(new Bewerbung()); 
+        Mail::to(Auth::user()->email)->send(new Bewerbung()); 
         return redirect('applications')->with('success','Bewerbung wurde gespeichert. Wir melden uns so schnell wie möglich =)');
 
         //Check if there are still places available
