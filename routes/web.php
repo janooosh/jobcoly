@@ -66,3 +66,14 @@ Route::get('rewards','BenutzerController@rewards')->name('rewards');
 
 //Route::redirect('applications/new', 'applications/create', 301); 
 
+//Mail
+use App\Mail\Gmail;
+use Illuminate\Support\Facades\Mail;
+
+Route::get('/send-mail', function () {
+
+    Mail::to('haehl.jan@gmail.com')->send(new Gmail()); 
+
+    return view('home');
+
+});
