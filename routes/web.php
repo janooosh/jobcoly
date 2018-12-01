@@ -48,6 +48,8 @@ Route::get('applications/evaluate/{status}','EvaluationsController@showAllApplic
 Route::get('applications/evaluate/accepted','EvaluationsController@showAccepteds')->name('evaluations.accepted');
 Route::get('applications/evaluate/view/{id}','EvaluationsController@showSingleApplication')->name('evaluation.show');
 
+Route::get('assignments/krankmeldung/{id}','AssignmentsController@krankmeldung')->name('assignments.krankmeldung');
+
 Route::resource('applications','ApplicationsController'); //resource controller has to go last...
 Route::resource('assignments','AssignmentsController');
 

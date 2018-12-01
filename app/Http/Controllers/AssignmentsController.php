@@ -12,6 +12,7 @@ use App\Privilege;
 use Illuminate\Support\Facades\Auth;
 
 use App\Mail\Annahme;
+use App\Mail\Krankmeldung;
 use Illuminate\Support\Facades\Mail;
 
 class AssignmentsController extends Controller
@@ -156,7 +157,19 @@ class AssignmentsController extends Controller
         return view('assignments.show', compact('assignment'));
     }
 
+    /**
+     * Meldet ein Assignment krank, schickt E-Mail zum Schluss
+     */
+    public function krankmeldung($id) { 
+        $assignment = Assignment::find($id);
 
+        $assignment->status="Krank";
+        $assignment->save();
+        Mail::to(Auth::user()->email)->send(new Krankmeldung()); 
+
+        return redirect('shifts/'.$assignment->shift->id)->with('success','Krankmeldung gespeichert, Zuweisung gelöscht.');
+
+    }
     /**
      * Show the form for editing the specified resource.
      *

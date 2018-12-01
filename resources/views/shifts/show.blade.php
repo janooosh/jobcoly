@@ -86,7 +86,11 @@ use Illuminate\Support\Facades\Auth;
                                     @else
                                         <ul class="listgroup">
                                             @foreach($shift->activeAssignments as $assignment)
-                                                <li class="list-group-item">{{$assignment->user->firstname}} {{$assignment->user->surname}} (<a href='mailto:{{$assignment->user->email}}' title='E-Mail schreiben'>{{$assignment->user->email}}</a>)</li>
+                                                <li class="list-group-item">{{$assignment->user->firstname}} {{$assignment->user->surname}} (<a href='mailto:{{$assignment->user->email}}' title='E-Mail schreiben'>{{$assignment->user->email}}</a>)
+                                                    @if(Auth::user()->is_admin==1)
+                                                        <a href="{{route('assignments.krankmeldung', $assignment->id)}}" type="button" class="btn btn-danger btn-xs"><i class="fa fa-ambulance"></i> Krank Melden</a>
+                                                    @endif
+                                                </li>
                                             @endforeach
                                         </ul>
                                     @endif
@@ -114,6 +118,32 @@ use Illuminate\Support\Facades\Auth;
                                                     @if(PrivilegeController::isManager(Auth::user()->id,$shift->id))
                                                     <a href="{{route('evaluation.show', $application->id)}}" type="button" class="btn btn-default btn-xs"><i class="fa fa-suitcase"></i> Zur Bewerbung</a>
                                                     @endif
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Gelöschte Zuweisungen --}}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseKrankmeldungen" aria-expanded="false" class="collapsed">
+                                        Gelöschte Zuweisungen ({{count($shift->deleteds)}})
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseKrankmeldungen" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                <div class="panel-body">
+                                    @if(count($shift->deleteds)<1)
+                                        Keine gelöschten Zuweisungen
+                                    @else
+                                        <ul class="listgroup">
+                                            @foreach($shift->deleteds as $deleted)
+                                                <li class="list-group-item">{{$deleted->user->firstname}} {{$deleted->user->surname}} (<a href='{{$deleted->user->email}}' title='E-Mail schreiben'>{{$deleted->user->email}}</a>)&nbsp;&nbsp;
+                                                    <b>{{$deleted->status}}</b>
                                                 </li>
                                             @endforeach
                                         </ul>

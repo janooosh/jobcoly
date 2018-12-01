@@ -195,6 +195,15 @@ class ShiftsController extends Controller
             }
         }
 
+        //Deleted/Kranke Shifts
+        $deleteds= array();
+        foreach($shift->Assignments as $a) {
+            if($a->status!='Aktiv') {
+                $deleteds[] = $a;
+            }
+        }
+        $shift->deleteds = $deleteds;
+
         //CO-MANAGER
         $managerFilter=['role'=>'Manager','shift_id'=>$shift->id];
         $privilegesManager = Privilege::where($managerFilter)->get();
