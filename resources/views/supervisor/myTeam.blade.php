@@ -46,7 +46,7 @@ use \App\Http\Controllers\ShiftsController;
 <div class="col-ld-10">
 
 <p>Dein Team als Supervisor: <b>{{$shift->job->name}}</b> ({{$shift->job->short}}){{$shift->area==''?' ':' ('.$shift->area.') '}} am {{$shift->datum}}, Start {{$shift->start}}.</p>
-<input type="text" class="form-control" id="search" oninput="searchTable('search','teammember')" placeholder="Schichten durchsuchen...."/>
+<input type="text" class="form-control" id="search" oninput="searchTable('search','teammember')" placeholder="Team durchsuchen...."/>
 <br />
 <table class="table table-hover table-bordered" id="teammember">
         <thead>
@@ -65,6 +65,16 @@ use \App\Http\Controllers\ShiftsController;
             @endforeach
         </tbody>
 </table>
+<br /><br />
+<h5>{{count($co_supervisors)}} Co-Supervisor</h5>
+@if(count($co_supervisors)<1) Du hast aktuell keine Co-Supervisor und bist alleine für die Bestätigung verantwortlich.<br />
+@else Bitte spreche dich mit deine Kollgen ab.<br />
+<ul>
+    @foreach($co_supervisors as $cs) 
+    <li>{{$cs->firstname.' '.$cs->surname}} ({{$cs->email}})</li>
+    @endforeach
+</ul>
+@endif
 </div>
 @else
 <div class="col-lg-12">

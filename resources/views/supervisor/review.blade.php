@@ -160,7 +160,17 @@ use \App\Http\Controllers\ShiftsController;
             @endforeach
         </tbody>
 </table>
+<h5>{{count($co_supervisors)}} Co-Supervisor</h5>
+@if(count($co_supervisors)<1) Du hast aktuell keine Co-Supervisor und bist alleine für die Bestätigung verantwortlich.<br />
+@else Bitte spreche dich mit deine Kollgen ab.<br />
+<ul>
+    @foreach($co_supervisors as $cs) 
+    <li>{{$cs->firstname.' '.$cs->surname}} ({{$cs->email}})</li>
+    @endforeach
+</ul>
 </div>
+
+@endif
 @else
 <div class="col-lg-12">
 <p>Noch keine Mitarbeiter.</p>

@@ -213,7 +213,7 @@
                             </div>
                             <div class="modal-body">
                             Möchtest du deine Bewerbung als <b>{{$a->shift->job->name}} ({{$a->shift->job->short}}) {{$a->shift->area == ''?'':'('.$a->shift->area.')'}} </b> wirklich zurückziehen? <br />
-                                Du kannst dich danach zwar erneut auf diese Schicht bewerben, aber nur falls sie bis dahin nicht belegt ist oder von anderen Bewerbern blockiert wird.
+                                Du kannst dich danach zwar erneut auf diese Schicht bewerben, aber nur falls sie bis dahin nicht belegt ist.
                                 <input type="hidden" id="application" name="application" value="{{$a->id}}"/> {{-- Application ID --}}
                             </div>
                             <div class="modal-footer">

@@ -117,10 +117,6 @@
                                     <li>
                                         <a href="{{route('supervisor')}}"><i class="fa fa-users"></i> Meine Teams</a>
                                     </li>
-                                    <li>
-                                        <a href="#"><i class="fa fa-thumbs-up"></i> Bestätigungen</a>
-                                    </li>
-
                                     @endif
                                     {{-- ENDE MANAGER --}}
 

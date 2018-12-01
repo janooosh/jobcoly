@@ -21,7 +21,7 @@ function searchTable(sourceElement, targetTable) {
         var cells = rows[x].cells;
         var treffer = 0;
         //Iterate through all cells in a row (Start bei 1, da ID nicht betrachtet werden soll, finish bei length-1 da zeitstempel uninteressant)
-        for(var y=1;y<cells.length-1;y++) {
+        for(var y=1;y<cells.length;y++) {
             //Match?
             if(cells[y].innerHTML.toLowerCase().indexOf(query.toLowerCase()) > -1) {
                 treffer++;

@@ -58,8 +58,13 @@ class SupervisorController extends Controller
         foreach ($assignments as $a) {
             $actives[] = $a->user;
         }
-
-        return view('supervisor.myTeam',compact('shift','actives'));
+        $co_supervisors = array(); //Array of users 
+        foreach($shift->supervisors as $s) {
+            if($s->user->id!=Auth::user()->id) {
+                $co_supervisors[]=$s->user;
+            }
+        }
+        return view('supervisor.myTeam',compact('shift','actives','co_supervisors'));
     }
 
     public function review($shift_id) {
@@ -81,8 +86,13 @@ class SupervisorController extends Controller
             $a->end = Carbon::parse($a->end)->format('H:i');
         }
 
-
-        return view('supervisor.review',compact('shift','actives'));
+        $co_supervisors = array(); //Array of users 
+        foreach($shift->supervisors as $s) {
+            if($s->user->id!=Auth::user()->id) {
+                $co_supervisors[]=$s->user;
+            }
+        }
+        return view('supervisor.review',compact('shift','actives','co_supervisors'));
     }
 
     /**
