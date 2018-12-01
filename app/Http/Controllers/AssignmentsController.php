@@ -124,7 +124,7 @@ class AssignmentsController extends Controller
             $assignment->save();
             //Set Application to accepted
             ApplicationsController::changeStatus($request->get('application'),'Accepted');
-            Mail::to(Auth::user()->email)->send(new Annahme()); 
+            Mail::to($applicant->email)->send(new Annahme()); 
             return redirect('applications/evaluate/active')->with('success','Bewerbung akzeptiert, '.$applicant->firstname.' als '.$shift->job->name.' zugelassen.');
         }
         else 
@@ -171,7 +171,7 @@ class AssignmentsController extends Controller
 
         $assignment->status="Krank";
         $assignment->save();
-        Mail::to(Auth::user()->email)->send(new Krankmeldung()); 
+        Mail::to($assignment->user->email)->send(new Krankmeldung()); 
 
         return redirect('shifts/'.$assignment->shift->id)->with('success','Krankmeldung gespeichert, Zuweisung gelöscht.');
 
