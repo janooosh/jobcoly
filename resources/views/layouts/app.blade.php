@@ -94,6 +94,9 @@
                                     <li>
                                         <a href="{{route('rewards')}}"><i class="fa fa-trophy"></i> Rewards</a>
                                     </li>
+                                    <li>
+                                        <a href="{{route('faq')}}"><i class="fa fa-question-circle"></i> FAQs</a>
+                                    </li>
                                     {{-- START MANAGER --}}
                                     @if(count(Auth::user()->manager_shifts)>0)
                                     <li>

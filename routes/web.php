@@ -21,6 +21,10 @@ Route::get('/datenschutz', function() {
     return view('datenschutz');
 })->name('datenschutz');
 
+Route::get('/faq',function() {
+    return view('faq');
+})->name('faq');
+
 Auth::routes(['verify' => true]);
 Auth::routes();
 

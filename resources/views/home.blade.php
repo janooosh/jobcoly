@@ -67,7 +67,7 @@ use Illuminate\Support\Facades\Auth;
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <i class="fa fa-beer fa-5x"></i>
+                                    <i class="fa fa-briefcase fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
                                     <div class="huge">{{count(Auth::user()->activeApplications)}}</div>
@@ -85,6 +85,21 @@ use Illuminate\Support\Facades\Auth;
                     </div>
                 </div>
                 </div>
-                <p>Hier kommen noch mehr tolle Infos hin.</p>
+                <h1>Neu hier?</h1>
+                <p>Sämtliche Schichten für die <b>#OlyLust19</b> - Pirates, Queens and Pineappels werden in diesem Jahr über dieses Tool vergeben.
+                <br />
+                Schichten werden im Allgemeinen nach "First-Come-First-Serve" vergeben, allerdings müsst ihr euch für die Schichten bewerben. Keine Angst, das ist ganz einfach!<br />
+                <br /><b>Lege direkt los:</b>
+                <br />
+                <a href="/applications/new" type="button" class="btn btn-default"><i class="fa fa-rocket"></i> Neue Bewerbung</a>
+                <br /><br />
+                Wir werden uns deine Bewerbung so schnell wie möglich ansehen und dir dann eine Rückmeldung geben. Mit diesem Prinzip möchten wir sicherstellen, dass im Vergleich zu den letzten Jahren jeder der eine bestimmte Schicht möchte auch eine faire Chance auf diese bekommt, und Schichten nicht sofort vergeben sind. <br />
+                Du kannst den Status deiner Bewerbungen unter "Bewerbungen" verfolgen. Auch wenn es einmal nicht sofort klappt, kannst du dich zu einem späteren Zeitpunkt erneut auf diese Schicht bewerben, vorausgesetzt es sind noch freie Stellen offen.
+                <br /><br >
+                Schau doch auch mal in den <b>FAQs</b> vorbei, dort beantworten wir bereits einige Fragen. <br />
+                <a href="{{route('faq')}}" type="button" class="btn btn-default"><i class="fa fa-question-circle"></i> FAQs</a>
+                <hr />
+                Wir stehen dir bei Fragen oder Problemen jederzeit unter <a href="mailto:crew@olylust.de">crew@olylust.de</a> zur Verfügung.
+                </p>
 
 @endsection
