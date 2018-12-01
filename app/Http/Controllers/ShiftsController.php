@@ -107,9 +107,6 @@ class ShiftsController extends Controller
         if(Carbon::parse($request->get('shiftstart'))->greaterThanOrEqualTo(Carbon::parse($request->get('shiftend')))) {
             return redirect('shifts/create')->with('warning','Schichtende muss nach Schichtbeginn sein.');
         } 
-        if(Carbon::parse($request->get('shiftstart'))->diffInHours(Carbon::parse($request->get('shiftend')))>23) {
-            return redirect('shifts/create')->with('warning','Schicht darf nicht länger als 24h dauern');
-        } 
         
         $start = $startDate.' '.$startTime;
         $ende = $endDate.' '.$endTime;
@@ -295,9 +292,6 @@ class ShiftsController extends Controller
         
         if(Carbon::parse($request->get('shiftstart'))->greaterThanOrEqualTo(Carbon::parse($request->get('shiftend')))) {
             return redirect('shifts/'.$id.'/edit')->with('warning','Schichtende muss nach Schichtbeginn sein.');
-        } 
-        if(Carbon::parse($request->get('shiftstart'))->diffInHours(Carbon::parse($request->get('shiftend')))>23) {
-            return redirect('shifts/'.$id.'/edit')->with('warning','Schicht darf nicht länger als 24h dauern');
         } 
 
         $start = $startDate.' '.$startTime;
