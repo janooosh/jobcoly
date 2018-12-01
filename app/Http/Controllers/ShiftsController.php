@@ -101,12 +101,31 @@ class ShiftsController extends Controller
         //Set correct datetime Formats
         $startDate = Carbon::parse($request->get('shiftstart'))->format('Y-m-d');
         $startTime = Carbon::parse($request->get('shiftstarttime'))->format('H:i:00');
+
+        $s = Carbon::parse($request->get('shiftstart'));
+        $st = Carbon::parse($request->get('shiftstarttime'));
+        $e = Carbon::parse($request->get('shiftend'));
+        $et = Carbon::parse($request->get('shiftendtime'));
+
+        $start = Carbon::now();
+
+        $start->setDate($s->year,$s->month,$s->day);
+        $start->setTime($st->hour,$st->minute,0);
+
+        $ende = Carbon::now();
+        $ende->setDate($e->year,$e->month,$e->day);
+        $ende->setTime($et->hour,$et->minute,0);
+
+
         $endDate = Carbon::parse($request->get('shiftend'))->format('Y-m-d');
         $endTime = Carbon::parse($request->get('shiftendtime'))->format('H:i:00');
 
-        if(Carbon::parse($request->get('shiftstart'))->greaterThanOrEqualTo(Carbon::parse($request->get('shiftend')))) {
+        if($start->greaterThanOrEqualTo($ende)) {
             return redirect('shifts/create')->with('warning','Schichtende muss nach Schichtbeginn sein.');
         } 
+        if($start->diffInHours($ende)>23) {
+            return redirect('shifts/create')->with('warning','Schicht darf nicht länger als 24h dauern.');
+        }
         
         $start = $startDate.' '.$startTime;
         $ende = $endDate.' '.$endTime;
@@ -289,10 +308,32 @@ class ShiftsController extends Controller
         $startTime = Carbon::parse($request->get('shiftstarttime'))->format('H:i:00');
         $endDate = Carbon::parse($request->get('shiftend'))->format('Y-m-d');
         $endTime = Carbon::parse($request->get('shiftendtime'))->format('H:i:00');
-        
-        if(Carbon::parse($request->get('shiftstart'))->greaterThanOrEqualTo(Carbon::parse($request->get('shiftend')))) {
-            return redirect('shifts/'.$id.'/edit')->with('warning','Schichtende muss nach Schichtbeginn sein.');
+
+        $s = Carbon::parse($request->get('shiftstart'));
+        $st = Carbon::parse($request->get('shiftstarttime'));
+        $e = Carbon::parse($request->get('shiftend'));
+        $et = Carbon::parse($request->get('shiftendtime'));
+
+        $start = Carbon::now();
+
+        $start->setDate($s->year,$s->month,$s->day);
+        $start->setTime($st->hour,$st->minute,0);
+
+        $ende = Carbon::now();
+        $ende->setDate($e->year,$e->month,$e->day);
+        $ende->setTime($et->hour,$et->minute,0);
+
+
+        $endDate = Carbon::parse($request->get('shiftend'))->format('Y-m-d');
+        $endTime = Carbon::parse($request->get('shiftendtime'))->format('H:i:00');
+
+        if($start->greaterThanOrEqualTo($ende)) {
+            return redirect('shifts/create')->with('warning','Schichtende muss nach Schichtbeginn sein.');
         } 
+        if($start->diffInHours($ende)>23) {
+            return redirect('shifts/'.$shift->id.'/edit')->with('warning','Schicht darf nicht länger als 24h dauern.');
+        }
+        
 
         $start = $startDate.' '.$startTime;
         $ende = $endDate.' '.$endTime;
