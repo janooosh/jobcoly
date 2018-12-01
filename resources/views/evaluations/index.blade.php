@@ -51,6 +51,7 @@
 {{-- Offene Bewerbungen --}}
 @if(count($actives)>0 && $status!='active')
 <a href="active" class="btn btn-default" >{{count($actives)}} Offene Bewerbung(en)</a>
+
 @endif
 
 {{-- Zugelassene Bewerbungen --}}

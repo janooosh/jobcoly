@@ -231,7 +231,7 @@ class EvaluationsController extends Controller
         $application->status='Rejected';
         $application->save();
         Mail::to($application->applicant->email)->send(new Absage()); 
-        return view('evaluations.index')->with('success','Absage gespeichert');
+        return redirect('applications/evaluate')->with('success','Absage gespeichert');
     }
 
 
