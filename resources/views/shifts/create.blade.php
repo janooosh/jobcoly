@@ -75,7 +75,7 @@
 
     <div class="col-md-3 form-group" style="padding-bottom: 20px;">
             <label for="shiftstart">Start *</label>
-            <input class="form-control datepicker" id="shiftstart" name="shiftstart" type="text" placeholder="mm/dd/yyyy" required autofocus/>
+            <input class="form-control" id="shiftstart" name="shiftstart" type="date" required autofocus/>
     </div>
     <div class="col-md-3 form-group" style="padding-bottom: 20px;">
             <label for="shiftstarttime">Zeit *</label>
@@ -83,7 +83,7 @@
     </div>
     <div class="col-md-3 form-group" style="padding-bottom: 20px;">
             <label for="shiftend">Ende *</label>
-            <input class="form-control datepicker" id="shiftend" name="shiftend" type="text" placeholder="mm/dd/yyyy" required autofocus/>
+            <input class="form-control" id="shiftend" name="shiftend" type="date" required autofocus/>
     </div>
     <div class="col-md-3 form-group" style="padding-bottom: 20px;">
             <label for="shiftendtime">Zeit *</label>
@@ -116,7 +116,7 @@
             </select>
         </div>
         <div class="col-md-6 form-group" style="padding-bottom: 20px;">
-                <label for="shiftsupervisor">Supervisor *</label>
+                <label for="shiftsupervisor">Supervisor</label>
             <select multiple class="form-control" id="shiftsupervisor" name="shiftsupervisor[]" autofocus>
                 <option disabled>Bitte auswählen...</option>
                 @foreach($users as $user)

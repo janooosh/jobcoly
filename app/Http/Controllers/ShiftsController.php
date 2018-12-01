@@ -86,9 +86,11 @@ class ShiftsController extends Controller
         $request->validate([       
             'shiftjob' => 'required|exists:jobs,id',
             'shiftgroup' => 'required|exists:shiftgroups,id', 
-            'shiftstart' => 'required|date_format:"m/d/Y"',
+            'shiftstart' => 'required',
+            'shiftstart' => 'required|date_format:"Y-m-d"',
+            'shiftend' => 'required|date_format:"Y-m-d"',
             'shiftstarttime' => 'required|date_format:"H:i"',
-            'shiftend' => 'required|date_format:"m/d/Y"',
+            'shiftend' => 'required',
             'shiftendtime' => 'required|date_format:"H:i"',
             'shiftanzahl' => 'required|integer|max:99|min:1',
             'shiftstatus' => 'required',
@@ -101,6 +103,13 @@ class ShiftsController extends Controller
         $startTime = Carbon::parse($request->get('shiftstarttime'))->format('H:i:00');
         $endDate = Carbon::parse($request->get('shiftend'))->format('Y-m-d');
         $endTime = Carbon::parse($request->get('shiftendtime'))->format('H:i:00');
+
+        if(Carbon::parse($request->get('shiftstart'))->greaterThanOrEqualTo(Carbon::parse($request->get('shiftend')))) {
+            return redirect('shifts/create')->with('warning','Schichtende muss nach Schichtbeginn sein.');
+        } 
+        if(Carbon::parse($request->get('shiftstart'))->diffInHours(Carbon::parse($request->get('shiftend')))>23) {
+            return redirect('shifts/create')->with('warning','Schicht darf nicht länger als 24h dauern');
+        } 
         
         $start = $startDate.' '.$startTime;
         $ende = $endDate.' '.$endTime;
@@ -174,7 +183,7 @@ class ShiftsController extends Controller
         }
 
           //Return
-          return redirect('shifts')->with('success', 'Schicht erstellt');
+          return redirect('/shifts/admin')->with('success', 'Schicht erstellt');
     }
 
     /**
@@ -244,9 +253,9 @@ class ShiftsController extends Controller
         $shift = Shift::find($id);
         /* html5 datetime-local value requires YYYY-MM-DDThh:mm:ss.ms, 00 as ms bc by default carbon prints 0000 instead of 00, to lazy to change that... */
         
-        $shift->shiftstart = Carbon::parse($shift->starts_at)->format('m/d/Y');
+        $shift->shiftstart = Carbon::parse($shift->starts_at)->format('Y-m-d');
         $shift->shiftstarttime = Carbon::parse($shift->starts_at)->format('H:i');
-        $shift->shiftend=Carbon::parse($shift->ends_at)->format('m/d/Y');
+        $shift->shiftend=Carbon::parse($shift->ends_at)->format('Y-m-d');
         $shift->shiftendtime=Carbon::parse($shift->ends_at)->format('H:i');
 
         $jobs = Job::all();
@@ -267,9 +276,9 @@ class ShiftsController extends Controller
         $shift = Shift::find($id);
         
         $request->validate([
-            'shiftstart' => 'required|date_format:"m/d/Y"',
+            'shiftstart' => 'required|date_format:"Y-m-d"',
+            'shiftend' => 'required|date_format:"Y-m-d"',
             'shiftstarttime' => 'required|date_format:"H:i"',
-            'shiftend' => 'required|date_format:"m/d/Y"',
             'shiftendtime' => 'required|date_format:"H:i"',
             'shiftanzahl' => 'required|integer|max:99|min:1',
             'shiftstatus' => 'required',
@@ -284,6 +293,13 @@ class ShiftsController extends Controller
         $endDate = Carbon::parse($request->get('shiftend'))->format('Y-m-d');
         $endTime = Carbon::parse($request->get('shiftendtime'))->format('H:i:00');
         
+        if(Carbon::parse($request->get('shiftstart'))->greaterThanOrEqualTo(Carbon::parse($request->get('shiftend')))) {
+            return redirect('shifts/'.$id.'/edit')->with('warning','Schichtende muss nach Schichtbeginn sein.');
+        } 
+        if(Carbon::parse($request->get('shiftstart'))->diffInHours(Carbon::parse($request->get('shiftend')))>23) {
+            return redirect('shifts/'.$id.'/edit')->with('warning','Schicht darf nicht länger als 24h dauern');
+        } 
+
         $start = $startDate.' '.$startTime;
         $ende = $endDate.' '.$endTime;
 
@@ -358,7 +374,7 @@ class ShiftsController extends Controller
      */
     public function showAll() {
         if(Auth::user()->is_admin!='1') {
-            return redirect('home')->with('danger','Kein Zugriff.');
+            return redirect('shifts');
         }
         $shifts=Shift::all();
         foreach($shifts as $shift) {

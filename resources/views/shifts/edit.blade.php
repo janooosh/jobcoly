@@ -97,7 +97,7 @@ use \App\Http\Controllers\PrivilegeController;
 
     <div class="col-md-3 form-group" style="padding-bottom: 20px;">
             <label for="shiftstart">Start *</label>
-    <input class="form-control datepicker" id="shiftstart" name="shiftstart" type="text" value="{{$shift->shiftstart}}" {{Auth::user()->is_admin==1?'':'disabled'}} required autofocus/>
+    <input class="form-control" id="shiftstart" name="shiftstart" type="date" value="{{$shift->shiftstart}}" {{Auth::user()->is_admin==1?'':'disabled'}} required autofocus/>
     </div>
     <div class="col-md-3 form-group" style="padding-bottom: 20px;">
             <label for="shiftstarttime">Zeit *</label>
@@ -105,7 +105,7 @@ use \App\Http\Controllers\PrivilegeController;
     </div>
     <div class="col-md-3 form-group" style="padding-bottom: 20px;">
             <label for="shiftend">Ende *</label>
-            <input class="form-control datepicker" id="shiftend" name="shiftend" type="text" value="{{$shift->shiftend}}" {{Auth::user()->is_admin==1?'':'disabled'}} required autofocus/>
+            <input class="form-control" id="shiftend" name="shiftend" type="date" value="{{$shift->shiftend}}" {{Auth::user()->is_admin==1?'':'disabled'}} required autofocus/>
     </div>
     <div class="col-md-3 form-group" style="padding-bottom: 20px;">
             <label for="shiftendtime">Zeit *</label>
