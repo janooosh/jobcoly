@@ -95,7 +95,7 @@ class ShiftsController extends Controller
             'shiftanzahl' => 'required|integer|max:99|min:1',
             'shiftstatus' => 'required',
             'shiftstreifen' => 'integer|min:0|max:50',
-            'shiftdescription' => 'max:1000'
+            'shiftdescription' => 'max:2000'
           ]);
 
         //Set correct datetime Formats

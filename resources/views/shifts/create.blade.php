@@ -63,7 +63,7 @@
                 <option value="Bierstube">Bierstube</option>
                 <option value="Lounge">Lounge</option>
                 <option value="Disco">Disco</option>
-                <option value="Saal">Saal</option>
+                <option value="Mensa">Mensa</option>
                 <option value="Taverne">Taverne</option>
                 <option value="Haupteingang">Haupteingang</option>
                 <option value="Foyer">Foyer</option>

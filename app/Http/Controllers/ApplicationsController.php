@@ -67,9 +67,9 @@ class ApplicationsController extends Controller
         
         //Validate
         $request->validate([
-            'shiftexperience' => 'max:500',
-            'shiftmotivation' => 'max:500',
-            'shiftcomments' => 'max:500',
+            'shiftexperience' => 'max:2000',
+            'shiftmotivation' => 'max:2000',
+            'shiftcomments' => 'max:2000',
             'shiftid' => 'exists:shifts,id'
         ]);
         
