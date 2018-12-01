@@ -41,7 +41,10 @@
 @endif
 
 @if($applications<1)
-<p>Dir wurden keine Bewerbungen zugewiesen.</p>
+<p>
+    <div class="alert alert-info">
+        Du hast keine offenen Bewerbungen, um die du dich kümmern musst. Zeit für <i class="fa fa-beer"></i>
+    </div></p>
 
 @else
 

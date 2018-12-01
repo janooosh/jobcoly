@@ -47,7 +47,7 @@
                 <th scope="col">ID</th>
                 <th scope="col">Schicht</th>
                 <th scope="col">Area</th>
-                <th scope="col">Läuft ab</th>
+                <th scope="col">Beworben</th>
                 <th scope="col">Gruppe</th>
                 <th scope="col">Status</th>
                 <th scope="col">Ansehen</th>
@@ -59,7 +59,7 @@
                 <th scope="row">{{$application->id}}</th>
                 <td>{{$application->shift->job->name}}</td>
                 <td>{{$application->shift->area==''?'-':$application->shift->area}}</td>
-                <td>{{$application->expiration}}</td>
+                <td>{{$application->eingang}}</td>
                 <td>{{$application->shift->shiftgroup->name}}</td>
                 <td>{{$application->status}}</td>
                 <td><a href="applications/{{$application->id}}" title="Bewerbung ansehen/zurückziehen" type="button" class="btn btn-default"><i class="fa fa-eye"></i> Mehr Infos</a>

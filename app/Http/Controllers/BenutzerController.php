@@ -17,6 +17,56 @@ class BenutzerController extends Controller
     }
 
     /**
+     * Update profile
+     */
+    public function updateProfile(Request $request) {
+
+        
+        //Validate
+        $request->validate([
+            'firstname' => 'required|string|max:50',
+            'surname' => 'required|string|max:50',
+            'phone' => 'max:30',
+            'gesundheitszeugnis' => 'boolean',
+            'olycat'=>'in:Hochhaus,Bungalow,HJK',
+            'oly_room'=>'max:10',
+            'plz'=>'max:5',
+            'ort'=>'string|max:50',
+            'semester'=>'max:2',
+            'uni'=>'in:TUM,LMU,HM,Andere',
+            'aboutyou'=>'max:500',
+            'shirtCut'=>'in:M,W',
+            'shirtSize'=>'in:XS,S,M,L,XL,XXL',
+            'ausschuss'=>'in:CTA,FOTO,KULT,FTA,GRAS,VA,MTA,KOMITEE,FA,TA,KICKER'
+        ]);
+
+        //Update User in DB
+        $user = User::find(Auth::user()->id);
+
+        $user->firstname=$request->get('firstname');
+        $user->birthday=$request->get('birthday');
+        $user->mobile=$request->get('phone');
+        $user->surname=$request->get('surname');
+        $user->oly_cat=$request->get('olycat');
+        $user->oly_room=$request->get('oly_room');
+        $user->street=$request->get('strasse');
+        $user->hausnummer=$request->get('hausnummer');
+        $user->plz=$request->get('plz');
+        $user->ort=$request->get('ort');
+        $user->uni=$request->get('uni');
+        $user->semester=$request->get('semester');
+        $user->studiengang=$request->get('studiengang');
+        $user->about_you=$request->get('aboutyou');
+        $user->shirt_cut=$request->get('shirtCut');
+        $user->shirt_size=$request->get('shirtSize');
+        $user->has_gesundheitszeugnis=$request->get('gesundheitszeugnis');
+        
+        $user->save();
+        echo("passt");
+        return redirect('profil')->with('success','Profil aktualisiert');
+    }
+
+    /**
      * Returns view for all users
      */
     public function showUsers() {

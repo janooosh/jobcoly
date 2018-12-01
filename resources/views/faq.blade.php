@@ -42,6 +42,21 @@ use Illuminate\Support\Facades\Auth;
 
 {{-- START FAQs--}}
 <div class="panel-group">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" href="#faq0">Kann ich mit meinen Freunden gemeinsam in eine Schicht?</a>
+          </h4>
+        </div>
+        <div id="faq0" class="panel-collapse collapse">
+          <div class="panel-body">
+            Aber natürlich! Allerdings muss sich deine Freundin/dein Freund auch über dieses Tool bewerben, am besten bewerbt ihr euch gleichzeitig. <br />
+            Gebt dann bei den Kommentaren in der Bewerbung unbedingt an, dass ihr gemeinsam arbeiten möchtet, dann geben wir unser Bestes dass das klappt. Versprechen können wir natürlich nichts, falls ihr eine größere Gruppe seid kündigt ihr uns das am besten auch schon im Vorraus unter <a href="mailto:crew@olylust.de">crew@olylust.de</a> an.
+
+          </div>
+        </div>
+      </div>
+
   <div class="panel panel-default">
     <div class="panel-heading">
       <h4 class="panel-title">

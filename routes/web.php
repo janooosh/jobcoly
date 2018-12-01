@@ -30,7 +30,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/profil', 'HomeController@profil')->name('profil');
-Route::get('/jobs', 'HomeController@jobs')->name('jobs');
+Route::post('/profil','BenutzerController@updateProfile')->name('profil.update');
 
 Route::get('shifts/{id}/destroy','ShiftsController@destroy');
 Route::get('shifts/admin','ShiftsController@showAll')->name('shifts.all');

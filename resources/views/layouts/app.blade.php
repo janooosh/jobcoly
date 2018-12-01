@@ -62,6 +62,9 @@
                                         </a>
         
                                     <ul class="dropdown-menu dropdown-user">
+                                            <li><a href="{{ route('profil') }}"><i class="fa fa-user fa-fw"></i> Profil</a>
+                                            </li>
+                                            
                                             <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
                                                 document.getElementById('logout-form').submit();"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                                             </li>

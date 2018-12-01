@@ -36,6 +36,7 @@ class ApplicationsController extends Controller
 
         foreach($applications as $application) {
             $application->expiration = Carbon::parse($application->expiration)->format('d.m.y H:i');
+            $application->eingang = Carbon::parse($application->created_at)->format('D, d.m.y. H:i');
         }
        
         return view('applications.index', compact('applications','user'));
