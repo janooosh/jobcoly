@@ -161,6 +161,12 @@ class AssignmentsController extends Controller
      * Meldet ein Assignment krank, schickt E-Mail zum Schluss
      */
     public function krankmeldung($id) { 
+
+        //Only Admins
+        if(Auth::user()->is_admin!=1) {
+            return redirect('home')->with('danger','Keine Berechtigung');
+        }
+
         $assignment = Assignment::find($id);
 
         $assignment->status="Krank";

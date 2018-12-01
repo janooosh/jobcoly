@@ -75,7 +75,7 @@
 
     <div class="col-md-3 form-group" style="padding-bottom: 20px;">
             <label for="shiftstart">Start *</label>
-            <input class="form-control datepicker" id="shiftstart" name="shiftstart" type="text" required autofocus/>
+            <input class="form-control datepicker" id="shiftstart" name="shiftstart" type="text" placeholder="mm/dd/yyyy" required autofocus/>
     </div>
     <div class="col-md-3 form-group" style="padding-bottom: 20px;">
             <label for="shiftstarttime">Zeit *</label>
@@ -83,7 +83,7 @@
     </div>
     <div class="col-md-3 form-group" style="padding-bottom: 20px;">
             <label for="shiftend">Ende *</label>
-            <input class="form-control datepicker" id="shiftend" name="shiftend" type="text" required autofocus/>
+            <input class="form-control datepicker" id="shiftend" name="shiftend" type="text" placeholder="mm/dd/yyyy" required autofocus/>
     </div>
     <div class="col-md-3 form-group" style="padding-bottom: 20px;">
             <label for="shiftendtime">Zeit *</label>

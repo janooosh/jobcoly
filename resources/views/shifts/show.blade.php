@@ -88,15 +88,39 @@ use Illuminate\Support\Facades\Auth;
                                             @foreach($shift->activeAssignments as $assignment)
                                                 <li class="list-group-item">{{$assignment->user->firstname}} {{$assignment->user->surname}} (<a href='mailto:{{$assignment->user->email}}' title='E-Mail schreiben'>{{$assignment->user->email}}</a>)
                                                     @if(Auth::user()->is_admin==1)
-                                                        <a href="{{route('assignments.krankmeldung', $assignment->id)}}" type="button" class="btn btn-danger btn-xs"><i class="fa fa-ambulance"></i> Krank Melden</a>
+                                                        <button data-toggle="modal" data-target="#krankmelden{{$assignment->id}}" type="button" class="btn btn-danger btn-xs"><i class="fa fa-ambulance"></i> Krank Melden</button>
                                                     @endif
                                                 </li>
+                                                                                    {{-- KRANKMELDUNG --}}
+                                                <div class="modal fade" id="krankmelden{{$assignment->id}}" tabindex="-1" role="dialog" aria-labelledby="managers" aria-hidden="true" style="display: none;">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                                <h4 class="modal-title" id="myModalLabel">{{$assignment->user->firstname}} wirklich krankmelden?</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p>
+                                                                    Möchtest du {{$assignment->user->firstname}} als {{$assignment->shift->job->name}} ({{$assignment->shift->shiftgroup->name}}) wirklich krankmelden? <br />
+                                                                    {{$assignment->user->firstname}} wird per E-Mail über die Krankmeldung informiert. Die Schicht ist danach wieder freigegeben. Bitte halte mit {{$assignment->user->firstname}} Rücksprache bzgl. Ersatzschichten usw. <br />
+                                                                </p>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Close</button>
+                                                                <a href="{{route('assignments.krankmeldung', $assignment->id)}}" type="button" class="btn btn-danger btn-xs"><i class="fa fa-ambulance"></i> Krank Melden</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+       
+                                                </div>
                                             @endforeach
                                         </ul>
                                     @endif
                                 </div>
                             </div>
                         </div>
+
+                                            
 
                         {{-- Aktive Bewerbungen --}}
                         <div class="panel panel-default">
@@ -275,8 +299,6 @@ use Illuminate\Support\Facades\Auth;
 
     </div> {{-- Ende Rechte Seite --}}
 </div>
-
-
 
 
 @endsection
