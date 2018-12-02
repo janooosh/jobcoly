@@ -1,6 +1,6 @@
 @component('mail::message')
 
-Hi <b>{{$user}}</b>,
+Hi,
 
 wir haben dich für eine Schicht auf der OlyLust krankgemeldet und wünschen Gute Besserung!<br />
 Bitte überprüfe deine Schichten und gib uns Bescheid, falls etwas nicht stimmt.

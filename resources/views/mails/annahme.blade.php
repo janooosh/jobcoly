@@ -1,6 +1,6 @@
 @component('mail::message')
 
-Hi <b>{{$user}}</b>,
+Hi,
 
 du wurdest für eine Schicht auf der OlyLust zugelassen - <b>Herzlichen Glückwunsch!</b> <br /><br />
 

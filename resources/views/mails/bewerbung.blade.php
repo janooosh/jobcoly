@@ -1,6 +1,6 @@
 @component('mail::message')
 
-Hi <b>{{$user}}</b>,
+Hi,
 
 vielen Dank für deine Bewerbung! Wir freuen uns, dass du die OlyLust unterstützen möchtest :) <br />
 <br />

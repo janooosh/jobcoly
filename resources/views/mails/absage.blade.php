@@ -1,6 +1,6 @@
 @component('mail::message')
 
-Hi <b>{{$user}}</b>,
+Hi,
 
 vielen Dank, dass du die OlyLust unterstützen möchtest!<br />
 Du hast dich kürzlich für eine Schicht beworben, leider wurdest du jedoch nicht dafür zugelassen. Bitte überprüfe deine Bewerbungen.
