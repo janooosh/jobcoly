@@ -86,7 +86,7 @@ use Illuminate\Support\Facades\Auth;
                 </div>
                 </div>
                 <h1>Neu hier?</h1>
-                <p>Sämtliche Schichten für die <b>#OlyLust19</b> - Pirates, Queens and Pineappels werden in diesem Jahr über dieses Tool vergeben.
+                <p>Sämtliche Schichten für die <b>#OlyLust19</b> - Pirates, Queens and Pineapples werden in diesem Jahr über dieses Tool vergeben.
                 <br />
                 Schichten werden im Allgemeinen nach "First-Come-First-Serve" vergeben, allerdings müsst ihr euch für die Schichten bewerben. Keine Angst, das ist ganz einfach!<br />
                 <br /><b>Lege direkt los:</b>
