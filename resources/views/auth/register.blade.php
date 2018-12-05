@@ -55,7 +55,7 @@
                           <option value="M">M</option>
                           <option value="L">L</option>
                           <option value="XL">XL</option>
-                          <option value="XXL">XXL</option>
+                          <option value="XX">XXL</option>
                       </select>
                   </div>
                     <div class="col-md-2 mb-3">
