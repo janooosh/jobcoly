@@ -36,7 +36,7 @@ class BenutzerController extends Controller
             'uni'=>'in:TUM,LMU,HM,Andere',
             'aboutyou'=>'max:500',
             'shirtCut'=>'in:M,W',
-            'shirtSize'=>'in:XS,S,M,L,XL,XXL',
+            'shirtSize'=>'in:XS,S,M,L,XL,xx',
             'ausschuss'=>'in:CTA,FOTO,KULT,FTA,GRAS,VA,MTA,KOMITEE,FA,TA,KICKER'
         ]);
 

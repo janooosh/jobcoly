@@ -275,11 +275,11 @@ use Carbon\Carbon;
                     <select name="shirtSize" id="shirtSize" class="form-control d-block w-100" required>
                         <option value="" {{$user->shirt_size==''?'selected':''}} disabled>Bitte auswählen...</option>
                         <option value="XS" {{$user->shirt_size=='XS' ? 'selected':''}}>XS</option>
-                        <option value="S" {{!$user->shirt_size=='S' ? 'selected':''}}>S</option>
+                        <option value="S" {{$user->shirt_size=='S' ? 'selected':''}}>S</option>
                         <option value="M" {{$user->shirt_size=='M' ? 'selected':''}}>M</option>
-                        <option value="L" {{!$user->shirt_size=='L' ? 'selected':''}}>L</option>
+                        <option value="L" {{$user->shirt_size=='L' ? 'selected':''}}>L</option>
                         <option value="XL" {{$user->shirt_size=='XL' ? 'selected':''}}>XL</option>
-                        <option value="XXL" {{!$user->shirt_size=='XXL' ? 'selected':''}}>XXL</option>
+                        <option value="xx" {{$user->shirt_size=='xx' ? 'selected':''}}>XXL</option>
                     </select>
                 </div>
             </div>
