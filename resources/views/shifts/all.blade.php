@@ -5,6 +5,12 @@ use \App\Http\Controllers\ShiftsController;
 
 @section('content')
 <script src="{{ asset('js/evaluations.js')}}"></script>
+<script src="{{ asset('js/jayfilter.js')}}"></script>
+{{--<script>
+$(document).ready( function () {
+    $('#shiftTable').DataTable();
+} );
+</script> --}}
 <div class="row">
     <div class="col-lg-8">
         <h1 class="page-header">Schichten</h1>
@@ -51,16 +57,14 @@ use \App\Http\Controllers\ShiftsController;
         <thead>
             <tr>
                 <th scope="col">ID</th>
-                <th scope="col">Gruppe</th>
-                <th scope="col">Job</th>
-                <th scope="col">Area</th>
-                <th scope="col">Datum</th>
-                <th scope="col">Start</th>
-                <th scope="col">Ende</th>
-                <th scope="col">Dauer</th>
-                <th scope="col">Frei</th>
+                <th scope="col" filter="elements">Gruppe</th>
+                <th scope="col" filter="elements">Job</th>
+                <th scope="col" filter="elements">Area</th>
+                <th scope="col" filter="date">Datum</th>
+                <th scope="col" filter="time">Start</th>
+                <th scope="col" filter="time">Dauer</th>
+                <th scope="col" filter="number">Frei</th>
                 <th scope="col">Belegung</th>
-                <th scope="col">Status</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
             </tr>
@@ -71,14 +75,12 @@ use \App\Http\Controllers\ShiftsController;
                 <th scope="row">{{$shift->id}}</th>
                 <td>{{$shift->shiftgroup['name']}}</td>
                 <td>{{$shift->job['name']}}</td>
-                <td>{{$shift->area}}</td>
+                <td>{{$shift->area==''?'-':$shift->area}}</td>
                 <td>{{$shift->datum}}</td>
                 <td>{{$shift->starts_at}}</td>
-                <td>{{$shift->ends_at}}</td>
                 <td>{{$shift->duration}}</td>
                 <td>{{ShiftsController::hasFreeAssignments($shift->id)}}</td>
                 <td>{{round(($shift->anzahl-ShiftsController::hasFreeAssignments($shift->id))/$shift->anzahl*100,1)}}%</td>
-                <td>{{$shift->status}}</td>
                 <td><a href="{{ route('shifts.edit',$shift->id)}}" class="fa fa-pencil" title='Schicht bearbeiten'></a></td>
                 </td>
                 <td><a href="{{ route('shifts.show',$shift->id)}}" class="fa fa-eye" title='Schicht anzeigen'></a></td>
@@ -86,6 +88,50 @@ use \App\Http\Controllers\ShiftsController;
             @endforeach
         </tbody>
 </table>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel"></h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <div id="inhalt"></div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Schließen</button>
+              <div id="saver"></div>
+            </div>
+          </div>
+        </div>
+</div>
+
+<script>
+//Fügen IDs zu Spalten hinzu
+initFilter('shiftTable');
+</script>
+
+
+
+<script>
+$('#exampleModal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  var filterID = button.data('filter') // Extract info from data-* attributes
+  
+  //Finde Filter
+  var filter = findFilter(filterID);
+
+  var container = buildFilter(filter);
+  var saver = buildSaver(filter);
+  
+  var modal = $(this)
+  modal.find('.modal-title').html('Filter')
+  modal.find('.modal-body #inhalt').html(container)
+  modal.find('.modal-footer #saver').html(saver)
+})
+</script>
 </div>
 @else
 <div class="col-lg-12">

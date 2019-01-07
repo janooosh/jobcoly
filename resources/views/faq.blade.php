@@ -122,8 +122,8 @@ use Illuminate\Support\Facades\Auth;
                 Eine Übersicht sowie weitere Informationen findest du unter "Rewards". <br /><br />
                 Die Gutscheine werden nach der OlyLust auch in den Betrieben (Bierstube, Lounge, Disko) einsetzbar sein und ersetzen damit die Streifenkarten. <br />
                 1 Gutschein = 1 Antialkoholisches Getränk/1 Shot <br />
-                2 Gutscheine = 1 Bier (Helles/Radler/Weißbier/Desperados), 1 Red Bull <br />
-                3 Gutscheine = 1 Longdrink/Cocktail <br />
+                2 Gutscheine = 1 Longdrink oder Bier (Helles/Radler/Weißbier/Desperados), 1 Red Bull <br />
+                3 Gutscheine = 1 Cocktail <br />
                 <br />Der Wert für ein Essen in der Bierstube wird zeitnah noch ergänzt.
             </div>
             </div>
@@ -151,8 +151,8 @@ use Illuminate\Support\Facades\Auth;
                     <div id="faq7" class="panel-collapse collapse">
                       <div class="panel-body">
                          Ja! <br />
-                         Für 6 Gutscheine erhälst du eine Eintrittskarte für den Weiberfasching (Donnerstag), DER Studentenfasching (Freitag) und den Scavenger Monday (Montag). <br />
-                         Für 12 Gutscheine erhälst du eine Eintrittskarte für den Legendären Samstagsfasching (Samstag).
+                         Für 3 Gutscheine erhälst du eine Eintrittskarte für den Weiberfasching (Donnerstag), DER Studentenfasching (Freitag) und den Scavenger Monday (Montag). <br />
+                         Für 6 Gutscheine erhälst du eine Eintrittskarte für den Legendären Samstagsfasching (Samstag).
                     </div>
                     </div>
                   </div>

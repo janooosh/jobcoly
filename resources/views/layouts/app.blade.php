@@ -24,9 +24,15 @@
     
     {{--<script src="{{ asset('js/app.js') }}" defer></script>--}}
 
+    {{--<link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
+    --}}
+
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
     <script src="//code.jquery.com/jquery.js"></script>
+    {{--<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    --}}
+
     </head>
 
     <body>
@@ -184,12 +190,14 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="{{ asset('template/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
-
+    
      <!-- Metis Menu Plugin JavaScript -->
      <script src="{{ asset('template/vendor/metisMenu/metisMenu.min.js') }}"></script>
 
      <!-- Custom Theme JavaScript -->
      <script src="{{ asset('template/dist/js/sb-admin-2.js') }}"></script>
+
+
 
 </body>
 </html>

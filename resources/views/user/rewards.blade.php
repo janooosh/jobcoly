@@ -212,8 +212,8 @@
                     <div class="panel-body">
                         <p>
                             Gutscheine sind übertragbar, daher kannst du sie gerne auch an Freunde weitergeben! Mit einer von dir unterzeichneten Vollmacht kann die Gutscheine auch deine Freundin/dein Freund abholen. Zudem kannst du sie bei den Treffen auch in Eintrittskarten umtauschen lassen.<br />
-                            Ein Gutschein hat folgenden Wert: 1 Gutschein = Antialkoholisches Getränk (außer RedBull), Shot oder Klopfer; 2 Gutscheine = Bier (Helles/Radler/Alkoholfreies/Weißbier/Desperados), RedBull, 3 Gutscheine = Freie Auswahl (inkl. Longdrinks).
-                            Für eine Eintrittskarte am <b>Weiberfasching</b> (Donnerstag), <b>DER Studentenfasching</b> (Freitag) und <b>Scavenger Monday</b> (Montag) fallen 6 Gutscheine an. Für einen Eintritt am <b>Legendären Samstagsfasching</b> (Samstag) fallen 12 Gutscheine an.
+                            Ein Gutschein hat folgenden Wert: 1 Gutschein = Antialkoholisches Getränk (außer RedBull), Shot oder Klopfer; 2 Gutscheine = Longdrink oder Bier (Helles/Radler/Alkoholfreies/Weißbier/Desperados), RedBull, 3 Gutscheine = Cocktail.
+                            Für eine Eintrittskarte am <b>Weiberfasching</b> (Donnerstag), <b>DER Studentenfasching</b> (Freitag) und <b>Scavenger Monday</b> (Montag) fallen 3 Gutscheine an. Für einen Eintritt am <b>Legendären Samstagsfasching</b> (Samstag) fallen 6 Gutscheine an.
                             <br />
                             Die Gutscheine ersetzen zudem das bisher bekannte Streifenkartenmodell und können 1:1 im Nachhinein in den Betrieben eingesetzt werden.
                             Gutscheine kannst du dir an allen Veranstaltungstagen jeweils zwischen 18:00h - 19:00h in der Bierstube abholen. Zudem kannst du auch bereits am Mittwoch, 27.02.2019 zwischen 20:00h - 21:00h in der Bierstube vorbeikommen.
