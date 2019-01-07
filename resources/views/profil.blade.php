@@ -195,6 +195,8 @@ use Carbon\Carbon;
                         <option value="KULT" {{$user->ausschuss=='KULT' ? 'selected':''}}>Kult</option>
                         <option value="FTA" {{$user->ausschuss=='FTA'?'selected':''}}>Film & Theater</option>
                         <option value="GRAS" {{$user->ausschuss=='GRAS'?'selected':''}}>Gras</option>
+                        <option value="WA" {{$user->ausschuss=='WA' ? 'selected':''}}>Werkstattausschuss</option>
+                        
                         <option value="VA" {{$user->ausschuss=='VA' ? 'selected':''}}>Veranstaltungsausschuss</option>
                         <option value="MTA" {{$user->ausschuss=='MTA'?'selected':''}}>Miet - & Ausländerausschuss</option>
                         <option value="KOMITEE" {{$user->ausschuss=='KOMITEE' ? 'selected':''}}>Olympisches Komitee</option>
