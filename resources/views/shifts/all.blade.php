@@ -51,6 +51,7 @@ $(document).ready( function () {
 <div class="col-ld-10">
 
 <p>Es gibt {{count($shifts)}} Schicht(en) im System.</p>
+<p>Insgesamt haben wir{{ ShiftsController::countShiftsGlobal() }} Stunden.</p>
 <input type="text" class="form-control" id="searchShifts" oninput="searchTable('searchShifts','shiftTable')" placeholder="Schichten durchsuchen...."/>
 <br />
 <table class="table table-hover table-bordered" id="shiftTable">

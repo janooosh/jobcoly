@@ -471,4 +471,21 @@ class ShiftsController extends Controller
         return $shift->anzahl - $belegt;
     }
 
+    public static function countShiftsGlobal() {
+        $filter = ['status'=>'Aktiv'];
+        $shifts = Shift::where($filter)->get();
+
+        $duration = 0;
+        foreach($shifts as $shift) {
+            $duration += Carbon::parse($shift->starts_at)->diffInHours(Carbon::parse($shift->ends_at));
+        }
+
+        $duration = 0;
+        foreach($u->activeAssignments as $x) {
+            $duration += $shift->anzahl * Carbon::parse($x->shift->starts_at)->diffInHours(Carbon::parse($x->shift->ends_at));
+        }
+
+        return $duration;
+    }
+
 }
