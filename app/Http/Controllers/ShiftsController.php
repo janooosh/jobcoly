@@ -480,10 +480,6 @@ class ShiftsController extends Controller
             $duration += Carbon::parse($shift->starts_at)->diffInHours(Carbon::parse($shift->ends_at));
         }
 
-        $duration = 0;
-        foreach($u->activeAssignments as $x) {
-            $duration += $shift->anzahl * Carbon::parse($x->shift->starts_at)->diffInHours(Carbon::parse($x->shift->ends_at));
-        }
 
         return $duration;
     }
