@@ -265,7 +265,7 @@ use Carbon\Carbon;
                     <select name="shirtCut" id="shirtCut" class="form-control d-block w-100" required>
                         <option value="" {{$user->shirt_cut==''?'selected':''}} disabled>Bitte auswählen...</option>
                         <option value="M" {{$user->shirt_cut=='M' ? 'selected':''}}>Männlich</option>
-                        <option value="W" {{!$user->shirt_cut=='W' ? 'selected':''}}>Weiblich</option>
+                        <option value="W" {{$user->shirt_cut=='W' ? 'selected':''}}>Weiblich</option>
                     </select>
                 </div>
             </div>

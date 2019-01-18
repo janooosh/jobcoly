@@ -40,7 +40,7 @@ class CreateUsersTable extends Migration
             $table->boolean('is_disco')->default(0);
             $table->boolean('is_praside')->default(0);
             $table->boolean('is_pflichtschicht')->default(0);
-            $table->string('facebook')->nullable();
+            $table->string('facebook')->nullable(); //Wants T-Shirt
             $table->string('instagram')->nullable();
             $table->boolean('is_dauerjob')->default(0);
             $table->string('ausschuss')->nullable();
