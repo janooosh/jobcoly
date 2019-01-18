@@ -28,11 +28,30 @@ use Illuminate\Support\Facades\Auth;
     </div>
 </div>
 @endif
+<div class="row" style="padding-top: 10px;">
+    <div class="col-md-12">
+        <div class="alert alert-warning">
+            <p><b>Achtung, Wartunsarbeiten</b> - Um das neue Entlohnungsmodell zu implementieren, wird das Tool am Donnerstag, 24.01. nur eingeschränkt zur Verfügung stehen.</p>
+        </div>
+    </div>
+</div>
+
 <div class="row">
         <div class="col-lg-8">
             <h1 class="page-header">Willkommen, {{Auth::user()->firstname}}</h1>
         </div>
+</div>
+@if(!Auth::user()->facebook)
+<div class="row">
+    <div class="col-md-12">
+            <div class="row">
+                <div class="alert alert-info">
+                    <i class="fa fa-info-circle"></i> Bitte fülle die <b>T-Shirt</b> Umfrage bis zum 23.01.2019 aus. <a type="button" class="btn btn-default btn-sm" href="{{route('profil.shirtsurvey')}}">Zur Umfrage</a>
+                </div>
+            </div>
     </div>
+</div>
+@endif
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}

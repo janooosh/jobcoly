@@ -262,7 +262,7 @@ use Carbon\Carbon;
                     <b>T-Shirt Schnitt</b>
                 </div>
                 <div class="col-xs-6">
-                    <select name="shirtCut" id="shirtCut" class="form-control d-block w-100" required>
+                    <select name="shirtCut" id="shirtCut" class="form-control d-block w-100" disabled required>
                         <option value="" {{$user->shirt_cut==''?'selected':''}} disabled>Bitte auswählen...</option>
                         <option value="M" {{$user->shirt_cut=='M' ? 'selected':''}}>Männlich</option>
                         <option value="W" {{$user->shirt_cut=='W' ? 'selected':''}}>Weiblich</option>
@@ -274,9 +274,9 @@ use Carbon\Carbon;
                     <b>T-Shirt Größe</b>
                 </div>
                 <div class="col-xs-6">
-                    <select name="shirtSize" id="shirtSize" class="form-control d-block w-100" required>
+                    <select name="shirtSize" id="shirtSize" class="form-control d-block w-100" disabled required>
                         <option value="" {{$user->shirt_size==''?'selected':''}} disabled>Bitte auswählen...</option>
-                        <option value="XS" {{$user->shirt_size=='XS' ? 'selected':''}}>XS</option>
+                        <option value="XS" {{$user->shirt_size=='XS' ? 'selected':''}}>S</option>
                         <option value="S" {{$user->shirt_size=='S' ? 'selected':''}}>S</option>
                         <option value="M" {{$user->shirt_size=='M' ? 'selected':''}}>M</option>
                         <option value="L" {{$user->shirt_size=='L' ? 'selected':''}}>L</option>

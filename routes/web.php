@@ -32,6 +32,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/profil', 'HomeController@profil')->name('profil');
 Route::post('/profil','BenutzerController@updateProfile')->name('profil.update');
 
+Route::get('shirt-umfrage','BenutzerController@shirtSurveyDisplay')->name('profil.shirtsurvey');
+Route::post('shirt-umfrage','BenutzerController@shirtSurveyPost')->name('shirtSurvey.save');
+
+
 Route::get('shifts/{id}/destroy','ShiftsController@destroy');
 Route::get('shifts/admin','ShiftsController@showAll')->name('shifts.all');
 Route::resource('shifts','ShiftsController');

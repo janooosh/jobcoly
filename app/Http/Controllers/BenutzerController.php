@@ -17,6 +17,48 @@ class BenutzerController extends Controller
     }
 
     /**
+     * Displays shirt survey
+     */
+    public function shirtSurveyDisplay() {
+        //Get current user
+        $user = Auth::user();
+        //Already filled out survey? (is facebook column, didnt know how to rename)
+        if($user->facebook) {
+            return redirect('home')->with('warning','Du hast die Umfrage bereits ausgefüllt.');
+        }
+        //Return survey
+        return view('specials.shirtsurvey',compact('user'));
+    }
+
+    /**
+     * Update shirt
+     */
+    public function shirtSurveyPost(Request $request) {
+        //Validate
+
+        $request->validate([
+            'shirtCut' => 'required|in:M,W',
+            'shirtSize' => 'required|in:S,M,L,XL,xx',
+            'shirtDes' => 'required|boolean'
+        ]);
+
+        $user = Auth::user();
+        $user->shirt_cut = $request->get('shirtCut');
+        $user->shirt_size = $request->get('shirtSize');
+        $willShirt = "";
+        if($request->get('shirtDes')==1) {
+            $willShirt = "ja";
+        }
+        else {
+            $willShirt = "nein";
+        }
+        $user->facebook = $willShirt;
+
+        $user->save();
+        return redirect('home')->with('success','T-Shirt Gespeichert!');
+    }
+
+    /**
      * Update profile
      */
     public function updateProfile(Request $request) {
@@ -37,7 +79,7 @@ class BenutzerController extends Controller
             'aboutyou'=>'max:500',
             'shirtCut'=>'in:M,W',
             'shirtSize'=>'in:XS,S,M,L,XL,xx',
-            'ausschuss'=>'in:CTA,FOTO,KULT,FTA,GRAS,VA,MTA,KOMITEE,FA,TA,KICKER'
+            'ausschuss'=>'in:CTA,WA,FOTO,KULT,FTA,GRAS,VA,MTA,KOMITEE,FA,TA,KICKER'
         ]);
 
         //Update User in DB
@@ -57,8 +99,8 @@ class BenutzerController extends Controller
         $user->semester=$request->get('semester');
         $user->studiengang=$request->get('studiengang');
         $user->about_you=$request->get('aboutyou');
-        $user->shirt_cut=$request->get('shirtCut');
-        $user->shirt_size=$request->get('shirtSize');
+        //$user->shirt_cut=$request->get('shirtCut');
+        //$user->shirt_size=$request->get('shirtSize');
         $user->has_gesundheitszeugnis=$request->get('gesundheitszeugnis');
         
         $user->save();

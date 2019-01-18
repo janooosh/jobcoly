@@ -40,7 +40,7 @@ class CreateUsersTable extends Migration
             $table->boolean('is_disco')->default(0);
             $table->boolean('is_praside')->default(0);
             $table->boolean('is_pflichtschicht')->default(0);
-            $table->string('facebook')->nullable(); //Wants T-Shirt
+            $table->string('facebook')->nullable();
             $table->string('instagram')->nullable();
             $table->boolean('is_dauerjob')->default(0);
             $table->string('ausschuss')->nullable();
@@ -52,7 +52,7 @@ class CreateUsersTable extends Migration
             $table->string('about_you')->nullable();
             $table->boolean('has_gesundheitszeugnis')->nullable();
             $table->integer('gutscheine')->default(0);
-            $table->boolean('has_shirt')->default(0);
+            $table->boolean('has_shirt')->default(0); //Wants T-Shirt
             $table->boolean('is_admin')->default(0);
             $table->boolean('is_vegetarian')->nullable();
 
