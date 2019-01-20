@@ -3,6 +3,32 @@
 @section('content')
 
 <script src="{{ asset('js/evaluations.js')}}"></script>
+
+{{-- Message --}}
+@if($message = Session::get('success')) 
+<div class="row">
+    <div class="alert alert-success">
+        {{$message}}
+    </div>
+</div>
+@endif
+
+@if($message = Session::get('danger')) 
+<div class="row">
+    <div class="alert alert-danger">
+        {{$message}}
+    </div>
+</div>
+@endif
+
+@if($message = Session::get('warning')) 
+<div class="row">
+    <div class="alert alert-warning">
+        {{$message}}
+    </div>
+</div>
+@endif
+
 {{-- Headline --}}
 <div class="row">
     <div class="col-lg-8">
