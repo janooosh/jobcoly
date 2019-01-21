@@ -51,7 +51,8 @@ use Illuminate\Support\Facades\Auth;
             </div>
     </div>
 </div>
-@else
+@endif
+@if(Auth::user()->facebook)
 <div class="row">
     <div class="col-md-12">
             <div class="row">
