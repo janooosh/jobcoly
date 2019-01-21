@@ -22,10 +22,10 @@ class BenutzerController extends Controller
     public function shirtSurveyDisplay() {
         //Get current user
         $user = Auth::user();
-        //Already filled out survey? (is facebook column, didnt know how to rename)
+        /*//Already filled out survey? (is facebook column, didnt know how to rename)
         if($user->facebook) {
             return redirect('home')->with('warning','Du hast die Umfrage bereits ausgefüllt.');
-        }
+        }*/
         //Return survey
         return view('specials.shirtsurvey',compact('user'));
     }

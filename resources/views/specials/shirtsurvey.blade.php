@@ -74,9 +74,9 @@
     <div class="col-md-4" style="padding-bottom: 10px;">
         <label for="shirtDes">Möchtest du dein T-Shirt behalten? *</label>
         <select class="form-control" name="shirtDes" id="shirtDes" required>
-            <option value="" selected disabled>Bitte auswählen...</option>
-            <option value="1">Ja</option>
-            <option value="0">Nein</option> 
+            <option value="" {{$user->facebook == ''?'selected':''}} disabled>Bitte auswählen...</option>
+            <option value="1" {{$user->facebook=='ja'?'selected':''}}>Ja</option>
+            <option value="0" {{$user->facebook=='nein'?'selected':''}}>Nein</option> 
         </select>
     </div>
 </div>
