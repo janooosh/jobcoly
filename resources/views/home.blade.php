@@ -51,6 +51,16 @@ use Illuminate\Support\Facades\Auth;
             </div>
     </div>
 </div>
+@else
+<div class="row">
+    <div class="col-md-12">
+            <div class="row">
+                <div class="alert alert-success">
+                    <i class="fa fa-info-circle"></i> Umfrage bereits gespeichert. Änderungen sind bis Mittwoch, 23.01. möglich. <a type="button" class="btn btn-default btn-sm" href="{{route('profil.shirtsurvey')}}">Zur Umfrage</a>
+                </div>
+            </div>
+    </div>
+</div>
 @endif
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
