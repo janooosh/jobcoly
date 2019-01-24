@@ -4,7 +4,7 @@
 <div class="row">
     <div class="alert alert-info">
        <b>Wartungsarbeiten</b><br />
-       Wie angekündigt, finden heute, am Donnerstag, 24.01., Wartungsarbeiten statt. Das Tool steht ab Freitag, 25.1., 08:00h, wieder zur Verfügung. <b r/>
+       Wie angekündigt, finden heute, am Donnerstag, 24.01, ein paar Wartungsarbeiten statt. Das Tool steht ab Freitag, 25.1., 08:00h, wieder zur Verfügung. <b r/>
 
     </div>
     
