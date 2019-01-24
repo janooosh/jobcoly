@@ -30,7 +30,15 @@ class CreateShiftsTable extends Migration
             $table->boolean('confirmed')->nullable();
             $table->boolean('pflicht')->default(1); // Kann als Pflichtschicht angerechnet werden? Default: true
         });
+
+        Schema::table('shifts', function(Blueprint $table) {
+            $table->integer('p')->nullable(); //Nach wie vielen Stunden AWE?
+        });
+    
     }
+
+
+
 
     /**
      * Reverse the migrations.
