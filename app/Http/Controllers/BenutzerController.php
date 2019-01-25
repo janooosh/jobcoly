@@ -361,4 +361,19 @@ class BenutzerController extends Controller
         $gutscheine = round($gutscheine);
         return $gutscheine;
     }
+
+    //Neue Rewards
+    public function rewarder() {
+        //Bestätigung ausstehend
+        $ausstehend = array();
+
+        //Bestätigt
+        $confirmed = array();
+
+        //Transaktionen
+        $transactions = array();
+
+        //RETURN
+        return view('user.rewards2',compact('ausstehend','confirmed','transactions'));
+    }
 }

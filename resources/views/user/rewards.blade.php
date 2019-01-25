@@ -28,13 +28,6 @@
 </div>
 @endif
 
-<div class="row" style="padding-top: 10px;">
-        <div class="col-md-12">
-            <div class="alert alert-warning">
-                <p><b>Achtung, Wartunsarbeiten</b> - Um das neue Entlohnungsmodell zu implementieren, wird das Tool am Donnerstag, 24.01. nur eingeschränkt zur Verfügung stehen.</p>
-            </div>
-        </div>
-    </div>
 
 <div class="row">
     <div class="col-md-12">

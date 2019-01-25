@@ -13,7 +13,7 @@
     
 </div>
 
-{{--
+<!--
 <form class="form-signin" method="POST" action="{{ route('login') }}">
 @csrf    
     <img class="mb-4" src="{{ asset('img/ananas.png') }}" alt="" width="100" height="auto">
@@ -48,5 +48,6 @@
         <a class="btn btn-primary btn-lg btn-block" href="{{ route('register') }}">{{ __('Neu hier?') }}</a></p>
         <p class="mt-3 mb-5 text-muted">&copy; 2018 | Studenten im Olympiazentrum e.V. <br /> <a href="{{route('impressum')}}" target="_blank">Impressum</a> | <a href="{{route('datenschutz')}}" target="_blank">Datenschutz</a></p>
 </form>
---}}
+-->
+
 @endsection
