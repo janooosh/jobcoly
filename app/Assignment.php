@@ -16,4 +16,8 @@ class Assignment extends Model
     public function user() {
         return $this->belongsTo('App\User');
     }
+
+    public function salarygroup() {
+        return $this->belongsTo('App\Salarygroup');
+    }
 }

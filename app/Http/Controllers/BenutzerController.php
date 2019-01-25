@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Assignment;
+use App\Salarygroup;
 use Carbon\Carbon;
 
 class BenutzerController extends Controller
@@ -362,18 +363,92 @@ class BenutzerController extends Controller
         return $gutscheine;
     }
 
-    //Neue Rewards
-    public function rewarder() {
-        //Bestätigung ausstehend
-        $ausstehend = array();
+//Neue Rewards
+public function rewarder() {
+    //All Assignments
+        $filter = ['user_id'=>Auth::user()->id,'status'=>'Aktiv'];
+        $assignments = Assignment::where($filter)->get();
 
-        //Bestätigt
-        $confirmed = array();
+    //Bestätigt? Fülle beide Arrays
+        $ausstehend = array(); //Array of Assignments
+        $confirmed = array(); //Array of Assignments
+        foreach($assignments as $a) {
+            if($a->shift->confirmed) {
+                $confirmed[] = $a;
+            }
+            else {
+                $ausstehend[] = $a;
+            }
+        }
 
-        //Transaktionen
-        $transactions = array();
+    //Berechnungen für Ausstehend
+        $ausstehend_gutscheine = 0;
+        foreach($ausstehend as $a) {
+            $a->date = Carbon::parse($a->shift->starts_at)->format('D d.m.');
+            $a->start = Carbon::parse($a->shift->starts_at)->format('H:i');
+            $a->end = Carbon::parse($a->shift->ends_at)->format('H:i');
+            $a->dauer = Carbon::parse($a->shift->starts_at)->diff(Carbon::parse($a->shift->ends_at))->format('%H:%I');
+            $a->gutscheine = $a->shift->gutscheine;
+            $a->awe = $a->shift->awe;
+            $a->faktor = Carbon::parse($a->dauer)->format('H') + Carbon::parse($a->dauer)->format('i')/60;
+            $a->gutscheine_summe = number_format($a->gutscheine*$a->faktor,2);
+            $ausstehend_gutscheine += $a->gutscheine_summe;
+        }
+    
+    //Berechnungen für Bestätigt
+        $zero = Carbon::createFromTimestamp(0);
+        $t_max = 0; //In Minutes
 
-        //RETURN
-        return view('user.rewards2',compact('ausstehend','confirmed','transactions'));
-    }
+        //Get Salarygroups
+        $salarygroups = array(); //Array of Salarygroup OBJECTS
+
+        foreach($confirmed as $c) {
+            if($c->salarygroup_id) {
+                $salarygroup = Salarygroup::find($c->salarygroup_id);
+                if(!in_array($salarygroup,$salarygroups)) {
+                    $salarygroups[] = $salarygroup;
+                }
+            }
+        }
+
+        //Do calculations for each
+            $salarygroup_number = 0;
+        foreach($salarygroups as $s) {
+            //Number (Col 1)
+            $s->number = ++$salarygroup_number;
+
+            //HTML List
+            /*$s->shifts = array();
+            foreach($s->assignments as $a) {
+                $s->shifts[] = $a->shift;
+            }*/
+
+            //t (Verfügbare Zeit zum Aufteilen)
+            $s->t = AssignmentsController::getDurationInMinutesOfAssignments($s->assignments);
+            $s->t_max_readable = date('H:i',mktime(0,$s->t));
+            $t_max += $s->t;
+
+        }
+
+        /*
+        $salarygroups_ids = SalarygroupsController::findSalaryGroups(Auth::user()->id);
+        $salarygroups = array(); //Wird returnt, enthält Salarygroup Objekte
+        $sid_counter=0;
+        foreach($salarygroups_ids as $s) {
+            $salarygroup = Salarygroup::find($s);
+            
+            $salarygroup->i = ++$sid_counter;
+
+            //t calculator
+            $salarygroup->t = AssignmentsController::getDurationInMinutesOfAssignments($salarygroup->assignments);
+        } */
+
+        //Readable Time
+        //$t_max_readable = $zero->diffInHours($t_max) . ':' . $zero->diff($t_max)->format('%H:%i');
+    //Transaktionen
+    $transactions = array();
+
+    //RETURN
+    return view('user.rewards2',compact('ausstehend','ausstehend_gutscheine','salarygroups','t_max','confirmed','transactions','assignments'));
+}
 }

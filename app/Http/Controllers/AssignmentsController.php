@@ -243,4 +243,24 @@ class AssignmentsController extends Controller
         }
         else return 3;
     }
+
+    /**
+     * Calculates the duration of the assignment in minutes & returns it as integer
+     */
+    public static function getDurationInMinutes($assignment) {
+        //$assignment = Assignment::find($aid);
+        $duration = Carbon::parse($assignment->start)->diffInMinutes(Carbon::parse($assignment->end));
+        return $duration;
+    }
+
+    /**
+     * Adds up the individual durations of each assignment included in the assignments array (of objects) and returns it
+     */
+    public static function getDurationInMinutesOfAssignments($assignments) {
+        $minutes = 0;
+        foreach($assignments as $a) {
+            $minutes += AssignmentsController::getDurationInMinutes($a);
+        }
+        return $minutes;
+    }
 }

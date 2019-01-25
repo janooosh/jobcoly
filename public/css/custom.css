@@ -22,3 +22,8 @@
     border-radius: 4px;
     border: 1px solid #ddd;
 }
+
+.linie_t
+{
+     border-left:3px solid #aaa!important;
+}

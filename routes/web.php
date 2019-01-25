@@ -72,7 +72,7 @@ Route::post('supervisor/team/save/{id}','SupervisorController@save')->name('supe
 Route::post('supervisor/team/close/{id}','SupervisorController@close')->name('supervisor.close');
 //MANAGE APPLICATIONS
 
-Route::get('rewards','BenutzerController@rewards')->name('rewards');
+Route::get('rewards','BenutzerController@rewarder')->name('rewards');
 /* Application routes */
 
 Route::post('privileges/update','PrivilegeController@update')->name('privilege.update');
