@@ -4,7 +4,8 @@
 <div class="row">
     <div class="alert alert-info">
        <b>Wartungsarbeiten</b><br />
-       Bitte entschuldigt die Verzögerung. Aktuell wird das neue Entlohnungsmodell implementiert. Ab Sonntag, 27.01. ist das Tool wieder erreichbar.
+       Bitte entschuldigt die Verzögerung. Aktuell wird das neue Entlohnungsmodell implementiert. Ab Sonntag, 27.01. ist das Tool wieder erreichbar. <br />
+       Bei Fragen stehen euch Katja und Nina unter crew@olylust.de jederzeit zur Verfügung.
     </div>
     
 </div>
