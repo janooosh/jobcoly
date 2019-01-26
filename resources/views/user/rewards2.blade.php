@@ -7,6 +7,7 @@ use Carbon\Carbon;
 @section('content')
 <script src="{{ asset('js/evaluations.js')}}"></script>
 
+
 {{-- Messages --}}
 @if($message = Session::get('success')) 
 <div class="row">
@@ -117,8 +118,8 @@ use Carbon\Carbon;
     </div>
 </div>
 <div class="row">
-    <div class="col-md-12">
-
+    <div class="col-md-6">
+        <p>Alle Stunden: <b><span id='ttotal'>{{$t_total}}</span></b> || Offene Stunden: <b><span id='tmaxcontainer'>{{$t_max_readable}}</span></b>, Vergebene Stunden: <b><span id='tvergebencontainer'>{{$t_vergeben_readable}}</span></b></p>
     </div>
 </div>
 <div class="row">
@@ -129,63 +130,103 @@ use Carbon\Carbon;
                     <th scope="col">ID</th>
                     <th scope="col">Schicht(en)</th>
                     <th scope="col">Zeit</th>
+                    <th scope="col">Verfügbar</th>
                     <th scope="col">Gutscheine</th>
                     <th scope="col">AWE</th>
                     <th scope="col">AWE ab... [h]</th>
+                    <th scope="col">#Gutscheine</th>
+                    <th scope="col">#AWE</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($salarygroups as $s)
-                <tr>
+                <tr name='slg' id='slg{{$s->number}}'>
                     <td>{{$s->id}}</td>
                     <td>
                         <ul class="list-group">
                             @foreach($s->assignments as $a)
+                            @if($a->shift->confirmed)
                                 <li class="list-group-item">
                                     <b>{{$a->shift->job->short}}</b> <small>{{$a->shift->shiftgroup->name}}, {{Carbon::parse($a->start)->format('H:i').'-'.Carbon::parse($a->end)->format('H:i')}}</small>
                                 </li>
+                            @endif
                             @endforeach
                             </ul>
                     </td>
-                    <td>{{$s->t_max_readable}}</td>
-                    <td><input type='time' class='form-control'/> * {{$s->g}} Gutscheine / h</td>
-                    <td><input type='time' class='form-control'/> * {{$s->a}} € / h</td>
-                    <td>{{$s->p}}</td>
+                    <td><span id='tma{{$s->number}}' name='tma'>{{$s->t_max_readable}}</span></td>
+                    <td><span id='tve{{$s->number}}' name='tve'>{{$s->t_verfuegbar}}</span></td>
+                    <td><input id='gut{{$s->number}}' name='gut' type='time' class='form-control' value='{{$s->t_g_nice}}'/> * <span id='seg{{$s->number}}'>{{$s->g}}</span> Gutscheine / h</td>
+                    <td><input id='awe{{$s->number}}' name='awe' type='time' class='form-control' value='{{$s->t_a_nice}}' {{$s->awe_available ? '':'disabled'}}/> * <span id='sea{{$s->number}}'>{{$s->a}}</span> € / h</td>
+                    <td><span id='pfl{{$s->number}}' name='pfl'>{{$s->p}}</span></td>
+                    
+                    
+                    <td><span id='azg{{$s->number}}' name='azg'>{{$s->azg}}</span></td>
+                    <td><span id='aza{{$s->number}}' name='aza'>{{$s->aza}} €</span></td>
+ 
                 </tr>
                 @endforeach
             </tbody>
+            <tfoot>
+                <tr style="border-top: solid 2px #aaa;">
+                    <td colspan="7" style="text-align:right;"><b>Σ Summe</b></td>
+                    <td><b>{{$g_sum_rounded}}</b></td>
+                    <td><b>{{$a_sum_rounded}} €</b></td>
+                </tr>
+            </tfoot>
             
         </table>
-
-        
-        Zusammengerechnete Zeiten: {{$t_max}}
-        @foreach($salarygroups as $s)
-        <br />
-        {{$s->id.' hat vong Zeit: '.$s->t}}<br />
-        @endforeach
+        <p><small>Es können Rundungsfehler in Höhe von 0,01 € oder 0,01 Gutscheinen auftreten. Nachdem du die jeweilige Gruppe gespeichert hast, wird mit den genauen Werten gerechnet. Bitte kontaktiere uns unter crew@olylust.de, falls etwas deiner Meinung nach nicht stimmt.</small></p>
     </div>
 </div>
 
 
 @endif {{-- Ende Bestätigte --}}
 
+{{-- Transaktionen --}}
+@if(count($transactions)>0)
+<div class="row">
+    <div class="col-md-12">
+        <h4>{{count($transactions)}} Ausgaben</h4>
+        <p>Bisher hast du Folgendes erhalten:</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr style="background-color:#eee;">
+                    <th scope="col">ID</th>
+                    <th scope="col">Beschreibung</th>
+                    <th scope="col">Ausgabe am...</th>
+                    <th scope="col">Gutscheine</th>
+                </tr>
+            </thead>
+            @foreach($transactions as $t)
+                <tr>
+                    <td>{{$t->id}}</td>
+                    <td>{{$t->beschreibung_short==''? '-':$t->beschreibung_short}}</td>
+                    <td>{{$t->datetime}}</td>
+                    <td>{{$t->amount}}</td>
+                </tr>
+            @endforeach
+            <tbody>
+            <tfoot>
+                <tr style="border-top: solid 2px #aaa;">
+                    <td colspan="3" style="text-align:right;"><b>Σ Summe</b></td>
+                    <td><b>{{$gutscheine_erhalten_sum}}</b></td>
+                </tr>
+            </tfoot>
+            </tbody>
+        </table>
+    </div>
+</div> {{-- Ende Transatktionen --}}
+@else
+Keine Transaktionen.
+@endif
+
 <br />
 @endif
 
-<script>
-    function fromMinToString(min) {
-        var h = min/60;
-        var m = min%60;
 
-        if(h.toString().length==1) {
-            h = '0'+h;
-        }
-        if(m.toString().length==1) {
-            m = '0'+m;
-        }
-        var ret = h+':'+m;
-        return ret;
-    }
-</script>
-
+<script src="{{asset('js/rewards.js')}}"></script>
 @endsection

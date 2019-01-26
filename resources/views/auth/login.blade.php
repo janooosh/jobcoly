@@ -4,7 +4,7 @@
 <div class="row">
     <div class="alert alert-info">
        <b>Wartungsarbeiten</b><br />
-       Voraussichtliches Ende: Freitag, 25.01., 16:00h
+       Bitte entschuldigt die Verzögerung. Aktuell wird das neue Entlohnungsmodell implementiert. Ab Sonntag, 27.01. ist das Tool wieder erreichbar.
     </div>
     
 </div>
@@ -48,5 +48,6 @@
         <p class="mt-3 mb-5 text-muted">&copy; 2018 | Studenten im Olympiazentrum e.V. <br /> <a href="{{route('impressum')}}" target="_blank">Impressum</a> | <a href="{{route('datenschutz')}}" target="_blank">Datenschutz</a></p>
 </form>
 --}}
+
 
 @endsection

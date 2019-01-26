@@ -31,5 +31,28 @@ class SalarygroupsController extends Controller
         return $salarygroups;
     }
 
+    /**
+     * Gets the amount of time in given salarygroups that a worker spends on gutscheine.
+     * return in minutes
+     */
+    public static function countAttemptGutscheine($salarygroups) {
+        $out = 0;
+        foreach($salarygroups as $s) {
+            $out+=$s->t_g;
+        }
+        return $out;
+    }
+
+    /**
+     * gets the lowest p (Awe ab...) from a given set of salarygroups
+     */
+    public static function getLowestp($salarygroups) {
+        $ps = array();
+        foreach($salarygroups as $s) {
+            $ps[]=$s->p;
+        }
+        return min($ps)*60; //Return in Minuten
+    }
+
 
 }
