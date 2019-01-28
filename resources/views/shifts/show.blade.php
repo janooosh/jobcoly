@@ -265,6 +265,14 @@ use Illuminate\Support\Facades\Auth;
                     {{$shift->awe}} € / Stunde
                 </div>
             </div>
+            <div class="row">
+                <div class="col-xs-6">
+                    <b>AWE nach</b>
+                </div>
+                <div class="col-xs-6">
+                    {{$shift->p}} Stunden
+                </div>
+            </div>
             @endif
             <hr />
             <div class="row">
