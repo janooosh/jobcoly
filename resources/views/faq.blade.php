@@ -134,10 +134,10 @@ use Illuminate\Support\Facades\Auth;
           <div class="panel panel-default">
               <div class="panel-heading">
                 <h4 class="panel-title">
-                  <a data-toggle="collapse" href="#faq3">AWE?</a>
+                  <a data-toggle="collapse" href="#faq99">AWE?</a>
                 </h4>
               </div>
-              <div id="faq3" class="panel-collapse collapse">
+              <div id="faq99" class="panel-collapse collapse">
                 <div class="panel-body">Du kannst eine Aufwandsentschädigung (AWE) für deine Tätigkeit erhalten, i.d.r 7€/h nach 16 Stunden Tätigkeit. Genauere Infos findest du unter 'Rewards'.</div>
               </div>
             </div>
