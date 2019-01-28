@@ -18,6 +18,213 @@ class BenutzerController extends Controller
         $this->middleware(['auth', 'verified']);
     }
 
+
+
+/**
+ * Save Rewards
+ * Zentrale Stelle um Eingaben zu SPEICHERN oder ABZUSCHLIESSEN
+ * Wird über das Formular auf Rewards getriggert.
+ */
+public function saveRewards(Request $request) {
+    //Get Data
+        $g_fields = $request->get('gut');
+        $a_fields = $request->get('awe');
+        if(empty($g_fields)) {
+            $g_fields = [];
+        }
+        if(empty($a_fields)) {
+            $a_fields = [];
+        }
+        $si_fields = $request->get('salgroupid'); //Salarygroup-ID
+        $aktion = $request->get('saver')[0];
+
+        /**
+         * 1.) Gesamtzeit ausgegeben <= Gesamtzeit verfügbar
+         * 2.) PRO REIHE:
+         *  a) Zeit ausgegeben für Reihe <= Zeit verfügbar für Reihe
+         *  b) if(AWE): Gesamtzeit ausgegeben > Pflicht der Reihe
+         * 3.) if(Pflichtschicht): Gutscheinzeit >= 8h
+         */
+
+         //WERTE
+            //Gesamtzeit verfügbar [MINUTEN]
+            $t_gesamt_available = 0;
+
+            //Gesamtzeit ausgegeben [MINUTEN] && Gutscheinzeit [MINUTEN]
+            $t_g = 0;
+            $t_a = 0;
+            foreach($g_fields as $g) {
+                $t_g+=SalarygroupsController::StringToMin($g);
+            }
+            foreach($a_fields as $a) {
+                $t_a+=SalarygroupsController::StringToMin($a);
+            }
+            $t_gesamt_spent = $t_g + $t_a;
+            
+            $counter=0;
+            foreach($si_fields as $si) {
+                $salarygroup = Salarygroup::find($si);
+                $salarygroup->available += AssignmentsController::getDurationInMinutesOfConfirmedAssignments($salarygroup->assignments);
+                $t_gesamt_available += $salarygroup->available;
+
+                
+            }
+
+            //1.) Gesamtzeit ausgegeben <= Gesamtzeit verfügbar?
+            if($t_gesamt_spent>$t_gesamt_available) {
+                return redirect('rewards/')->with('danger','Du hast zu viel Zeit verteilt.');
+            }
+
+            
+
+
+            return $t_gesamt_spent;
+            
+
+
+
+        if($t_a>0&&$t_g<480) {
+            return redirect('rewards/')->with('danger','Mind. 8 Gutscheinstunden erforderlich.');
+        }
+
+            
+            
+            foreach($si_fields as $si) {
+
+            }
+            
+
+    
+        //return $request->input();
+
+    //Decide weather save or submit
+
+    //Perform action
+}   
+
+//Neue Rewards
+public static function rewarder() {
+    //All Assignments
+        $filter = ['user_id'=>Auth::user()->id,'status'=>'Aktiv'];
+        $assignments = Assignment::where($filter)->orderBy('salarygroup_id')->get();
+
+    //Bestätigt? Fülle beide Arrays
+        $ausstehend = array(); //Array of Assignments
+        $confirmed = array(); //Array of Assignments
+        foreach($assignments as $a) {
+            if($a->shift->confirmed) {
+                $confirmed[] = $a;
+            }
+            else {
+                $ausstehend[] = $a;
+            }
+        }
+
+    //Berechnungen für Ausstehend
+        $ausstehend_gutscheine = 0;
+        foreach($ausstehend as $a) {
+            $a->date = Carbon::parse($a->shift->starts_at)->format('D d.m.');
+            $a->start = Carbon::parse($a->shift->starts_at)->format('H:i');
+            $a->end = Carbon::parse($a->shift->ends_at)->format('H:i');
+            $a->dauer = Carbon::parse($a->shift->starts_at)->diff(Carbon::parse($a->shift->ends_at))->format('%H:%I');
+            $a->gutscheine = $a->shift->gutscheine;
+            $a->awe = $a->shift->awe;
+            $a->faktor = Carbon::parse($a->dauer)->format('H') + Carbon::parse($a->dauer)->format('i')/60;
+            $a->gutscheine_summe = number_format($a->gutscheine*$a->faktor,2);
+            $ausstehend_gutscheine += $a->gutscheine_summe;
+        }
+    
+    //Berechnungen für Bestätigt
+        $zero = Carbon::createFromTimestamp(0);
+        $t_max = 0; //In Minutes
+        $t_vergeben = 0; //Vergebene Zeit
+        $t_total = 0;
+
+        $g_sum = 0; //Gutschein Summe
+        $a_sum = 0; //AWE Summe
+
+        //Get Salarygroups
+        $salarygroups = array(); //Array of Salarygroup OBJECTS
+
+        foreach($confirmed as $c) {
+            if($c->salarygroup_id) {
+                $salarygroup = Salarygroup::find($c->salarygroup_id);
+                if(!in_array($salarygroup,$salarygroups)) {
+                    $salarygroups[] = $salarygroup;
+                }
+            }
+        }
+
+        //Do calculations for each
+        $salarygroup_number = 0;
+        foreach($salarygroups as $s) {
+            //Number (Col 1)
+            $s->number = ++$salarygroup_number;
+
+            //t (Verfügbare Zeit zum Aufteilen)
+            $s->t = AssignmentsController::getDurationInMinutesOfConfirmedAssignments($s->assignments);
+            $s->t_max_readable = date('H:i',mktime(0,$s->t));
+            //print_r($s->t_max_readable);
+            $t_total += $s->t;
+            $s->t_vergeben = $s->t_a + $s->t_g;
+            $t_max += $s->t - $s->t_vergeben;
+            $t_vergeben += $s->t_vergeben;
+
+            $s->t_verfuegbar = $s->t - $s->t_vergeben;
+            $s->t_verfuegbar = date('H:i',mktime(0,$s->t_verfuegbar));
+            
+            $s->t_vergeben = date('H:i',mktime(0,$s->t_vergeben));
+
+            //Gutscheine & AWE
+            $gutschein_faktor = $s->t_g/60;
+            $s->azg = number_format($gutschein_faktor * $s->g,2);
+            $g_sum += $s->azg;
+
+            $awe_faktor = $s->t_a/60;
+            $s->aza = number_format($awe_faktor * $s->a,2);
+            $a_sum += $s->aza;
+
+            //Felder Verteilung G/AWE
+            $s->t_g_nice = date('H:i',mktime(0,$s->t_g));
+            $s->t_a_nice = date('H:i',mktime(0,$s->t_a));
+            
+            $s->awe_available = false;
+            //return SalarygroupsController::countAttemptGutscheine($salarygroups);
+            if($t_vergeben>=$s->p*60 && $s->t_g<$s->t && SalarygroupsController::countAttemptGutscheine($salarygroups)>=SalarygroupsController::getLowestp($salarygroups) ) {
+                $s->awe_available=true;
+            }
+
+            $g_sum_rounded = round($g_sum);
+            $a_sum_rounded = number_format(round($a_sum,2),2,',','.');
+
+        }
+
+        //Generate nice reading of tmax
+        $t_max_readable = date('H:i',mktime(0,$t_max));
+        $t_vergeben_readable = date('H:i',mktime(0,$t_vergeben));
+        $t_total = date('H:i',mktime(0,$t_total));
+        
+
+        //Transaktionen
+        $transaction_filter = ['user_id'=>Auth::user()->id];
+        $transactions = Transaction::where($transaction_filter)->get();
+        $gutscheine_erhalten_sum = 0;
+        foreach($transactions as $t) {
+            $t->datetime = Carbon::parse($t->datetime)->format('d.m. H:i');
+            $gutscheine_erhalten_sum += $t->amount;
+        }
+        //return null;
+
+
+    //RETURN
+    return view('user.rewards2',compact('ausstehend','ausstehend_gutscheine','salarygroups','t_total','t_max','t_max_readable','t_vergeben_readable','confirmed','transactions','assignments','gutscheine_erhalten_sum','g_sum','a_sum','g_sum_rounded','a_sum_rounded'))->with('danger','so ebbes');
+}
+
+
+/**
+ * AB HIER: ALTES MODELL - NICHT MEHR RELEVANT
+ */
+
     /**
      * Displays shirt survey
      */
@@ -364,120 +571,4 @@ class BenutzerController extends Controller
         return $gutscheine;
     }
 
-//Neue Rewards
-public function rewarder() {
-    //All Assignments
-        $filter = ['user_id'=>Auth::user()->id,'status'=>'Aktiv'];
-        $assignments = Assignment::where($filter)->get();
-
-    //Bestätigt? Fülle beide Arrays
-        $ausstehend = array(); //Array of Assignments
-        $confirmed = array(); //Array of Assignments
-        foreach($assignments as $a) {
-            if($a->shift->confirmed) {
-                $confirmed[] = $a;
-            }
-            else {
-                $ausstehend[] = $a;
-            }
-        }
-
-    //Berechnungen für Ausstehend
-        $ausstehend_gutscheine = 0;
-        foreach($ausstehend as $a) {
-            $a->date = Carbon::parse($a->shift->starts_at)->format('D d.m.');
-            $a->start = Carbon::parse($a->shift->starts_at)->format('H:i');
-            $a->end = Carbon::parse($a->shift->ends_at)->format('H:i');
-            $a->dauer = Carbon::parse($a->shift->starts_at)->diff(Carbon::parse($a->shift->ends_at))->format('%H:%I');
-            $a->gutscheine = $a->shift->gutscheine;
-            $a->awe = $a->shift->awe;
-            $a->faktor = Carbon::parse($a->dauer)->format('H') + Carbon::parse($a->dauer)->format('i')/60;
-            $a->gutscheine_summe = number_format($a->gutscheine*$a->faktor,2);
-            $ausstehend_gutscheine += $a->gutscheine_summe;
-        }
-    
-    //Berechnungen für Bestätigt
-        $zero = Carbon::createFromTimestamp(0);
-        $t_max = 0; //In Minutes
-        $t_vergeben = 0; //Vergebene Zeit
-        $t_total = 0;
-
-        $g_sum = 0; //Gutschein Summe
-        $a_sum = 0; //AWE Summe
-
-        //Get Salarygroups
-        $salarygroups = array(); //Array of Salarygroup OBJECTS
-
-        foreach($confirmed as $c) {
-            if($c->salarygroup_id) {
-                $salarygroup = Salarygroup::find($c->salarygroup_id);
-                if(!in_array($salarygroup,$salarygroups)) {
-                    $salarygroups[] = $salarygroup;
-                }
-            }
-        }
-
-        //Do calculations for each
-        $salarygroup_number = 0;
-        foreach($salarygroups as $s) {
-            //Number (Col 1)
-            $s->number = ++$salarygroup_number;
-            
-
-            //t (Verfügbare Zeit zum Aufteilen)
-            $s->t = AssignmentsController::getDurationInMinutesOfAssignments($s->assignments);
-            $s->t_max_readable = date('H:i',mktime(0,$s->t));
-            $t_total += $s->t;
-            $s->t_vergeben = $s->t_a + $s->t_g;
-            $t_max += $s->t - $s->t_vergeben;
-            $t_vergeben += $s->t_vergeben;
-
-            $s->t_verfuegbar = $s->t - $s->t_vergeben;
-            $s->t_verfuegbar = date('H:i',mktime(0,$s->t_verfuegbar));
-            
-            $s->t_vergeben = date('H:i',mktime(0,$s->t_vergeben));
-
-            //Gutscheine & AWE
-            $gutschein_faktor = $s->t_g/60;
-            $s->azg = number_format($gutschein_faktor * $s->g,2);
-            $g_sum += $s->azg;
-
-            $awe_faktor = $s->t_a/60;
-            $s->aza = number_format($awe_faktor * $s->a,2);
-            $a_sum += $s->aza;
-
-            //Felder Verteilung G/AWE
-            $s->t_g_nice = date('H:i',mktime(0,$s->t_g));
-            $s->t_a_nice = date('H:i',mktime(0,$s->t_a));
-            
-            $s->awe_available = false;
-            //return SalarygroupsController::countAttemptGutscheine($salarygroups);
-            if($t_vergeben>=$s->p*60 && $s->t_g<$s->t && SalarygroupsController::countAttemptGutscheine($salarygroups)>=SalarygroupsController::getLowestp($salarygroups) ) {
-                $s->awe_available=true;
-            }
-
-            $g_sum_rounded = round($g_sum);
-            $a_sum_rounded = number_format(round($a_sum,2),2,',','.');
-
-        }
-
-        //Generate nice reading of tmax
-        $t_max_readable = date('H:i',mktime(0,$t_max));
-        $t_vergeben_readable = date('H:i',mktime(0,$t_vergeben));
-        $t_total = date('H:i',mktime(0,$t_total));
-        
-
-        //Transaktionen
-        $transaction_filter = ['user_id'=>Auth::user()->id];
-        $transactions = Transaction::where($transaction_filter)->get();
-        $gutscheine_erhalten_sum = 0;
-        foreach($transactions as $t) {
-            $t->datetime = Carbon::parse($t->datetime)->format('d.m. H:i');
-            $gutscheine_erhalten_sum += $t->amount;
-        }
-
-
-    //RETURN
-    return view('user.rewards2',compact('ausstehend','ausstehend_gutscheine','salarygroups','t_total','t_max','t_max_readable','t_vergeben_readable','confirmed','transactions','assignments','gutscheine_erhalten_sum','g_sum','a_sum','g_sum_rounded','a_sum_rounded'));
-}
 }

@@ -73,6 +73,12 @@ Route::post('supervisor/team/close/{id}','SupervisorController@close')->name('su
 //MANAGE APPLICATIONS
 
 Route::get('rewards','BenutzerController@rewarder')->name('rewards');
+Route::post('rewards/save','BenutzerController@saveRewards')->name('rewards.save');
 /* Application routes */
 
 Route::post('privileges/update','PrivilegeController@update')->name('privilege.update');
+
+//Tr
+
+//Transaction Routes
+Route::get('transaction/','TransactionController@index')->name('transaction.browser');

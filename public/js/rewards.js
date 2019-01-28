@@ -8,8 +8,9 @@ const tvergeben = 0;
 
 //Event Listeners
     var listener = [];
-    var g_fields = document.getElementsByName('gut');
-    var a_fields = document.getElementsByName('awe');
+    var g_fields = document.getElementsByName('gut[]');
+    console.log(g_fields.length);
+    var a_fields = document.getElementsByName('awe[]');
     for(var g = 0;g<g_fields.length;g++) {
         listener.push(g_fields[g]);
     }
@@ -37,6 +38,8 @@ const tvergeben = 0;
     }
 
     function zeileAnpassen() {
+        var g_summe = 0; //Gutschein Summe
+        var a_summe = 0; //AWE Summe
         //Get Anzahl an Zeien
         var rows = document.getElementsByName('tma');
         for(var x=0;x<rows.length;x++) {
@@ -98,9 +101,19 @@ const tvergeben = 0;
             var g_new = (g_anzahl * g/60).toFixed(2);
             var a_new = (a_anzahl * a/60).toFixed(2);
 
+            g_summe += g_anzahl * g/60;
+            a_summe += a_anzahl * a/60;
+
             updateElement('azg'+i,g_new,'black');
             updateElement('aza'+i,a_new,'black');
         }
+        //Passe Summe an
+        g_summe = Math.round(g_summe);
+        a_summe = a_summe.toFixed(2);
+        var g_summe_container = document.getElementById('gutscheine_summe');
+        var a_summe_container = document.getElementById('awe_summe');
+        g_summe_container.innerHTML = g_summe;
+        a_summe_container.innerHTML = a_summe;
     }
 
     /**
@@ -143,12 +156,7 @@ const tvergeben = 0;
         tmaxContainer.innerHTML=MinToString(neu);
     }
 
-    /**
-     * Fügt min Minuten zu tvergeben hinzu
-     */
-    function addTVergeben(min) {
 
-    }
 
 //Helper
 
@@ -205,7 +213,7 @@ function getVergeben() {
  */
 
  function countGutscheine() {
-     var g_fields = document.getElementsByName('gut');
+     var g_fields = document.getElementsByName('gut[]');
      var tg = 0;
      for(var x = 0; x<g_fields.length;x++) {
         //if(g_fields[x].value!="") {

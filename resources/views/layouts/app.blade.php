@@ -139,6 +139,9 @@
                                         <a style="font-style:italic; color:black; text-align:center;">ADMINISTRATOR</a>
                                     </li>
                                     <li>
+                                        <a href="{{route('transaction.browser')}}"><i class="fa fa-money"></i> Gutscheine</a>
+                                    </li>
+                                    <li>
                                         <a href="{{route('shifts.all')}}"><i class="fa fa-suitcase"></i> Schichten verwalten</a>
                                     </li>
                                     <li>
@@ -181,7 +184,7 @@
     <footer class="fixed-bottom">
     <div style="background-color:#f5f5f5; border: 1px solid #e3e3e3; text-align:center; color:#777;">
     &copy; 2018 Studenten im Olympiazentrum e.V. | <a href="{{route('impressum')}}" title="Impressum">Impressum</a> | <a href="{{route('datenschutz')}}">Datenschutz</a>
-    <br /><small><i class="fa fa-heart"></i> <i class="fa fa-beer"></i> ~ <a href="https://github.com/janooosh/jobcoly" target="_blank">jobcly v.0.1</a> | Letztes Update: 21.01.2019 15:20</small>
+    <br /><small><i class="fa fa-heart"></i> <i class="fa fa-beer"></i> ~ <a href="https://github.com/janooosh/jobcoly" target="_blank">jobcly v.0.1</a> | Letztes Update: 28.01.2019 00:46</small>
     </div>
     
     </footer> 

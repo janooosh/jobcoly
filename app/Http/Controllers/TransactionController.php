@@ -3,18 +3,29 @@
 namespace App\Http\Controllers;
 
 use App\Transaction;
+use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', 'verified']);
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
+    {   
+        if(!Auth::user()->is_admin) {
+            return redirect('home')->with('warning','Kein Zugriff');
+        }
+        //Show all Users
+        $user = User::all();
+        return view('transactions.index',compact('user'));
     }
 
     /**

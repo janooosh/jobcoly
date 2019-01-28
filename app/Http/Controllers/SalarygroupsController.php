@@ -54,5 +54,19 @@ class SalarygroupsController extends Controller
         return min($ps)*60; //Return in Minuten
     }
 
+    /**
+     * H:i to Minute
+     */
+    public static function StringToMin($str) {
+
+        if($str=="") {
+            return 0;
+        }
+        $h = (int)substr($str,0,2);
+        $m = (int)substr($str,3,2);
+        return $h*60+$m;
+
+    }
+
 
 }

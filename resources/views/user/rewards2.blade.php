@@ -8,6 +8,12 @@ use Carbon\Carbon;
 <script src="{{ asset('js/evaluations.js')}}"></script>
 
 
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="page-header"><i class="fa fa-trophy"></i> Meine Rewards 2.0</h1>
+    </div>
+</div>
+
 {{-- Messages --}}
 @if($message = Session::get('success')) 
 <div class="row">
@@ -20,7 +26,7 @@ use Carbon\Carbon;
 @if($message = Session::get('danger')) 
 <div class="row">
     <div class="alert alert-danger">
-        {{$message}}
+        <span class='fa fa-warning'></span> {{$message}}
     </div>
 </div>
 @endif
@@ -28,17 +34,10 @@ use Carbon\Carbon;
 @if($message = Session::get('warning')) 
 <div class="row">
     <div class="alert alert-warning">
-        {{$message}}
+        <span class='fa fa-warning'></span> {{$message}}</span>
     </div>
 </div>
 @endif
-
-
-<div class="row">
-    <div class="col-md-12">
-        <h1 class="page-header"><i class="fa fa-trophy"></i> Meine Rewards 2.0</h1>
-    </div>
-</div>
 
 @if(count($assignments)<1)
 <div class="row">
@@ -124,6 +123,8 @@ use Carbon\Carbon;
 </div>
 <div class="row">
     <div class="col-md-12">
+        <form method="POST" action="{{route('rewards.save')}}">
+            @csrf
         <table class="table table-hover table-bordered">
             <thead>
                 <tr style="background-color:#eee;">
@@ -155,27 +156,33 @@ use Carbon\Carbon;
                     </td>
                     <td><span id='tma{{$s->number}}' name='tma'>{{$s->t_max_readable}}</span></td>
                     <td><span id='tve{{$s->number}}' name='tve'>{{$s->t_verfuegbar}}</span></td>
-                    <td><input id='gut{{$s->number}}' name='gut' type='time' class='form-control' value='{{$s->t_g_nice}}'/> * <span id='seg{{$s->number}}'>{{$s->g}}</span> Gutscheine / h</td>
-                    <td><input id='awe{{$s->number}}' name='awe' type='time' class='form-control' value='{{$s->t_a_nice}}' {{$s->awe_available ? '':'disabled'}}/> * <span id='sea{{$s->number}}'>{{$s->a}}</span> € / h</td>
+                    <td><input id='gut{{$s->number}}' name='gut[]' type='time' class='form-control' value='{{$s->t_g_nice}}'/> * <span id='seg{{$s->number}}'>{{$s->g}}</span> Gutscheine / h</td>
+                    <td><input id='awe{{$s->number}}' name='awe[]' type='time' class='form-control' value='{{$s->t_a_nice}}' {{$s->awe_available ? '':'disabled'}}/> * <span id='sea{{$s->number}}'>{{$s->a}}</span> € / h</td>
                     <td><span id='pfl{{$s->number}}' name='pfl'>{{$s->p}}</span></td>
                     
                     
                     <td><span id='azg{{$s->number}}' name='azg'>{{$s->azg}}</span></td>
                     <td><span id='aza{{$s->number}}' name='aza'>{{$s->aza}} €</span></td>
- 
+                    <input type="hidden" name='salgroupid[]' value="{{$s->id}}"/>
                 </tr>
                 @endforeach
             </tbody>
             <tfoot>
                 <tr style="border-top: solid 2px #aaa;">
                     <td colspan="7" style="text-align:right;"><b>Σ Summe</b></td>
-                    <td><b>{{$g_sum_rounded}}</b></td>
-                    <td><b>{{$a_sum_rounded}} €</b></td>
+                    <td><b><span id='gutscheine_summe'>{{$g_sum_rounded}}</span></b></td>
+                    <td><b><span id='awe_summe'>{{$a_sum_rounded}}</span> €</b></td>
                 </tr>
             </tfoot>
             
         </table>
         <p><small>Es können Rundungsfehler in Höhe von 0,01 € oder 0,01 Gutscheinen auftreten. Nachdem du die jeweilige Gruppe gespeichert hast, wird mit den genauen Werten gerechnet. Bitte kontaktiere uns unter crew@olylust.de, falls etwas deiner Meinung nach nicht stimmt.</small></p>
+        <input type="submit" name='saver[]' class='btn btn-primary' id='save' value="Speichern" alt='Eingaben Speichern'/>
+        <input type="submit" name='saver[]' class='btn btn-success' id='submit' value="Abschließen" alt='Eingaben Abschließen'/>
+
+        <p>Du kannst deine Eingaben für später <b>Speichern</b> oder deine Auswahl <b>Abschließen</b>. Bitte beachte, dass du nach dem Abschließen die Daten an die Buchhaltung weitergegeben werden und deine Eingaben nicht mehr ändern kannst. </p>
+       
+    </form>
     </div>
 </div>
 

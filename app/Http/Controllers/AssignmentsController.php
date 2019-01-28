@@ -250,16 +250,20 @@ class AssignmentsController extends Controller
     public static function getDurationInMinutes($assignment) {
         //$assignment = Assignment::find($aid);
         $duration = Carbon::parse($assignment->start)->diffInMinutes(Carbon::parse($assignment->end));
+        //print_r($duration);
+        //print_r('-');
         return $duration;
     }
 
     /**
      * Adds up the individual durations of each assignment included in the assignments array (of objects) and returns it
      */
-    public static function getDurationInMinutesOfAssignments($assignments) {
+    public static function getDurationInMinutesOfConfirmedAssignments($assignments) {
         $minutes = 0;
         foreach($assignments as $a) {
-            $minutes += AssignmentsController::getDurationInMinutes($a);
+            if($a->shift->confirmed) {
+                $minutes += AssignmentsController::getDurationInMinutes($a);
+            }
         }
         return $minutes;
     }
