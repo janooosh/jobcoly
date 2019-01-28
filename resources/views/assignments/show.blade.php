@@ -178,6 +178,14 @@
                     {{$assignment->shift->awe}} € / Stunde
                 </div>
             </div>
+            <div class="row">
+                <div class="col-xs-6">
+                    <b>AWE nach</b>
+                </div>
+                <div class="col-xs-6">
+                    {{$assignment->shift->p}} Stunden
+                </div>
+            </div>
             @endif
         </div>
     </div> {{-- Ende Pannel --}}
