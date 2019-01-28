@@ -10,7 +10,7 @@ use Carbon\Carbon;
 
 <div class="row">
     <div class="col-md-12">
-        <h1 class="page-header"><i class="fa fa-trophy"></i> Meine Rewards 2.0</h1>
+        <h1 class="page-header"><i class="fa fa-trophy"></i> Meine Rewards</h1>
     </div>
 </div>
 
@@ -228,7 +228,7 @@ use Carbon\Carbon;
     </div>
 </div> {{-- Ende Transatktionen --}}
 @else
-Keine Transaktionen.
+
 @endif
 
 <br />

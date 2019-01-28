@@ -117,18 +117,31 @@ use Illuminate\Support\Facades\Auth;
             </div>
             <div id="faq5" class="panel-collapse collapse">
               <div class="panel-body">
-                  Die meisten Schichten bieten Gutscheine als Entlohnung, i.d.R. 3 Gutscheine/h. Wie viel das bei der jeweiligen Schicht genau ist, findest du auf der letzten Bewerbungsseite, unter "Schichten" oder auch unter "Rewards". <br />
-                Die Gutscheine werden minutengenau berechnet, dadurch also im Zweifelsfall auch aufgerundet. Du erhälst Gutscheine stets für den tatsächlich geleisteten Stundenaufwand. Falls eine Schicht also länger geht als geplant, 
+                  Die meisten Schichten bieten Gutscheine als Entlohnung, i.d.R. 3 Gutscheine/h. Wie viel das bei der jeweiligen Schicht genau ist, findest du auf der letzten Bewerbungsseite, unter "Schichten" oder auch unter "Rewards". Einige Schichten erhalten mehr Gutscheine pro Stunde. <br />
+                Die Gutscheine sind so angepasst, dass sie dir stets <b>mindestens</b> den Wert von Streifen geben. Die Gutscheine werden minutengenau berechnet, dadurch also im Zweifelsfall auch aufgerundet. Du erhälst Gutscheine stets für den tatsächlich geleisteten Stundenaufwand. Falls eine Schicht also länger geht als geplant, 
                 erhälst du natürlich auch mehr Gutscheine. <br />
+
                 Eine Übersicht sowie weitere Informationen findest du unter "Rewards". <br /><br />
                 Die Gutscheine werden nach der OlyLust auch in den Betrieben (Bierstube, Lounge, Disko) einsetzbar sein und ersetzen damit die Streifenkarten. <br />
                 1 Gutschein = 1 Antialkoholisches Getränk/1 Shot <br />
-                2 Gutscheine = 1 Longdrink oder Bier (Helles/Radler/Weißbier/Desperados), 1 Red Bull <br />
+                2 Gutscheine = 1 Longdrink oder Bier (Helles/Radler/Weißbier/Desperados), 1 Red Bull, 1 Essen (OlyLust) <br />
                 3 Gutscheine = 1 Cocktail <br />
                 <br />Der Wert für ein Essen in der Bierstube wird zeitnah noch ergänzt.
             </div>
             </div>
           </div>
+
+          <div class="panel panel-default">
+              <div class="panel-heading">
+                <h4 class="panel-title">
+                  <a data-toggle="collapse" href="#faq3">AWE?</a>
+                </h4>
+              </div>
+              <div id="faq3" class="panel-collapse collapse">
+                <div class="panel-body">Du kannst eine Aufwandsentschädigung (AWE) für deine Tätigkeit erhalten, i.d.r 7€/h nach 16 Stunden Tätigkeit. Genauere Infos findest du unter 'Rewards'.</div>
+              </div>
+            </div>
+          
 
           <div class="panel panel-default">
                 <div class="panel-heading">
@@ -166,7 +179,7 @@ use Illuminate\Support\Facades\Auth;
                 </div>
                 <div id="faq8" class="panel-collapse collapse">
                   <div class="panel-body">
-                      Die ersten 6 Gutscheine die du "verdienst" gehen auf das T-Shirt, dieses kannst du also natürlich behalten. <br />
+                      Du kannst für 6 Gutscheine (2 Stunden) das Crew T-Shirt erhalten! Die Ausgaben erfolgen bei jedem Personalmeeting. Natürlich musst du das T-Shirt aber nicht nehmen.
                 </div>
                 </div>
               </div>

@@ -34,21 +34,17 @@ use Carbon\Carbon;
 
     @if (Auth::user()->is_praside==1 || Auth::user()->ausschuss!="")
         <p>Der Schicht entsprechen {{Carbon::parse($shift->starts_at)->diff(Carbon::parse($shift->ends_at))->format('%H:%I')}} Pflichtstunden.
-           Du erhälst folgende Entlohnung (die ersten 2h gehen auf das T-Shirt):</p>
+           Du erhälst folgende Entlohnung:</p>
     @else
         <p>Du sammelst keine Pflichtstunden und erhälst folgende Entlohnung für deine Schicht:</p>
     @endif
      <ul>       
     @if($shift->awe>0)
-    <li>{{$shift->awe}},00 € Aufwandsentschädigung pro Stunde</li>
+    <li>{{$shift->awe}},00 € Aufwandsentschädigung pro Stunde (optional nach {{$shift->p}} Stunden)</li>
     @endif
 
     @if($shift->gutscheine>0)
     <li>{{$shift->gutscheine}} Gutscheine pro Stunde</li>
-    @endif
-
-    @if($shift->streifen_total>0)
-    <li>{{$shift->streifen_total}} Streifen</li>
     @endif
 
      </ul>
