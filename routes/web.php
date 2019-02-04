@@ -57,6 +57,8 @@ Route::get('applications/evaluate/accepted','EvaluationsController@showAccepteds
 Route::get('applications/evaluate/view/{id}','EvaluationsController@showSingleApplication')->name('evaluation.show');
 
 Route::get('assignments/krankmeldung/{id}','AssignmentsController@krankmeldung')->name('assignments.krankmeldung');
+Route::post('assignments/absagen','AssignmentsController@absage')->name('assignments.absagen');
+
 
 Route::resource('applications','ApplicationsController'); //resource controller has to go last...
 Route::resource('assignments','AssignmentsController');

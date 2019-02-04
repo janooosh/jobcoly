@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Mail\Annahme;
 use App\Mail\Krankmeldung;
+use App\Mail\Austragung;
 use Illuminate\Support\Facades\Mail;
 
 class AssignmentsController extends Controller
@@ -176,6 +177,33 @@ class AssignmentsController extends Controller
         return redirect('shifts/'.$assignment->shift->id)->with('success','Krankmeldung gespeichert, Zuweisung gelöscht.');
 
     }
+
+    /**
+     * Meldet ein Assignment abgesagt, schickt E-Mail zum Schluss
+     */
+    public function absage(Request $request) { 
+
+        //Only Admins
+        if(Auth::user()->is_admin!=1) {
+            return redirect('home')->with('danger','Keine Berechtigung');
+        }
+
+        $request->validate([
+            'assignment_id'=>'required|exists:assignments,id',
+            'absagengrund'=>'max:255'
+        ]);
+
+        $assignment = Assignment::find($request->get('assignment_id'));
+
+        $assignment->status=$request->get('absagengrund');
+        $assignment->save();
+        Mail::to($assignment->user->email)->send(new Austragung()); 
+
+        return redirect('shifts/'.$assignment->shift->id)->with('success','Absage gespeichert, Zuweisung gelöscht.');
+
+    }
+
+
     /**
      * Show the form for editing the specified resource.
      *

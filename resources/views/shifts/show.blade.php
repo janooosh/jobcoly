@@ -89,7 +89,9 @@ use Illuminate\Support\Facades\Auth;
                                                 <li class="list-group-item">{{$assignment->user->firstname}} {{$assignment->user->surname}} (<a href='mailto:{{$assignment->user->email}}' title='E-Mail schreiben'>{{$assignment->user->email}}</a>)
                                                     @if(Auth::user()->is_admin==1)
                                                         <button data-toggle="modal" data-target="#krankmelden{{$assignment->id}}" type="button" class="btn btn-danger btn-xs"><i class="fa fa-ambulance"></i> Krank Melden</button>
-                                                    @endif
+                                                        <button data-toggle="modal" data-target="#absagen{{$assignment->id}}" type="button" class="btn btn-danger btn-xs"><i class="fa fa-times"></i> Absagen</button>
+                                                        
+                                                        @endif
                                                 </li>
                                                                                     {{-- KRANKMELDUNG --}}
                                                 <div class="modal fade" id="krankmelden{{$assignment->id}}" tabindex="-1" role="dialog" aria-labelledby="managers" aria-hidden="true" style="display: none;">
@@ -107,8 +109,36 @@ use Illuminate\Support\Facades\Auth;
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Close</button>
-                                                                <a href="{{route('assignments.krankmeldung', $assignment->id)}}" type="button" class="btn btn-danger btn-xs"><i class="fa fa-ambulance"></i> Krank Melden</a>
+                                                                <a href="{{route('assignments.krankmeldung', $assignment->id)}}" type="button" class="btn btn-danger btn-xs"><i class="fa fa-ambulance"></i> Krankmelden</a>
                                                             </div>
+                                                        </div>
+                                                    </div>
+       
+                                                </div>
+                                                                                                                                    {{-- ABSAGE --}}
+                                                <div class="modal fade" id="absagen{{$assignment->id}}" tabindex="-1" role="dialog" aria-labelledby="managers" aria-hidden="true" style="display: none;">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <form method="post" action="{{ route('assignments.absagen') }}">
+                                                            @csrf
+                                                                <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                                <h4 class="modal-title" id="myModalLabel">{{$assignment->user->firstname}} wirklich absagen?</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p>
+                                                                    Möchtest du {{$assignment->user->firstname}} als {{$assignment->shift->job->name}} ({{$assignment->shift->shiftgroup->name}}) wirklich krankmelden? <br />
+                                                                    {{$assignment->user->firstname}} wird per E-Mail über die Absage informiert. Die Schicht ist danach wieder freigegeben. Bitte halte mit {{$assignment->user->firstname}} Rücksprache bzgl. Ersatzschichten usw. <br />
+                                                                </p>
+                                                                <input required type="text" id="absagengrund" class="form-control" name="absagengrund" placeholder="Grund für die Absage">
+                                                        
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <input type="hidden" name="assignment_id" value="{{$assignment->id}}"/>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">Close</button>
+                                                                <button type="submit" class="btn btn-danger btn-xs"><i class="fa fa-times"></i> Absagen</a>
+                                                            </div>
+                                                        </form>
                                                         </div>
                                                     </div>
        
