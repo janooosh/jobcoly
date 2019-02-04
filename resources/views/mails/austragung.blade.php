@@ -1,7 +1,7 @@
 @component('mail::message')
 
 Hi,
-ACHTUNG - TEST - ES WURDE NICHTS GEÄNDERT, ES WIRD NUR GETESTET...
+<br />
 wir haben dich für eine Schicht auf der OlyLust ausgetragen.<br />
 Du hast hierzu bereits Informationen erhalten, falls nicht gib uns bitte sofort Bescheid.<br />
 Bitte überprüfe deine Schichten und gib uns Bescheid, falls etwas nicht stimmt.
