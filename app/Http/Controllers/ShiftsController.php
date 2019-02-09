@@ -170,7 +170,6 @@ class ShiftsController extends Controller
             'awe'=>$job->awe,
             'gutscheine'=>$job->gutscheine,
             'description'=>$request->get('shiftdescription')
-
           ]);
 
           //Store Shift

@@ -104,6 +104,13 @@
                 <option value="Inaktiv">Inaktiv</option>
             </select>
         </div>
+        <div class="col-md-3 form-group" style="padding-bottom: 20px;" required autofocus>
+            <label for="shiftextern">Für Externe? *</label>
+            <select class="form-control" id="shiftextern" name="shiftextern">
+                <option value="1">Ja</option>
+                <option value="0" selected>Nein</option>
+            </select>
+        </div>
     </div>
     <div class="row">
         <div class="col-md-6 form-group" style="padding-bottom: 20px;">

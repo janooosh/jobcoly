@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Job extends Model
 {
     protected $fillable = [
-        'name','short','description','gesundheitszeugnis','awe','gutscheine'
+        'name','short','description','gesundheitszeugnis','awe','gutscheine','is_extern'
     ];
 
     public function shifts() {

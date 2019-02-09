@@ -197,7 +197,7 @@
         </div>
   
         <footer class="my-5 pt-5 text-muted text-center text-small">
-          <p class="mb-1">&copy; 2018 Studenten im Olympiazentrum e.V.</p>
+          <p class="mb-1">&copy; 2019 Studenten im Olympiazentrum e.V.</p>
           <ul class="list-inline">
             <li class="list-inline-item"><a href="{{route('impressum')}}">Impressum</a></li>
             <li class="list-inline-item"><a href="{{route('datenschutz')}}">Datenschutz</a></li>

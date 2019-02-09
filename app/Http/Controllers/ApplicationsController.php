@@ -404,6 +404,9 @@ class ApplicationsController extends Controller
         $jobs = Job::get();
         $counter = 0;
         foreach($jobs as $job) {
+            if(Auth::user()->is_extern && !$job->is_extern) {
+                continue; //Externer User && Job ist intern -> nicht weiter betrachten
+            }
             $freeShifts = ApplicationsController::countFreeShifts($shiftgroup_id,$job->id);
             if($freeShifts>0) {
                 $counter++;
@@ -418,138 +421,23 @@ class ApplicationsController extends Controller
     */
     public function new() {
 
+        $extern_status = Auth::user()->is_extern;
+
         $shifts = Shift::where('status','Aktiv')->get();
+
         $assignments = Assignment::where('status','Aktiv');
         $shiftgroups = Shiftgroup::all();
         $applications = Application::where('status','Aktiv');
-        $jobs = Job::all();
+
+        //Jobs
+        if(Auth::user()->is_extern) {
+            $jobs = Job::where('is_extern','1')->get();
+        }
+        else {
+            $jobs = Job::all();
+        }
         $openShifts = [];
 
-        return view('applications.new', compact('shifts', 'assignments', 'applications', 'shiftgroups','jobs'));
-        
-        /**
-         * ACHTUNG, DAS HIER WIRD NICHT MEHR AUSGEFÜHRT!
-         * HABE HIER VERSUCHT, DIE SORTIERUNG BEREITS IM VORRAUS ZU MACHEN, BIN ABER GESCHEITERT.
-         * WILL STICK TO LARAVEL, just display it statically.
-         */
-
-        //Only get active applications
-
-        $shifts = []; //will be returned, array of adapted shift objects
-        //Display dimensions for shifts/groups: link, jobname, jobshort, date(*), time, duration, available, free, applications
-
-        //Identify groups, iterate through all existing shifts (stored in shifts_unsorted)
-        foreach($shifts_unsorted as $shift_u) {
-            //Check if item exists several times in shifts_unsorted (all shifts), if yes it's a group, if no it's a single
-            if($this->shiftCounterMaster($shifts_unsorted, $shift_u->job_id, $shift_u->shiftgroup_id)>1) {
-                //It's a group
-
-                //Is it already in the shifts array?
-                if($this->shiftCounterSub($shifts,$shift_u->job_id, $shift_u->shiftgroup->id)>0) {
-                    //Shift as part of a group is already included
-
-                        //Adapt spaces stuff? #Advanced
-                }
-
-                else {
-                    //Shift as part of a group is not yet included
-
-                    //Create virtual shift
-                    $newShift = [
-                    //Create attributes
-                    'link' => 'applications/new/'.$shift_u->shiftgroup_id.'/'.$shift_u->job_id,
-                    'jobid' => $shift_u->job_id,
-                    'shiftgroupid' => $shift_u->shiftgroup_id,
-                    'jobname' => $shift_u->job->name,
-                    'jobshort' => $shift_u->job->short,
-                    'date' => '',
-                    'time' => '',
-                    'duration' => '',
-                    'available' => $this->countAvailable($shift_u->job_id, $shift_u->shiftgroup_id),
-                    'applications' => $this->countApplications($shift_u->job_id,$shift_u->shiftgroup_id)
-                    ];
-                    //Add to shifts
-                    $shifts[] = $newShift;
-                }
-            }
-            else {
-                //It's a single
-                $newShift = [
-                //Create attributes
-                'link' => 'applications/create/'.$shift_u->id,
-                'jobid' => $shift_u->job_id,
-                'shiftgroupid' => $shift_u->shiftgroup_id,
-                'jobname' => $shift_u->job->name,
-                'jobshort' => $shift_u->job->short,
-                'date' => Carbon::parse($shift_u->starts_at)->format('d.m.Y'),
-                'time' => Carbon::parse($shift_u->starts_at)->format('H:i').' - '.Carbon::parse($shift_u->ends_at)->format('H:i'),
-                'duration' => Carbon::parse($shift_u->starts_at)->diff(Carbon::parse($shift_u->ends_at))->format('%H:%I'),
-                'available' => $this->countAvailable($shift_u->job_id, $shift_u->shiftgroup_id),
-                'free' => $this->countFree($shift_u->job_id,$shift_u->shiftgroup_id),
-                'applications' => $this->countApplications($shift_u->job_id,$shift_u->shiftgroup_id),
-                ];
-                //Add to shifts
-                $shifts[] = $newShift;
-            } 
-        }
-
-        //return view('applications.new',compact('shifts'));
+        return view('applications.new', compact('shifts', 'assignments', 'applications', 'shiftgroups','jobs','extern_status'));
     }
-
-    /*
-    *Checks if a combination of job and shiftgroup (-> unique identification of a group) is already in the given array
-    *and counts the occurence.
-    
-    public function shiftCounterMaster($shifts, $job, $shiftgroup){
-        if(count($shifts)<1) {
-            return 0;
-        }
-        $counter=0;
-        foreach($shifts as $shift) {
-            if($shift->job_id == $job && $shift->shiftgroup_id == $shiftgroup) {
-                $counter++;
-            }
-        }
-        return $counter;
-    }
-
-    /**
-     * Checkt nur ob es schon dem output array shifts hinzugefügt wurde, kann aber nicht auf die Objektattribute zugreifen, da wir das ja neu erstellen.
-     
-    public function shiftCounterSub($shifts, $job, $shiftgroup) {
-        if(count($shifts)<1) {
-            return 0;
-        }
-        $counter=0;
-        foreach($shifts as $shift) {
-            if($shift['jobid'] == $job && $shift['shiftgroupid'] == $shiftgroup) {
-                $counter++;
-            }
-        }
-        return $counter;
-    }
-
-    public function countFree($job, $shiftgroup) {
-        //TO-DO
-        return 1;
-    }
-
-    public function countApplications($job, $shiftgroup) {
-        //TO-DO
-        return 1;
-    }
-
-    public function countAvailable($job, $shiftgroup) {
-        //To-Do
-        return 1;
-    }
-    */
-
-
-
-    
-
-
-
-
 }

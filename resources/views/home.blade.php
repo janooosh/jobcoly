@@ -31,7 +31,7 @@ use Illuminate\Support\Facades\Auth;
 
 <div class="row">
         <div class="col-lg-8">
-            <h1 class="page-header">Willkommen, {{Auth::user()->firstname}}</h1>
+            <h1 class="page-header">Hey, {{Auth::user()->firstname}}! 😃</h1>
         </div>
 </div>
 
@@ -88,6 +88,7 @@ use Illuminate\Support\Facades\Auth;
                 </div>
                 </div>
                 <h1>Neu hier?</h1>
+                <p><b>❤️ - lich Willkommen!</b></p>
                 <p>Sämtliche Schichten für die <b>#OlyLust19</b> - Pirates, Queens and Pineapples werden in diesem Jahr über dieses Tool vergeben.
                 <br />
                 Schichten werden im Allgemeinen nach "First-Come-First-Serve" vergeben, allerdings müsst ihr euch für die Schichten bewerben. Keine Angst, das ist ganz einfach!<br />
@@ -97,7 +98,9 @@ use Illuminate\Support\Facades\Auth;
                 <br /><br />
                 Wir werden uns deine Bewerbung so schnell wie möglich ansehen und dir dann eine Rückmeldung geben. Mit diesem Prinzip möchten wir sicherstellen, dass im Vergleich zu den letzten Jahren jeder der eine bestimmte Schicht möchte auch eine faire Chance auf diese bekommt, und Schichten nicht sofort vergeben sind. <br />
                 Du kannst den Status deiner Bewerbungen unter "Bewerbungen" verfolgen. Auch wenn es einmal nicht sofort klappt, kannst du dich zu einem späteren Zeitpunkt erneut auf diese Schicht bewerben, vorausgesetzt es sind noch freie Stellen offen.
-                <br /><br >
+                <br /><br />
+                <a type="button" href="{{asset('doc/Crew.pdf')}}" target="_blank" class="btn btn-outline btn-primary "><span class="fa fa-file-pdf-o "></span> Entlohnung</a>
+                <br /><br />
                 Schau doch auch mal in den <b>FAQs</b> vorbei, dort beantworten wir bereits einige Fragen. <br />
                 <a href="{{route('faq')}}" type="button" class="btn btn-default"><i class="fa fa-question-circle"></i> FAQs</a>
                 <hr />

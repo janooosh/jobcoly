@@ -34,7 +34,7 @@
                 <th scope="col">Beschreibung</th>
                 <th scope="col">Gesundheitszeugnis?</th>
                 <th scope="col">Schichten</th>
-                <th scope="col">Arbeiter</th>
+                <th scope="col">Für Externe?</th>
                 <th scope="col"></th>
             </tr>
         </thead>
@@ -55,7 +55,7 @@
                     @endif
                 </td>
                 <td>{{count($job->shifts)}}</td>
-                <td>{{$job->actives}}</td>
+                <td>{{$job->is_extern == '1' ? 'Ja':'Nein'}}</td>
                 <td><a href="{{ route('jobs.edit',$job->id)}}" class="fa fa-pencil" title="Job bearbeiten"></a></td>
                 {{--<td><a class="fa fa-trash-o" href="{{ route('jobs.destroy',$job->id)}}"></a></td>--}}
             @endforeach

@@ -35,8 +35,36 @@ public function saveRewards(Request $request) {
         if(empty($a_fields)) {
             $a_fields = [];
         }
+
         $si_fields = $request->get('salgroupid'); //Salarygroup-ID
         $aktion = $request->get('saver')[0];
+
+        //NUR SPEICHERN??
+        if($aktion=='Speichern') {
+            //Keine Überprüfung
+            $a_counter = 0;
+            $g_counter = 0;
+            //Iteriere über alle Einträge und speichere die t_g und t_a Werte OHNE Überprüfung in den Salarygroups... Go!!
+            foreach($si_fields as $si) {
+                //Finde Salarygroup
+                $salarygroup = Salarygroup::find($si);
+                $salarygroup->t_g = SalarygroupsController::StringToMin($g_fields[$g_counter]);
+                $g_counter++;
+                if(array_key_exists($a_counter,$a_fields)) {
+                    echo $si;
+                    $salarygroup->t_a = SalarygroupsController::StringToMin($a_fields[$a_counter]);
+                    $a_counter++;
+                }
+                else {
+                    $salarygroup->t_a = 0;
+                }
+                $salarygroup->save();
+            }
+
+            //return;
+            return redirect('rewards/')->with('info','Eingaben gespeichert, jedoch ohne Überprüfung. Schließe die Schicht ab sobald du fertig bist.');
+        
+        }
 
         /**
          * 1.) Gesamtzeit ausgegeben <= Gesamtzeit verfügbar
@@ -48,6 +76,8 @@ public function saveRewards(Request $request) {
 
          //WERTE
             //Gesamtzeit verfügbar [MINUTEN]
+            $errors = 0; 
+            $prepared_for_save = array(); //Salarygroups, bereit zu speichern wenn keine errors auftauchen
             $t_gesamt_available = 0;
 
             //Gesamtzeit ausgegeben [MINUTEN] && Gutscheinzeit [MINUTEN]
@@ -61,43 +91,50 @@ public function saveRewards(Request $request) {
             }
             $t_gesamt_spent = $t_g + $t_a;
             
-            $counter=0;
+            $g_counter=0; //Iteriert, da die gut[] und awe[] Arrays nicht synchron mit den si indeze laufen
+            $a_counter=0;
+            $salarygroups = array();
+            //Welche Zeit kann maximal verteilt werden?
             foreach($si_fields as $si) {
+                $awe_used = 0; // mins / Hat er AWE genutzt?
                 $salarygroup = Salarygroup::find($si);
                 $salarygroup->available += AssignmentsController::getDurationInMinutesOfConfirmedAssignments($salarygroup->assignments);
-                $t_gesamt_available += $salarygroup->available;
+                $t_gesamt_available += $salarygroup->available; 
 
-                
+                //2a) Zeit ausgegeben für Reihe <= Zeit verfügbar für Reihe?
+                $salarygroup->ausgegeben = 0;
+                $salarygroup->ausgegeben += SalarygroupsController::StringToMin($g_fields[$g_counter]); //Gutscheinfeld gibts safe!
+                if(array_key_exists($a_counter,$a_fields)) {
+                    $awe_used = SalarygroupsController::StringToMin($a_fields[$a_counter]);
+                    $salarygroup->ausgegeben += $awe_used;
+                    $a_counter;
+                }
+                $g_counter++; //
+                $salarygroup->awe_used = $awe_used;
+                if($salarygroup->ausgegeben > $salarygroup->available){
+                    return redirect('rewards/')->with('danger','Du hast für mindestens eine Gruppe zu viel Zeit ausgegeben.');
+                    $errors++;
+                }
+                else {
+                    $prepared_for_save = $salarygroup;
+                }
+                $salarygroups[] = $salarygroup;
             }
+
+            //2b) if(Awe): Gesamtzeit ausgegeben > Pflicht der Reihe
+            foreach($salarygroups as $salarygroup) {
+                if($salarygroup->awe_used>0 && $t_gesamt_spent < $salarygroup->p) {
+                    return redirect('Unzulässiger Gebrauch von AWE');
+                }
+            }
+            
 
             //1.) Gesamtzeit ausgegeben <= Gesamtzeit verfügbar?
             if($t_gesamt_spent>$t_gesamt_available) {
-                return redirect('rewards/')->with('danger','Du hast zu viel Zeit verteilt.');
+                return redirect('rewards/')->with('danger','Mööp, Du hast zu viel Zeit verteilt. Try again.');
             }
 
-            
 
-
-            return $t_gesamt_spent;
-            
-
-
-
-        if($t_a>0&&$t_g<480) {
-            return redirect('rewards/')->with('danger','Mind. 8 Gutscheinstunden erforderlich.');
-        }
-
-            
-            
-            foreach($si_fields as $si) {
-
-            }
-            
-
-    
-        //return $request->input();
-
-    //Decide weather save or submit
 
     //Perform action
 }   
@@ -149,7 +186,7 @@ public static function rewarder() {
         foreach($confirmed as $c) {
             if($c->salarygroup_id) {
                 $salarygroup = Salarygroup::find($c->salarygroup_id);
-                if(!in_array($salarygroup,$salarygroups)) {
+                if(!in_array($salarygroup,$salarygroups) && !$salarygroup->confirmed) {
                     $salarygroups[] = $salarygroup;
                 }
             }
@@ -170,9 +207,15 @@ public static function rewarder() {
             $t_max += $s->t - $s->t_vergeben;
             $t_vergeben += $s->t_vergeben;
 
-            $s->t_verfuegbar = $s->t - $s->t_vergeben;
-            $s->t_verfuegbar = date('H:i',mktime(0,$s->t_verfuegbar));
+            //$s->t_verfuegbar = $s->t - $s->t_vergeben;
+            //Verfügbare Zeit = Gesamte Zeit - Vergebene Zeit
+            $s->t_verfuegbar = '';
+            /*if($s->t - $s->t_vergeben < 0){
+                $s->t_verfuegbar = $s->t_verfuegbar.'- ';
+            }*/
             
+            $s->t_verfuegbar = $s->t_verfuegbar.SalarygroupsController::MinToString($s->t - $s->t_vergeben);
+            //return $s->t_verfuegbar;
             $s->t_vergeben = date('H:i',mktime(0,$s->t_vergeben));
 
             //Gutscheine & AWE
@@ -201,8 +244,10 @@ public static function rewarder() {
 
         //Generate nice reading of tmax
         $t_max_readable = date('H:i',mktime(0,$t_max));
-        $t_vergeben_readable = date('H:i',mktime(0,$t_vergeben));
-        $t_total = date('H:i',mktime(0,$t_total));
+        $t_vergeben_readable = SalarygroupsController::MinToString($t_vergeben);
+        //date('H:i',mktime(0,$t_vergeben));
+        $t_total = SalarygroupsController::MinToString($t_total);
+        //date('H:i',mktime(0,$t_total));
         
 
         //Transaktionen

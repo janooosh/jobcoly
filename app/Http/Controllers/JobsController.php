@@ -65,7 +65,8 @@ class JobsController extends Controller
             'jobshort' => 'required|size:2|regex:/^[A-Za-z\s-_]+$/|unique:jobs,short',
             'jobdescription' => 'max:2000',
             'jobgutscheine' => 'required|integer|min:0|max:20',
-            'jobawe' => 'required|integer|min:0|max:20'
+            'jobawe' => 'required|integer|min:0|max:20',
+            'jobextern'=>'required|in:0,1'
           ]);
           $newjob = new Job([
             'name' => $request->get('jobname'),
@@ -73,7 +74,8 @@ class JobsController extends Controller
             'description'=> $request->get('jobdescription'),
             'gesundheitszeugnis'=>$request->get('jobgesundheitszeugnis'),
             'gutscheine'=>$request->get('jobgutscheine'),
-            'awe'=>$request->get('jobawe')
+            'awe'=>$request->get('jobawe'),
+            'is_extern'=>$request->get('jobextern'),
           ]);
           $newjob->save();
           return redirect('jobs')->with('success', 'Der Job wurde hinzugefügt.');
@@ -126,7 +128,8 @@ class JobsController extends Controller
             'jobname' => 'required|unique:jobs,name,'.$job->id,
             'jobshort' => 'required|size:2|regex:/^[A-Za-z\s-_]+$/|unique:jobs,short,'.$job->id,
             'jobgutscheine' => 'required|integer|min:0|max:20',
-            'jobawe' => 'required|integer|min:0|max:20'
+            'jobawe' => 'required|integer|min:0|max:20',
+            'jobextern' => 'required|in:0,1'
           ]);
     
           
@@ -136,6 +139,7 @@ class JobsController extends Controller
           $job->description = $request->get('jobdescription');
           $job->gutscheine = $request->get('jobgutscheine');
           $job->awe = $request->get('jobawe');
+          $job->is_extern = $request->get('jobextern');
           $job->save(); 
           return redirect('jobs')->with('success', 'Job erledigt.');
     }

@@ -69,4 +69,34 @@ class SalarygroupsController extends Controller
     }
 
 
+    /**
+     * Take min and display in hh:mm format (hh > 24 allowed)
+     */
+    public static function MinToString($min) {
+       
+
+        //$stunden = number_format($min/60,0);
+        $stunden = floor($min/60);
+        $minuten = $min%60;
+        $negativ='';
+        if($min<0) {
+            $negativ = '- ';
+        }
+        if($stunden<0) {
+            $stunden = substr($stunden,1,strlen($stunden));
+        }
+        if($minuten<0) {
+            $minuten = substr($minuten,1,strlen($minuten));
+        }
+
+        if(strlen($stunden)==1) {
+            $stunden = '0'.$stunden;
+        }
+        if(strlen($minuten)==1) {
+            $minuten = '0'.$minuten;
+        }
+       
+        $ausgabe = $negativ.$stunden.':'.$minuten;
+        return $ausgabe;
+    }
 }

@@ -35,7 +35,7 @@
           <label>
                 <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
                 <label class="form-check-label" for="remember">
-                        {{ __('Remember Me') }}
+                        {{ __('Angemeldet Bleiben') }}
                 </label>
             </label>
         </div>
@@ -45,7 +45,7 @@
                 {{ __('Passwort vergessen?') }}
         </a>
         <a class="btn btn-primary btn-lg btn-block" href="{{ route('register') }}">{{ __('Neu hier?') }}</a></p>
-        <p class="mt-3 mb-5 text-muted">&copy; 2018 | Studenten im Olympiazentrum e.V. <br /> <a href="{{route('impressum')}}" target="_blank">Impressum</a> | <a href="{{route('datenschutz')}}" target="_blank">Datenschutz</a></p>
+        <p class="mt-3 mb-5 text-muted">&copy; 2019, Studenten im Olympiazentrum e.V. <br /> <a href="{{route('impressum')}}" target="_blank">Impressum</a> | <a href="{{route('datenschutz')}}" target="_blank">Datenschutz</a></p>
 </form>
 
 

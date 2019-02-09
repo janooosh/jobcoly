@@ -145,6 +145,18 @@ class RegisterController extends Controller
             $creator['is_ehemalig'] = $data['ehemalig'];
         }
 
+        //EXTERN?
+        $is_extern = 1; //Annahme: Ist Extern, außer das Gegenteil ist bewiesen
+            //Vereinsmitglied
+        if(isset($data['vereinSel']) && $data['vereinSel']==1) {
+            $is_extern=0;
+        }
+            //Ehemalige/r
+        if(isset($data['ehemalig']) && $data['ehemalig']==1) {
+            $is_extern=0;
+        }
+
+        $creator['is_extern'] = $is_extern;
         return User::create($creator);
 
         /*return User::create([

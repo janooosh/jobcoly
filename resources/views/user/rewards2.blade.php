@@ -23,6 +23,14 @@ use Carbon\Carbon;
 </div>
 @endif
 
+@if($message = Session::get('info')) 
+<div class="row">
+    <div class="alert alert-info">
+        <span class="fa fa-info"></span> {{$message}}
+    </div>
+</div>
+@endif
+
 @if($message = Session::get('danger')) 
 <div class="row">
     <div class="alert alert-danger">
@@ -39,6 +47,22 @@ use Carbon\Carbon;
 </div>
 @endif
 
+<div class="row">
+    <div class="col-md-9">
+<div class="panel panel-success">
+        <div class="panel-heading">
+            <b>Entlohnungsmodell</b>
+        </div>
+        <div class="panel-body">
+            <p>In diesem Dokument wird erklärt, wie du für deine Schicht entlohnt werden kannst und was dir die Gutscheine bringen. Bei Fragen kannst du uns jederzeit unter crew@olylust.de kontaktieren.</p>
+        </div>
+</div>
+    </div>
+    <div class="col-md-3">
+            <a type="button" href="{{asset('doc/Crew.pdf')}}" target="_blank" class="btn btn-outline btn-primary btn-lg btn-block"><span class="fa fa-file-pdf-o "></span> Entlohnung</a>
+    </div>
+</div>
+<hr />
 @if(count($assignments)<1)
 <div class="row">
     <div class="col-md-12">
@@ -60,7 +84,6 @@ use Carbon\Carbon;
 <div class="row">
     <div class="col-md-12">
         <h4>{{count($ausstehend)}} Unbestätigte Schichten</h4>
-        <p>Für diese, noch unbestätigten, Schichten kannst du dir <b>bereits vor deiner Schicht</b> 70% der dir zustehenden Gutscheine auszahlen lassen!</p>
         <div class="alert alert-info">
             <i class="fa fa-info-circle"></i> <b>Aufwandsentschädigung (AWE)</b> kann ausgewählt werden, sobald die Schicht bestätigt wurde.
         </div>
@@ -98,10 +121,10 @@ use Carbon\Carbon;
                     <td colspan="6" style="text-align:right;">Summe</td>
                     <td class="linie_t">{{round($ausstehend_gutscheine)}}<small><i>{{' ('.$ausstehend_gutscheine.')'}}</i></small></td>
                 </tr>
-                <tr>
+                {{--<tr>
                     <td colspan="6" style="text-align:right;">Freigegeben</td>
                     <td class="linie_t">{{round(0.7*$ausstehend_gutscheine)}}</td>
-                </tr>
+                </tr>--}}
             </tfoot>
         </table>
     </div>

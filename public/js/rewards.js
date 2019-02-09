@@ -7,6 +7,8 @@ const tvergeben = 0;
 
 
 //Event Listeners
+document.addEventListener("DOMContentLoaded", init);
+
     var listener = [];
     var g_fields = document.getElementsByName('gut[]');
     console.log(g_fields.length);
@@ -22,6 +24,36 @@ const tvergeben = 0;
         listener[x].addEventListener('change',globalsAnpassen);
         listener[x].addEventListener('change',zeileAnpassen);
     }
+
+//Init Function - Überprüft und Färbt Werte
+function init() {
+    //Vergeben > Offen ?
+        //Total
+        var total_container = document.getElementById('ttotal');
+        var total_value = StringToMin(total_container.innerHTML);
+        //Vergeben
+        var vergeben_container = document.getElementById('tvergebencontainer');
+        var vergeben_value = StringToMin(vergeben_container.innerHTML);
+        //Offen
+        var offen_container = document.getElementById('tmaxcontainer');
+        var offen_value = StringToMin(offen_container.innerHTML);
+        //Calc
+        if(vergeben_value>total_value) {
+            colorizer(vergeben_container,'red');
+            colorizer(offen_container,'red');
+        }
+        //else if()
+        else {
+            colorizer(vergeben_container,'green');
+            colorizer(offen_container,'green');
+        }
+    //Reihe: Verfügbar 
+
+}
+
+function colorizer(container,color) {
+    container.style='color:'+color+'!important;';
+}
 
 //Functions
     function globalsAnpassen() {

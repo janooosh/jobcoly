@@ -91,7 +91,7 @@ Keine Schichten verfügbar.
 <div class="row">
     <div class="col-md-12">
         <div class="alert alert-info">
-    <p><b>Aktuell sind keine freien Schichten verfügbar.</b></p>
+    <p><b>Aktuell sind für dich leider keine freien Schichten verfügbar. <br />Du willst trotzdem mithelfen? 💪🏻  Melde dich bei crew@olylust.de</b></p>
 </div>
     </div>
 </div>
@@ -100,7 +100,9 @@ Keine Schichten verfügbar.
 <hr />
 <div class="row">
     <div class="col-md-12">
-        <p>Es werden nur Schichten angezeigt, falls du an diesen auch Zeit hast (keine bereits zugesagte Schicht oder beworbene Schicht). <br />Auch nach einer Absage deiner Bewerbung kannst du dich auf die Schicht erneut bewerben.</p>
+        <div class="alert alert-info">
+        <span class="fa fa-info-circle"></span> Es werden nur Schichten angezeigt, falls du an diesen auch Zeit hast (keine bereits zugesagte Schicht oder beworbene Schicht). <br />
+        </div> 
     </div>
 </div>
 @endsection

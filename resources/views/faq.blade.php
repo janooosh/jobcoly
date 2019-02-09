@@ -117,16 +117,17 @@ use Illuminate\Support\Facades\Auth;
             </div>
             <div id="faq5" class="panel-collapse collapse">
               <div class="panel-body">
-                  Die meisten Schichten bieten Gutscheine als Entlohnung, i.d.R. 3 Gutscheine/h. Wie viel das bei der jeweiligen Schicht genau ist, findest du auf der letzten Bewerbungsseite, unter "Schichten" oder auch unter "Rewards". Einige Schichten erhalten mehr Gutscheine pro Stunde. <br />
-                Die Gutscheine sind so angepasst, dass sie dir stets <b>mindestens</b> den Wert von Streifen geben. Die Gutscheine werden minutengenau berechnet, dadurch also im Zweifelsfall auch aufgerundet. Du erhälst Gutscheine stets für den tatsächlich geleisteten Stundenaufwand. Falls eine Schicht also länger geht als geplant, 
+                  Die meisten Schichten bieten Gutscheine als Entlohnung, i.d.R. 3 Gutscheine/h. Wie viel das bei der jeweiligen Schicht genau ist, findest du auf der letzten Bewerbungsseite, unter "Schichten" oder auch unter "Rewards". <br />
+                Die Gutscheine sind so angepasst, dass sie dir stets <b>mehr</b> Wert als alte Streifen geben. Die Gutscheine werden minutengenau berechnet, dadurch also im Zweifelsfall auch aufgerundet. Du erhälst Gutscheine stets für den tatsächlich geleisteten Stundenaufwand. Falls eine Schicht also länger geht als geplant, 
                 erhälst du natürlich auch mehr Gutscheine. <br />
 
-                Eine Übersicht sowie weitere Informationen findest du unter "Rewards". <br /><br />
-                Die Gutscheine werden nach der OlyLust auch in den Betrieben (Bierstube, Lounge, Disko) einsetzbar sein und ersetzen damit die Streifenkarten. <br />
-                1 Gutschein = 1 Antialkoholisches Getränk/1 Shot <br />
-                2 Gutscheine = 1 Longdrink oder Bier (Helles/Radler/Weißbier/Desperados), 1 Red Bull, 1 Essen (OlyLust) <br />
-                3 Gutscheine = 1 Cocktail <br />
-                <br />Der Wert für ein Essen in der Bierstube wird zeitnah noch ergänzt.
+                <a type="button" href="{{asset('doc/Crew.pdf')}}" target="_blank" class="btn btn-outline btn-primary "><span class="fa fa-file-pdf-o "></span> Entlohnungsmodell</a>
+                <br /><br />
+                Die Gutscheine werden nach der OlyLust auch in den Betrieben (Bierstube, Lounge, Disko) einsetzbar sein und <b>ersetzen damit die Streifenkarten</b>. <br />
+                1 Gutschein = 1 Bier, 1 Longdrink/Antialkoholisches Getränk, 1 große Portion Pommes (Bierstube) <br />
+                2 Gutscheine = 1 Cocktail (OlyLounge), 1 Salat (Bierstube) <br />
+                4 Gutscheine = 1 Tagesessen (Bierstube), inkl. Burgermontag sowie Schnitzel/Currywurst etc. <br />
+
             </div>
             </div>
           </div>

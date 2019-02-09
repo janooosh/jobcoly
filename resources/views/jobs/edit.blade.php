@@ -53,13 +53,21 @@ Abkürzungen müssen 2 Zeichen haben, es werden keine Zahlen akzeptiert.</p>
         </div>
     </div>
     <div class="row">
-            <div class="col-md-5 form-group" style="padding-bottom: 20px">
+            <div class="col-md-4 form-group" style="padding-bottom: 20px">
                 <label for="jobgutscheine">Gutscheine (/h) *</label>
                 <input class="form-control" type="number" id="jobgutscheine" name="jobgutscheine" value="{{$job->gutscheine}}" required autofocus/>
             </div>
-            <div class="col-md-5 form-group" style="padding-bottom: 20px">
+            <div class="col-md-4 form-group" style="padding-bottom: 20px">
                 <label for="jobawe">AWE (/h) *</label>
                 <input class="form-control" type="number" id="jobawe" name="jobawe" value="{{$job->awe}}" required autofocus/>
+            </div>
+            <div class="col-md-2 form-group" style="padding-bottom: 20px">
+                <label for="jobextern">Für Externe? *</label>
+                <select class="form-control" id="jobextern" name="jobextern" autofocus>
+                    <option value="" disabled>Bitte auswählen...</option>
+                    <option value="1" {{$job->is_extern=='1'?'selected':''}}>Ja</option>
+                    <option value="0" {{$job->is_extern=='0'?'selected':''}}>Nein</option>
+                </select>
             </div>
     </div>
     <div class="row p-10">
