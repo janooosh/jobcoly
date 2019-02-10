@@ -183,7 +183,7 @@ use Carbon\Carbon;
                                     @else
                                         <ul class="listgroup">
                                             @foreach($user->activeAssignments as $other)
-                                        <li class="list-group-item"> <a type="button" class="btn btn-default" title="Zur Schicht" target="_blank" href="{{route('shifts.show',$other->shift->id)}}"><span class="fa fa-info"></span></a> {{$other->shift->job->short}} {{$other->shift->area == '' ? '':'('.$other->shift->area.')' }} | {{$other->shift->shiftgroup->name}} <small>{{Carbon::parse($other->shift->starts_at)->format('H:i')}} - {{Carbon::parse($other->shift->ends_at)->format('H:i')}}</small> <span class="badge">{{ShiftsController::getDuration($other->shift->id, '%H:%I')}}</span></li>
+                                        <li class="list-group-item"> <a type="button" class="btn btn-default" title="Zur Schicht" target="_blank" href="{{route('shifts.show',$other->shift->id)}}"><span class="fa fa-info"></span></a> {{$other->shift->job->short}} {{$other->shift->area == '' ? '':'('.$other->shift->area.')' }} | {{$other->shift->shiftgroup->name}} <small>{{Carbon::parse($other->shift->starts_at)->format('d.m., H:i')}} - {{Carbon::parse($other->shift->ends_at)->format('H:i')}}</small> <span class="badge">{{ShiftsController::getDuration($other->shift->id, '%H:%I')}}</span></li>
                                             @endforeach
                                         </ul>
                                     @endif
