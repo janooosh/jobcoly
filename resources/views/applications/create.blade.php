@@ -33,7 +33,7 @@ use Carbon\Carbon;
         von <b>{{Carbon::parse($shift->starts_at)->format('H:i')}}</b> bis <b>{{Carbon::parse($shift->ends_at)->format('H:i')}}</b>.</span></p>
 
     @if (Auth::user()->is_praside==1 || Auth::user()->ausschuss!="")
-        <p>Der Schicht entsprechen {{Carbon::parse($shift->starts_at)->diff(Carbon::parse($shift->ends_at))->format('%H:%I')}} Pflichtstunden.
+        <p>Der Schicht entsprechen <b>{{Carbon::parse($shift->starts_at)->diff(Carbon::parse($shift->ends_at))->format('%H:%I')}} Pflichtstunden</b>.
            Du erhälst folgende Entlohnung:</p>
     @else
         <p>Du sammelst keine Pflichtstunden und erhälst folgende Entlohnung für deine Schicht:</p>
@@ -48,9 +48,8 @@ use Carbon\Carbon;
     @endif
 
      </ul>
-     <br />
      <a type="button" href="{{asset('doc/Crew.pdf')}}" target="_blank" class="btn btn-outline btn-primary "><span class="fa fa-file-pdf-o "></span> Entlohnung</a>
-     <br />
+     <br /><br />
     @if($shift->shiftgroup->description!="")
     <h4>{{$shift->shiftgroup->name}}<small> {{$shift->shiftgroup->subtitle}}</small></h4>
     <p>{{$shift->shiftgroup->description}}</p>
