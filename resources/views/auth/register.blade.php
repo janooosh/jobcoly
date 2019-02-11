@@ -179,7 +179,7 @@
                   <div class="col-md-12 form-group">
                       <label for="aboutyou">Anmerkungen/Bemerkungen/Über Dich</label>
                       <textarea id="aboutyou" name="aboutyou" placeholder ="Erzähl uns etwas über dich! Warst du bereits auf früheren OlyLüsten?" class="form-control" rows="1" maxlength="190"></textarea>
-                    <br/><small>Maximal 190 Zeichen</small>
+                    <small>Maximal 190 Zeichen</small>
                     </div>
               </div>
               <div class="row">
