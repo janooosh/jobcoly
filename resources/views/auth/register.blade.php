@@ -178,7 +178,7 @@
               <div class="row">
                   <div class="col-md-12 form-group">
                       <label for="aboutyou">Anmerkungen/Bemerkungen/Über Dich</label>
-                      <textarea id="aboutyou" name="aboutyou" placeholder ="Erzähl uns etwas über dich! Warst du bereits auf früheren OlyLüsten?" class="form-control" rows="3"></textarea>
+                      <textarea id="aboutyou" name="aboutyou" placeholder ="Erzähl uns etwas über dich! Warst du bereits auf früheren OlyLüsten?" class="form-control" rows="3" maxlength="255"></textarea>
                   </div>
               </div>
               <div class="row">
