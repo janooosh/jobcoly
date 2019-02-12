@@ -11,6 +11,13 @@ use Carbon\Carbon;
     </div>
 </div>
 
+<div class="row">
+    <div class="col-md-12">
+        <div class="alert alert-info">
+        <span class="fa fa-info-circle"></span> Es werden nur Schichten angezeigt, falls du an diesen auch Zeit hast (keine bereits zugesagte Schicht oder beworbene Schicht).<br />
+        </div> 
+    </div>
+</div>
 
 <?php
 $zaehler = 0;
@@ -90,19 +97,10 @@ Keine Schichten verfügbar.
 @if($zaehler<1)
 <div class="row">
     <div class="col-md-12">
-        <div class="alert alert-info">
     <p><b>Aktuell sind für dich leider keine freien Schichten verfügbar. <br />Du willst trotzdem mithelfen? 💪🏻  Melde dich bei crew@olylust.de</b></p>
-</div>
     </div>
 </div>
 
 @endif
-<hr />
-<div class="row">
-    <div class="col-md-12">
-        <div class="alert alert-info">
-        <span class="fa fa-info-circle"></span> Es werden nur Schichten angezeigt, falls du an diesen auch Zeit hast (keine bereits zugesagte Schicht oder beworbene Schicht). <br />
-        </div> 
-    </div>
-</div>
+<br />
 @endsection

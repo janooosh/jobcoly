@@ -47,7 +47,7 @@
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                             </button>
-                            <a class="navbar-brand" href="index.html">{{ config('app.name', 'Laravel') }}</a>
+                            <a class="navbar-brand" href="{{route('home')}}">{{ config('app.name', 'Laravel') }}</a>
                         </div>
                         <!-- /.navbar-header -->
             
@@ -135,8 +135,12 @@
 
                                     {{-- START ADMIN --}}
                                     @if(Auth::user()->is_admin=='1')
+                                    
                                     <li>
                                         <a style="font-style:italic; color:black; text-align:center;">ADMINISTRATOR</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{route('shiftplan.index')}}"><i class="fa fa-calendar"></i> Schichtplan</a>
                                     </li>
                                     <li>
                                         <a href="{{route('transaction.browser')}}"><i class="fa fa-money"></i> Gutscheine</a>
@@ -184,7 +188,7 @@
     <footer class="fixed-bottom">
     <div style="background-color:#f5f5f5; border: 1px solid #e3e3e3; text-align:center; color:#777;">
     &copy; 2018 Studenten im Olympiazentrum e.V. | <a href="{{route('impressum')}}" title="Impressum">Impressum</a> | <a href="{{route('datenschutz')}}">Datenschutz</a>
-    <br /><small><i class="fa fa-heart"></i> <i class="fa fa-beer"></i> ~ <a href="https://github.com/janooosh/jobcoly" target="_blank">jobcly v.0.1</a> | Letztes Update: 28.01.2019 00:46</small>
+    <br /><small><i class="fa fa-heart"></i> <i class="fa fa-beer"></i> ~ <a href="https://github.com/janooosh/jobcoly" target="_blank">jobcly v.0.2b</a> | Letztes Update: 12.02.2019 04:34</small>
     </div>
     
     </footer> 

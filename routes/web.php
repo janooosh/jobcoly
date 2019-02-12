@@ -35,6 +35,8 @@ Route::post('/profil','BenutzerController@updateProfile')->name('profil.update')
 Route::get('shirt-umfrage','BenutzerController@shirtSurveyDisplay')->name('profil.shirtsurvey');
 Route::post('shirt-umfrage','BenutzerController@shirtSurveyPost')->name('shirtSurvey.save');
 
+Route::get('schichtplan','ShiftPlanController@index')->name('shiftplan.index');
+Route::post('schichtplan','ShiftPlanController@banane')->name('shiftplan.show');
 
 Route::get('shifts/{id}/destroy','ShiftsController@destroy');
 Route::get('shifts/admin','ShiftsController@showAll')->name('shifts.all');

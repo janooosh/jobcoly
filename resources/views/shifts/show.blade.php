@@ -331,6 +331,8 @@ use Illuminate\Support\Facades\Auth;
             </div>
         </div>
     </div> {{-- Ende Pannel --}}
+    <br />
+    <a href="/shifts/{{$shift->id}}/edit" target="_blank" title="Schicht Bearbeiten"><button type="button" class="btn btn-outline btn-primary"><span class="fa fa-pencil"></span> Schicht Bearbeiten</button></a>
 
     <br />
 
