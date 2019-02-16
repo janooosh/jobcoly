@@ -53,33 +53,54 @@ use \App\Http\Controllers\ShiftsController;
 <p>Es sind {{count($user)}} Benutzer registriert.</p>
 <input type="text" class="form-control" id="searchUser" oninput="searchTable('searchUser','userTable')" placeholder="Benutzer durchsuchen...."/>
 <br />
+<div class="row">
+    <div class="col-md-6">
+        <input type="checkbox" id='pflichtler' value=""> Nur Pflichtschichten anzeigen
+    </div>
+    <div class="col-md-6">
+            <a href="{{route('users.export_all')}}" target="_blank" title="CSV Datei herunterladen"><button type="button" class="btn btn-outline btn-success btn-xs"><span class="fa fa-download"></span> Alle Benutzer herunterladen</button></a>   
+    </div>
+</div>
+<br /><br />
 <table class="table table-hover table-bordered" id="userTable">
         <thead>
             <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Name</th>
-                <th scope="col">E-Mail</th>
-                <th scope="col">Mobil</th>
-                <th scope="col">Schichten (Aktiv)</th>
+                <th scope="col">Pflichtschichten?</th>
                 <th scope="col">Stunden (Aktiv)</th>
                 <th scope="col">Registriert</th>
-                <th scope="col"></th>
                 <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
             @foreach($user as $u)
-            <tr>
+            <tr 
+            @if($u->is_pflichtschicht && $u->working>=4)
+                style="background-color:rgba(0,255,0,0.04);"
+            @elseif($u->is_pflichtschicht && $u->working<8 )
+                style="background-color:rgba(255,0,0,0.1);"
+            @endif
+            name="pflicht{{$u->is_pflichtschicht}}"
+            >
                 <th scope="row">{{$u->id}}</th>
-                <td>{{$u->firstname}} {{$u->surname}}</td>
-                <td>{{$u->email}}</td>
-                <td>{{$u->mobil==''?'k.A.':$u->mobil}}</td>
-                <td>{{count($u->activeAssignments)}}</td>
-                <td>{{$u->working}}</td>
-                <td>{{$u->registriert}}</td>
-                <td><a href="{{ route('users.view',$u->id)}}" type="button" class="btn btn-default" title='Profil anzeigen'><i class="fa fa-eye"></i> Profil Anzeigen</a></td>
+                <td><a href="{{route('users.view',$u->id)}}" target="_blank" title="Zu {{$u->firstname}}'s Profil"><button type="button" class="btn btn-outline btn-success btn-xs"><span class="fa fa-user"></span></button></a> {{$u->firstname}} {{$u->surname}}</td>
+                <td>
+                    @if($u->is_pflichtschicht)
+                        @if($u->is_praside && $u->ausschuss)
+                        Präside, {{$u->ausschuss}}
+                        @elseif($u->is_praside && !($u->ausschuss))
+                        Präside
+                        @elseif(!($u->is_praside) && $u->ausschuss)
+                        {{$u->ausschuss}}
+                        @endif
+                    @else
+                        -
+                    @endif
                 </td>
-                <td><button type="button" data-toggle="modal" data-target="#changepw{{$u->id}}" class="btn btn-default" title='Passwort zurücksetzen'><i class="fa fa-lock"></i> Passwort Zurücksetzen</button></td>
+                <td>{{$u->working}}</td>
+                <td>{{$u->registriert}}</td></td>
+                <td><button type="button" data-toggle="modal" data-target="#changepw{{$u->id}}" class="btn btn-default" title='Passwort zurücksetzen'><i class="fa fa-lock"></i> Passwort</button></td>
                 
                 <div class="modal fade" id="changepw{{$u->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
                         <div class="modal-dialog">
@@ -156,4 +177,5 @@ use \App\Http\Controllers\ShiftsController;
 </div>
 @endif
 </div>
+<script src="{{ asset('js/user.js')}}"></script>
 @endsection

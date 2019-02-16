@@ -616,4 +616,21 @@ public static function rewarder() {
         return $gutscheine;
     }
 
+    /**
+     * EXPORT FUNKTIONEN
+     */
+    public function exportAll() {
+        $users = User::get(); // All users
+
+        foreach($users as $u) {
+            $duration = 0;
+            foreach($u->activeAssignments as $x) {
+                $duration += Carbon::parse($x->shift->starts_at)->diffInMinutes(Carbon::parse($x->shift->ends_at));
+            }
+            $u->working = $duration;
+        }
+        $csvExporter = new \Laracsv\Export();
+        $csvExporter->build($users, ['firstname'=>'Vorname','surname'=>'Nachname','email'=>'E-Mail','mobile'=>'Mobil','is_pflichtschicht'=>'Pflichtschicht','is_praside'=>'Präside','ausschuss'=>'Ausschuss','working'=>'Zugewiesene Zeit (Minuten)'])->download();
+    }
+
 }

@@ -69,6 +69,8 @@ Route::get('users/','BenutzerController@showUsers')->name('users');
 Route::get('users/{id}','BenutzerController@showSingleUser')->name('users.view');
 Route::post('users/changepw/{id}','BenutzerController@changepw')->name('users.password');
 
+Route::get('users/export/all','BenutzerController@exportAll')->name('users.export_all');
+
 Route::get('supervisor/','SupervisorController@index')->name('supervisor');
 Route::get('supervisor/team/{id}','SupervisorController@myTeam')->name('supervisor.team');
 Route::get('supervisor/team/{id}/review','SupervisorController@review')->name('supervisor.review');
