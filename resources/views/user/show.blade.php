@@ -163,6 +163,18 @@ use Carbon\Carbon;
                 <i class="fa fa-clock-o"></i> Zugewiesene Stunden: {{$user->working}}
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-12">
+                <i class="fa fa-medkit"></i> Gesundheitszeugnis laut Bewerbung: 
+                @if($user->has_gesundheitszeugnis===1)
+                Ja
+                @elseif($user->has_gesundheitszeugnis===0)
+                Nein
+                @else
+                Keine Angabe
+                @endif
+            </div>
+        </div>
         <hr />
         <div class="row">
             <div class="col-md-12">

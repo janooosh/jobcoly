@@ -86,7 +86,7 @@ use \App\Http\Controllers\PrivilegeController;
                         <td>{{Carbon::parse($a->shift->starts_at)->format('D d.m.')}}</td>
                         <td>{{$a->shift->job->short}}</td>
                         <td><a href="{{route('shifts.show',$a->shift->id)}}" target="_blank" title="Zur Schicht"><button type="button" class="btn btn-outline btn-primary btn-xs"><span class="fa fa-info"></span></button></a> {{$a->shift->job->name}} </td>
-                        <td><a href="{{route('users.view',$a->user->id)}}" target="_blank" title="Zu {{$a->user->firstname}}'s Profil"><button type="button" class="btn btn-outline btn-success btn-xs"><span class="fa fa-user"></span></button></a> {{$a->user->firstname.' '.$a->user->surname}}</td>
+                        <td><a href="{{route('users.view',$a->user->id)}}" target="_blank" title="Zu {{$a->user->firstname}}'s Profil"><button type="button" class="btn btn-outline btn-success btn-xs"><span class="fa fa-user"></span></button></a> {{$a->user->firstname.' '.$a->user->surname}} {{$a->user->has_gesundheitszeugnis?'(G)':''}}</td>
                         <td>{{Carbon::parse($a->shift->starts_at)->format('H:i')}}</td>
                         <td>{{Carbon::parse($a->shift->ends_at)->format('H:i')}}</td>
                     </tr>
