@@ -88,3 +88,6 @@ Route::post('privileges/update','PrivilegeController@update')->name('privilege.u
 
 //Transaction Routes
 Route::get('transaction/','TransactionController@index')->name('transaction.browser');
+Route::post('transaction/shirt','TransactionController@shirtPost')->name('transaction.shirtPost');
+Route::post('transaction/ticket','TransactionController@ticketPost')->name('transaction.ticketPost');
+Route::post('transaction/gutschein','TransactionController@gutscheinPost')->name('transaction.gutscheinPost');

@@ -49,4 +49,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function rejectedApplications() {
         return $this->hasMany('App\Application')->where('status','Rejected');
     }
+    public function transactions() {
+        return $this->hasMany('App\Transaction');
+    }
 }

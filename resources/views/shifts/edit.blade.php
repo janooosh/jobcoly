@@ -53,7 +53,7 @@ use \App\Http\Controllers\PrivilegeController;
 
 @if(count($jobs)>0 and count($shiftgroups)>0)
 {{-- Form --}}
-<form method="POST" action="{{ route('shifts.update', $shift->id)}}">
+<form method="POST" action="{{route('shifts.update')}}">
 @method('PATCH')
 @csrf
 <!-- Jobauswahl-->

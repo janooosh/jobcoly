@@ -400,6 +400,43 @@ public static function rewarder() {
             
         }
         $user->working = $duration;
+
+        /**
+         * User Zeiten
+         *  */
+            //All Assignments
+            $filter = ['user_id'=>Auth::user()->id,'status'=>'Aktiv'];
+            $assignments = Assignment::where($filter)->get();
+
+            //Bestätigt? Fülle beide Arrays
+            $confirmed = array(); //Array of Assignments
+            $not_yet_confirmed = array(); //Array of Assignments
+            $not_confirmed = array(); //Array of Assignments
+            $unclear = array(); //Array of assignments
+            foreach($assignments as $a) {
+                //Schicht bestätigt & Assignment Bestätigt (==1 nicht benötigt, hab ich getestet)
+                if($a->shift->confirmed && $a->confirmed) {
+                    $confirmed[] = $a;
+                }
+                //Schicht bestägigt & Assignment NICHT Bestätigt
+                elseif($a->shift->confirmed && !$a->confirmed) {
+                    $not_confirmed[] = $a;
+                }
+                elseif ($a->shift->confirmed) {
+                    $not_yet_confirmed = $a;
+                }
+                else {
+                    $unclear[] = $a;
+                }
+            }
+
+            $user->t_confirmed = BenutzerController::durationOfAssignments($confirmed);
+            $user->t_not_yet_confirmed = BenutzerController::durationOfAssignments($not_yet_confirmed);
+            $user->t_not_confirmed = BenutzerController::durationOfAssignments($not_confirmed);
+            $user->t_unclear = BenutzerController::durationOfAssignments($unclear);
+
+            $user->gutscheine_issued = BenutzerController::gutscheineIssued($user->id);
+            $user->gutscheine_gesamt = BenutzerController::gutscheineGesamt($user->id);
         return view('user.show', compact('user'));
     }
 
@@ -613,6 +650,50 @@ public static function rewarder() {
             $gutscheine = 0.7*$gutscheine;
         }
         $gutscheine = round($gutscheine);
+        return $gutscheine;
+    }
+    /**
+     * durationOfAssignments
+     * Adds up the durations of an array of assignments.
+     * Returns time in minutes.
+     */
+    public static function durationOfAssignments($assignments) {
+        $duration = 0;
+        foreach($assignments as $a) {
+            //If confirmed -> nehme Zeit aus Assignments, sonst aus Shift
+            if($a->shift->confirmed) {
+                $duration += Carbon::parse($a->start)->diffInMinutes(Carbon::parse($a->end));
+            }
+            elseif(!$a->shift->confirmed) { //Shift nicht confirmed (abgeschlossen)
+                $duration += Carbon::parse($a->shift->starts_at)->diffInMinutes(Carbon::parse($a->shift->ends_at));
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * countGutscheine (user_id)
+     */
+    public static function gutscheineIssued($user_id) {
+        $user = User::find($user_id);
+        $transactions = $user->transactions;
+        $gutscheine = 0;
+        foreach($transactions as $t) {
+            if($t->ausgabe) {
+                $gutscheine += $t->amount;
+            }
+        }
+
+        return $gutscheine;
+    }
+
+    public static function gutscheineGesamt($user_id) {
+        $user = User::find($user_id);
+        $transactions = $user->transactions;
+        $gutscheine = 0;
+        foreach($transactions as $t) {
+            $gutscheine += $t->amount;
+        }
         return $gutscheine;
     }
 
