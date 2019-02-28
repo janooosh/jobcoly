@@ -338,7 +338,7 @@ use Carbon\Carbon;
                 <tr style="border-top: 2px solid grey;">
                     <td colspan="2"><b>Σ Summe</b></td>
                     <td><b>{{$user->gutscheine_gesamt}}</b></td>
-                    <td colspan="3"><small>{{$user->gutscheine_issued}} ausgegeben</small></td>
+                    <td colspan="3"><small></small></td>
                 </tr>
             </tfoot>
         </table>
