@@ -405,7 +405,7 @@ public static function rewarder() {
          * User Zeiten
          *  */
             //All Assignments
-            $filter = ['user_id'=>Auth::user()->id,'status'=>'Aktiv'];
+            $filter = ['user_id'=>$user->id,'status'=>'Aktiv'];
             $assignments = Assignment::where($filter)->get();
 
             //Bestätigt? Fülle beide Arrays
@@ -422,11 +422,9 @@ public static function rewarder() {
                 elseif($a->shift->confirmed && !$a->confirmed) {
                     $not_confirmed[] = $a;
                 }
-                elseif ($a->shift->confirmed) {
-                    $not_yet_confirmed = $a;
-                }
-                else {
-                    $unclear[] = $a;
+                //Schicht NOCH nicht bestätigt
+                elseif(!$a->shift->confirmed) {
+                    $not_yet_confirmed[] = $a;
                 }
             }
 
@@ -437,7 +435,44 @@ public static function rewarder() {
 
             $user->gutscheine_issued = BenutzerController::gutscheineIssued($user->id);
             $user->gutscheine_gesamt = BenutzerController::gutscheineGesamt($user->id);
+
+            //Assign arrays of assignments to user
+            $user->a_confirmed = $confirmed;
+            $user->a_not_yet_confirmed = $not_yet_confirmed;
+            $user->a_not_confirmed=$not_confirmed;
+            
+            //Calculate Gutscheine
+
         return view('user.show', compact('user'));
+    }
+
+    /**
+     * Calculate Gutscheine
+     * 
+     * Falls Schicht, Assignment & Salarygroup bestätigt -> Grundlage salarygroup t_g
+     * falls Schicht, Assignment ja aber salarygroup nicht -> Grundlage assignment
+     * Falls Schicht ja aber Assignment und salarygroup nicht -> Grundlage shift
+     */
+
+    public static function calculateGutscheine($assignments) {
+        $gutscheine = 0;
+        
+        foreach($assignments as $a) {
+            if($a->shift->confirmed && $a->confirmed && $a->salarygroup->confirmed) {
+                $gutscheine += $a->salarygroup->t_g/60*$a->salarygroup->g;
+            }
+            elseif($a->shift->confirmed && $a->confirmed && !$a->salarygroup->confirmed) {
+                $gutscheine += Carbon::parse($a->start)->diffInMinutes(Carbon::parse($a->end))/60*$a->shift->gutscheine;
+            }
+            elseif($a->shift->confirmed && !$a->confirmed) {
+                $gutscheine += Carbon::parse($a->shift->starts_at)->diffInMinutes(Carbon::parse($a->shift->ends_at))/60*$a->shift->gutscheine;
+            }
+            elseif(!$a->shift->confirmed) {
+                $gutscheine += Carbon::parse($a->shift->starts_at)->diffInMinutes(Carbon::parse($a->shift->ends_at))/60*$a->shift->gutscheine;
+            }
+
+        }   
+        return $gutscheine;
     }
 
     /**
@@ -658,6 +693,9 @@ public static function rewarder() {
      * Returns time in minutes.
      */
     public static function durationOfAssignments($assignments) {
+        if(empty($assignments)) {
+            return 0;
+        }
         $duration = 0;
         foreach($assignments as $a) {
             //If confirmed -> nehme Zeit aus Assignments, sonst aus Shift

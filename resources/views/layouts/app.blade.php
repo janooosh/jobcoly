@@ -143,9 +143,6 @@
                                         <a href="{{route('shiftplan.index')}}"><i class="fa fa-calendar"></i> Schichtplan</a>
                                     </li>
                                     <li>
-                                        <a href="{{route('transaction.browser')}}"><i class="fa fa-money"></i> Gutscheine</a>
-                                    </li>
-                                    <li>
                                         <a href="{{route('shifts.all')}}"><i class="fa fa-suitcase"></i> Schichten verwalten</a>
                                     </li>
                                     <li>

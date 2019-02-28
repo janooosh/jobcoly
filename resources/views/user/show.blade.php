@@ -1,6 +1,7 @@
 <?php
 use \App\Http\Controllers\ShiftsController;
 use \App\Http\Controllers\TransactionController;
+use \App\Http\Controllers\BenutzerController;
 use Carbon\Carbon;
 ?>
 
@@ -261,7 +262,33 @@ use Carbon\Carbon;
 <hr />
 <div class="row">
     <div class="col-md-8">
-        Bereits erhaltene Gutscheine: <b>{{$user->gutscheine_issued}}</b>
+        <div class="row">
+            <div class="col-md-7">
+                Anspruch aus bestätigten Schichten <br />
+                Empfehlung aus offenen Schichten <br />
+                Bereits erhaltene Gutscheine: <br />
+                Gutscheine aus Waren: 
+
+            </div>
+            <div class="col-md-5">
+                {{BenutzerController::calculateGutscheine($user->a_confirmed)}}<br />
+                {{round(0.7*BenutzerController::calculateGutscheine($user->a_not_yet_confirmed),2)}} <small>({{BenutzerController::calculateGutscheine($user->a_not_yet_confirmed)}})</small><br />
+                - {{$user->gutscheine_issued}} <br />
+                - {{$user->gutscheine_gesamt - $user->gutscheine_issued}} <br />
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-7">
+                <b>Empfohlene Ausgabe:</b> <br />
+                <small>Maximal Mögliche Ausgabe:</small>
+            </div>
+            <div class="col-md-5">
+                <b>{{round(BenutzerController::calculateGutscheine($user->a_confirmed) + 0.7*BenutzerController::calculateGutscheine($user->a_not_yet_confirmed) - $user->gutscheine_gesamt)}}</b><br />
+                <small>{{round(BenutzerController::calculateGutscheine($user->a_confirmed) + BenutzerController::calculateGutscheine($user->a_not_yet_confirmed) - $user->gutscheine_gesamt)}}</small>
+            </div>
+        </div>
+
     </div>
 
     <div class="col-md-4">
@@ -317,6 +344,98 @@ use Carbon\Carbon;
         </table>
         <p><small><i>* = Keine Gutscheinausgabe da Warenwert</i></small></p>
         @endif   
+    </div>
+</div>
+<hr />
+
+{{-- Schicht Reihe --}}
+<div class="row">
+    <div class="col-md-12">
+        <h5>{{count($user->activeAssignments)}} zugesagte Schichten</h5>
+        <table class="table table-sm table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Job</th>
+                    <th scope="col">Gruppe</th>
+                    <th scope="col">Zeit</th>
+                    <th scope="col">Dauer</th>
+                    <th scope="col">Entlohnung</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="7"><b>{{count($user->a_confirmed)}} bestätigte Schicht(en)</b></td>
+                </tr>
+
+                {{-- Bestätigt --}}
+                @foreach($user->a_confirmed as $a)
+                <tr>
+                    <td>{{$a->id}}</td>
+                    <td><a href="{{route('shifts.show',$a->shift->id)}}" target="_blank"><span class="fa fa-info"></span></a> {{$a->shift->job->name}} ({{$a->shift->job->short}})</td>
+                    <td>{{$a->shift->shiftgroup->name}}</td>
+                    <td>{{Carbon::parse($a->start)->format('d.m, H:i')}} - {{Carbon::parse($a->end)->format('H:i')}}</td>
+                    <td>{{Carbon::parse($a->start)->diff(Carbon::parse($a->end))->format('%H:%I')}}</td>
+                    @if($a->salarygroup->confirmed)
+                        <td><small>Abgeschlossen. {{$a->salarygroup->g}} G /h, {{$a->salarygroup->a}} €/h.</small></td>
+                        <td>{{$a->salarygroup->t_g/60*$a->salarygroup->g}} </td>
+                    @else
+                        <td><small>Warte auf Auswahl. {{$a->salarygroup->g}} G /h, {{$a->salarygroup->a}} €/h.</small></td>
+                        <td>{{Carbon::parse($a->start)->diffInMinutes(Carbon::parse($a->end))/60*$a->salarygroup->g}} </td>
+                    @endif
+                </tr>
+                @endforeach
+                <tr>
+                    <td colspan="2"></td>
+                    <td colspan="3"></td>
+                    <td><b>Σ Summe</b></td>
+                    <td>{{BenutzerController::calculateGutscheine($user->a_confirmed)}}</td>
+                </tr>
+
+                {{-- Noch nicht bestätigt --}}
+                <tr style="border-top: 3px solid grey;">
+                        <td colspan="2"><b>{{count($user->a_not_yet_confirmed)}} offene Schicht(en)</b></td>
+                        <td colspan="3"></td>
+                        <td><small>Gutscheine /h</small></td>
+                        <td><small>Gutscheine</small></td>
+                </tr>
+                @foreach($user->a_not_yet_confirmed as $a)
+                <tr>
+                    <td>{{$a->id}}</td>
+                    <td><a href="{{route('shifts.show',$a->shift->id)}}" target="_blank"><span class="fa fa-info"></span></a> {{$a->shift->job->name}} ({{$a->shift->job->short}})</td>
+                    <td>{{$a->shift->shiftgroup->name}}</td>
+                    <td>{{Carbon::parse($a->shift->starts_at)->format('d.m, H:i')}} - {{Carbon::parse($a->shift->ends_at)->format('H:i')}}</td>
+                    <td>{{Carbon::parse($a->shift->starts_at)->diff(Carbon::parse($a->shift->ends_at))->format('%H:%I')}}</td>
+                    <td>{{$a->shift->gutscheine}}</td>
+                    <td>{{round(Carbon::parse($a->shift->starts_at)->diffInMinutes(Carbon::parse($a->shift->ends_at))/60*$a->shift->gutscheine,2)}}</td>
+                </tr>
+                @endforeach
+                <tr>
+                    <td colspan="2"></td>
+                    <td colspan="3"><small>Empfohlene Ausgabe: {{round(0.7*BenutzerController::calculateGutscheine($user->a_not_yet_confirmed))}} Gutscheine</small></td>
+                    <td><b>Σ Summe</b></td>
+                    <td>{{BenutzerController::calculateGutscheine($user->a_not_yet_confirmed)}}</td>
+                </tr>
+
+                {{-- Endgültig Nicht bestätigt --}}
+                <tr>
+                        <td colspan="7"><b>{{count($user->a_not_confirmed)}} nicht bestätigte Schicht(en)</b></td>
+
+                </tr>
+                @foreach($user->a_not_confirmed as $a)
+                <tr>
+                    <td>{{$a->id}}</td>
+                    <td><a href="{{route('shifts.show',$a->shift->id)}}" target="_blank"><span class="fa fa-info"></span></a> {{$a->shift->job->name}} ({{$a->shift->job->short}})</td>
+                    <td>{{$a->shift->shiftgroup->name}}</td>
+                    <td>{{Carbon::parse($a->shift->starts_at)->format('d.m, H:i')}} - {{Carbon::parse($a->shift->ends_at)->format('H:i')}}</td>
+                    <td>{{Carbon::parse($a->shift->starts_at)->diff(Carbon::parse($a->shift->ends_at))->format('%H:%I')}}</td>
+                    <td colspan="2"><i>Keine Entlohnung.</i></td>
+                </tr>
+                @endforeach
+
+            </tbody>
+        </table>
     </div>
 </div>
 
