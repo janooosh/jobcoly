@@ -101,6 +101,9 @@ class TransactionController extends Controller
      * Receiver = User ID vom Empfänger
      */
     public function shirtPost (Request $request) {
+        if(!Auth::user()->is_admin) {
+            return redirect('home')->with('warning','Kein Zugriff');
+        }
 
         $shirt_value = 6;
         $shirt_beschreibung = 'Schnitt: '.$request->get('shirtcut').', Größe: '.$request->get('shirtsize');
@@ -142,6 +145,9 @@ class TransactionController extends Controller
      * Receiver = User ID vom Empfänger
      */
     public function ticketPost (Request $request) {
+        if(!Auth::user()->is_admin) {
+            return redirect('home')->with('warning','Kein Zugriff');
+        }
 
         $request->validate([
             'receiver'=>'required|int|exists:users,id',
@@ -175,6 +181,9 @@ class TransactionController extends Controller
     }
 
     public function gutscheinPost(Request $request) {
+        if(!Auth::user()->is_admin) {
+            return redirect('home')->with('warning','Kein Zugriff');
+        }
         $request->validate([
             'receiver'=>'required|int|exists:users,id',
             'gutscheinanzahl'=>'required|int|max:99|min:1',
