@@ -177,11 +177,11 @@ class SupervisorController extends Controller
         }
 
         //Abschließen
-        foreach($assignments as $assignment) {
+        /*foreach($assignments as $assignment) {
             //SalarygroupsController::newAssignment($assignment); es gibt keine Salarygroups mehr...
             $assignment->confirmed=true;
             $assignment->save();
-        }
+        }*/
         //Close Shift
         $shift->confirmed = true;
         $shift->save();
