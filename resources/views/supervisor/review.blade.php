@@ -93,7 +93,7 @@ use \App\Http\Controllers\ShiftsController;
 </div>
 <div class="row">
     <div class="col-md-12">
-            <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#confirmshift2"><i class="fa fa-check"></i> Schicht Abschließen</button>
+            <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#confirmshift"><i class="fa fa-check"></i> Schicht Abschließen</button>
     <!-- Modal -->
 <div class="modal fade" id="confirmshift" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">

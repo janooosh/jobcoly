@@ -1,5 +1,6 @@
 <?php
 use \App\Http\Controllers\ShiftsController;
+use \App\Http\Controllers\AssignmentsController;
 use \App\Http\Controllers\TransactionController;
 use \App\Http\Controllers\BenutzerController;
 use Carbon\Carbon;
@@ -254,6 +255,8 @@ use Carbon\Carbon;
                         </div> {{-- Ende Panel --}}
 
                     </div>{{-- Ende Panelgroup --}}
+                    <a type="button" class="btn btn-default" data-toggle="modal" data-target="#assign"><span class="fa fa-plus-square"></span> Neue Zuweisung</a>
+
             </div> {{-- Ende col --}}
         </div> {{-- Ende Row --}}
     </div> {{-- Ende Rechte Spalte --}}
@@ -373,16 +376,16 @@ use Carbon\Carbon;
                 @foreach($user->a_confirmed as $a)
                 <tr>
                     <td>{{$a->id}}</td>
-                    <td><a href="{{route('shifts.show',$a->shift->id)}}" target="_blank"><span class="fa fa-info"></span></a> {{$a->shift->job->name}} ({{$a->shift->job->short}})</td>
+                    <td><a href="{{route('shifts.show',$a->shift->id)}}" target="_blank"> {{$a->shift->job->name}} ({{$a->shift->job->short}})</td>
                     <td>{{$a->shift->shiftgroup->name}}</td>
                     <td>{{Carbon::parse($a->start)->format('d.m, H:i')}} - {{Carbon::parse($a->end)->format('H:i')}}</td>
                     <td>{{Carbon::parse($a->start)->diff(Carbon::parse($a->end))->format('%H:%I')}}</td>
-                    @if($a->salarygroup->confirmed)
-                        <td><small>Abgeschlossen. {{$a->salarygroup->g}} G /h, {{$a->salarygroup->a}} €/h.</small></td>
-                        <td>{{$a->salarygroup->t_g/60*$a->salarygroup->g}} </td>
+                    @if($a->accepted)
+                        <td><small>Abgeschlossen. {{$a->shift->gutscheine}} G /h, {{$a->shift->awe}} €/h.</small></td>
+                        <td>{{$a->t_g/60*$a->shift->gutscheine}} </td>
                     @else
-                        <td><small>Warte auf Auswahl. {{$a->salarygroup->g}} G /h, {{$a->salarygroup->a}} €/h.</small></td>
-                        <td>{{Carbon::parse($a->start)->diffInMinutes(Carbon::parse($a->end))/60*$a->salarygroup->g}} </td>
+                        <td><small>Warte auf Auswahl. {{$a->shift->gutscheine}} G /h, {{$a->shift->awe}} €/h.</small></td>
+                        <td>{{Carbon::parse($a->start)->diffInMinutes(Carbon::parse($a->end))/60*$a->shift->gutscheine}} </td>
                     @endif
                 </tr>
                 @endforeach
@@ -403,7 +406,7 @@ use Carbon\Carbon;
                 @foreach($user->a_not_yet_confirmed as $a)
                 <tr>
                     <td>{{$a->id}}</td>
-                    <td><a href="{{route('shifts.show',$a->shift->id)}}" target="_blank"><span class="fa fa-info"></span></a> {{$a->shift->job->name}} ({{$a->shift->job->short}})</td>
+                <td><a href="{{route('shifts.show',$a->shift->id)}}" target="_blank"><span class="fa fa-info"></span></a> {{$a->shift->job->name}} ({{$a->shift->job->short}}) <a href="/supervisor/team/{{$a->shift->id}}/review" target="_blank"><span class="fa fa-key"></span></a></td>
                     <td>{{$a->shift->shiftgroup->name}}</td>
                     <td>{{Carbon::parse($a->shift->starts_at)->format('d.m, H:i')}} - {{Carbon::parse($a->shift->ends_at)->format('H:i')}}</td>
                     <td>{{Carbon::parse($a->shift->starts_at)->diff(Carbon::parse($a->shift->ends_at))->format('%H:%I')}}</td>
@@ -597,5 +600,64 @@ use Carbon\Carbon;
     <!-- /.modal-dialog -->
 </div>
 {{-- Ende Modal Gutschein --}}
+
+{{-- MODAL SCHICHTZUWEISUNG --}}
+<div class="modal fade" id="assign" tabindex="-1" role="dialog" aria-labelledby="assign" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <form method="POST" action="{{route('assignment.assign')}}">
+        @csrf
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel">Schichtzuweisung</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-1">
+                        <button type="submit" class="btn btn-primary btn-success"><i class="fa fa-save"></i></button>
+                    </div>
+                    <div class="col-xs-11">
+                        <input type="text" class="form-control" id="searchassignment" oninput="searchTable('searchassignment','assignmenttable')" placeholder="Durchsuchen...."/>
+                        <input type="hidden" name="userToAssign" value="{{$user->id}}"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                            <table class="table table-condensed" id="assignmenttable">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col"></th>
+                                            <th scope="col">Job</th>
+                                            <th scope="col">Start</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($shifts_all as $s)
+                                        @if(!AssignmentsController::isAssigned($user->id,$s->id))
+                                            <tr>
+                                                <td>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" name="shiftselect[]" value="{{$s->id}}" {{AssignmentsController::isAssigned($user->id,$s->id)?'checked':''}}>
+                                                    </div>
+                                                </td>
+                                                <td>{{$s->job->name}} ({{$s->job->short}})</td>
+                                                <td>{{Carbon::parse($s->starts_at)->format('D d.m., H:i')}} - {{Carbon::parse($s->ends_at)->format('H:i')}}</td>
+                                            </tr>
+                                        @endif
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                    </div>
+                </div>
+            </div>
+        </form>
+            <div class="modal-footer">
+            </div>
+        </div>
+        </form>
+            <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
 
 @endsection

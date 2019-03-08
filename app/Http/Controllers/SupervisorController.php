@@ -6,6 +6,7 @@ use App\User;
 use App\Shift;
 use App\Assignment;
 use Carbon\Carbon;
+use App\Salarygroup;
 use Illuminate\Http\Request;
 
 class SupervisorController extends Controller
@@ -157,7 +158,7 @@ class SupervisorController extends Controller
      * Schließt Schicht basierend auf Shift id ab (Änderungen danach nicht mehr möglich für Supervisor).
      * 
      */
-    public function close($shift_id) {
+    public static function close($shift_id) {
         $shift = Shift::find($shift_id);
         if(!PrivilegeController::isSupervisor(Auth::user()->id,$shift->id)) {
             if(Auth::user()->is_admin!='1') {
@@ -175,6 +176,12 @@ class SupervisorController extends Controller
             }
         }
 
+        //Abschließen
+        foreach($assignments as $assignment) {
+            //SalarygroupsController::newAssignment($assignment); es gibt keine Salarygroups mehr...
+            $assignment->confirmed=true;
+            $assignment->save();
+        }
         //Close Shift
         $shift->confirmed = true;
         $shift->save();

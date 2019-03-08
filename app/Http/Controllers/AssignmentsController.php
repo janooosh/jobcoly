@@ -238,6 +238,45 @@ class AssignmentsController extends Controller
         //
     }
 
+    public function assign(Request $request) {
+        //Darf er das? Admin Rights required
+        if(Auth::user()->is_admin==0) {
+            return redirect('home')->with('danger','Administrator-Rechte erforderlich.');
+        }
+
+        //Validate inputs
+        $request->validate([   
+            'userToAssign'=>'required|exists:users,id',
+            'shiftselect.*'=>'required|exists:shifts,id'
+        ]);
+
+        //return $request->get('shiftselect');
+
+        //Get Shifts
+        $shifts = $request->get('shiftselect');
+
+        //Get User
+        $user = User::find($request->get('userToAssign'));
+        if(empty($shifts)) {
+            return redirect('users/'.$user->id);
+        }
+        foreach($shifts as $s) {
+            $shift = Shift::find($s);
+            //New Assignment
+            $assignment = new Assignment([
+                'shift_id'=>$shift->id,
+                'user_id'=>$user->id,
+                'application_id'=>0,
+                'status'=>'Aktiv',
+                'start'=>$shift->starts_at,
+                'end'=>$shift->ends_at,
+                'notes_manager'=>'Nachträglich Zugelassen von '.Auth::user()->firstname.' '.Auth::user()->surname.'.'
+            ]);
+            $assignment->save();
+        }
+        return redirect('users/'.$user->id)->with('success','Zuweisung gespeichert');
+    }
+
     /**
      * Checks if a given user is already accepted for a certain shift.
      * Returns:
@@ -294,5 +333,26 @@ class AssignmentsController extends Controller
             }
         }
         return $minutes;
+    }
+
+    /**
+     * Checks if a user is assigned to an active assignment.
+     */
+    public static function isAssigned($user_id,$shift_id) {
+        try{
+            $user = User::find($user_id);
+            $assignment_filter = ['user_id'=>$user->id];
+            $assignments = Assignment::where($assignment_filter)->get();
+            $shift = Shift::find($shift_id)->get();  
+        }
+        catch (Exception $e) {
+            return ('Es ist ein unbekannter Fehler im System aufgetreten.');
+        }
+        foreach($assignments as $a) {
+            if($a->shift_id===$shift_id) {
+                return true;
+            }
+        }
+        return false;
     }
 }

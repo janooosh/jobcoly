@@ -4,12 +4,43 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Salarygroup;
 
 class SalarygroupsController extends Controller
 {
     public function __construct()
     {
         $this->middleware(['auth', 'verified']);
+    }
+
+    public static function newAssignment($assignment) {
+        //Entscheidung: Anhängen oder Neu Erstellen?
+        $s_p = $assignment->shift->p;
+        $s_a = $assignment->shift->awe;
+        $s_g = $assignment->shift->gutscheine;
+
+        $salarygroups = Salarygroup::all();
+        foreach($salarygroups as $sgroup) {
+            if($sgroup->p===$s_p && $sgroup->a===$s_a && $sgroup->g===$s_g && $sgroup->user_id===$assignment->user->id) {
+                //Füge Salarygroup hinzu
+                $assignment->salarygroup_id = $sgroup->id;
+                $assignment->save();
+                return;
+            }
+        }
+        //Neue Salarygroup
+        $sg = new Salarygroup([
+            'g'=>$assignment->shift->gutscheine,
+            'a'=>$assignment->shift->awe,
+            'p'=>$assignment->shift->p,
+            't_a'=>0,
+            't_g'=>0,
+            'confirmed'=>0
+        ]);
+        $sg->save();
+        $assignment->salarygroup_id = $sg->id;
+        $assignment->save();
+        return;
     }
 
     //Returns the Salarygroups of a given user id (as array of salarygroup IDs)

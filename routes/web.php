@@ -50,6 +50,7 @@ Route::get('applications/new/{shiftgroup}/{job}', 'ApplicationsController@select
 Route::get('applications/create/{id}', 'ApplicationsController@create'); //Final form, shift id ist am Start
 
 Route::get('assignments/my','AssignmentsController@my')->name('assignments.my');
+Route::post('assignments/assign','AssignmentsController@assign')->name('assignment.assign'); //Manuelle Zuweisung
 Route::post('assignments/reject','EvaluationsController@reject')->name('reject'); //Manager turns application down
 Route::post('applications/reject','ApplicationsController@reject')->name('applications.reject'); //Applicant rejects
 
@@ -78,8 +79,8 @@ Route::post('supervisor/team/save/{id}','SupervisorController@save')->name('supe
 Route::post('supervisor/team/close/{id}','SupervisorController@close')->name('supervisor.close');
 //MANAGE APPLICATIONS
 
-Route::get('rewards','BenutzerController@rewarder')->name('rewards');
-Route::post('rewards/save','BenutzerController@saveRewards')->name('rewards.save');
+Route::get('rewards','BenutzerController@doRewards')->name('rewards');
+Route::post('rewards/save','BenutzerController@saveRewardsNew')->name('rewards.save');
 /* Application routes */
 
 Route::post('privileges/update','PrivilegeController@update')->name('privilege.update');

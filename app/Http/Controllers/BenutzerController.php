@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Assignment;
+use App\Shift;
 use App\Salarygroup;
 use App\Transaction;
 use Carbon\Carbon;
@@ -18,9 +19,156 @@ class BenutzerController extends Controller
         $this->middleware(['auth', 'verified']);
     }
 
+public function saveRewardsNew(Request $request) {
+    $aktion = $request->get('saver')[0];
+    //return $aktion;
+    //Validate Inputs
+    $selecter = $request->get('selecter');
+    $checker = $request->get('checker'); //IDs (hidden field)
+    $gutscheine_fields = $request->get('gutscheine');
+    $awe_fields = $request->get('awe');
+    //Überprüfung: 1.) Empty, 2.) AWE Fields gleiche Länge Gutschein Fields? 3.) Selecter Gleiche Länge Gutschein Fields?
+    if(empty($selecter)) {
+        return redirect('rewards')->with('warning','Keine Schicht ausgewählt. Ich hab nix gespeichert.');
+    }
+    $assignments_selected = array(); //Assignments that are selected
+    foreach($selecter as $s) {
+        try {
+            $assignment = Assignment::find($s);
+            if($assignment->accepted || !$assignment->shift->confirmed) {
+                return redirect('rewards')->with('danger','Unzulässige Aktion, die Schicht kann nicht weiter bearbeitet werden. Bitte kontaktiere jan.haehl@olylust.de bei Fragen.');
+            }
+        }
+        catch(Exception $e) {
+            return redirect('rewards')->with('danger','Du Seggel, das ist unzulässsig.');
+        }
+        $assignments_selected[] = $assignment;
+    }
+
+    //+++ ÜBERPRÜFUNG +++ yeah...
+    $fehler = array();
+
+    //Wie viel Gutscheine hat er schon bekommen?
+    $gutscheine_gesamt = 0;
+    $t_filter = ['user_id'=>Auth::user()->id];
+    $transactions = Transaction::where($t_filter)->get();
+
+    foreach($transactions as $t) {
+        $gutscheine_gesamt+=$t->amount;
+    }
+
+    //Zeiten
+    $t_ausgegeben=0; //Zeit ausgegeben
+    $t_available=0; //Zeit Verfügbar
+    $t_awe=0; //Zeit für AWE ausgegeben
+    $t_gutscheine=0; //Zeit für Gutscheine ausgegeben
+    $gutscheine_temp = 0; //Wie viele Gutscheine lässt er sich hie auszahlen? Brauchen wir um später zu checken ob er genug Zeit in Gutscheine gesteckt hat, die er ggf. schon erhalten hat
+
+    $accepted = array();
+    $confirmed = array();
+
+    $a_filter = ['user_id'=>Auth::user()->id,'accepted'=>true];
+    $accepted_assignments = Assignment::where($a_filter)->get();
+    foreach($accepted_assignments as $a) {
+        if($a->shift->confirmed && $a->confirmed && $a->accepted) {
+            $accepted[] = $a;
+            $t_available += Carbon::parse($a->start)->diffInMinutes(Carbon::parse($a->end));
+            $t_awe+=$a->t_a;
+            $t_gutscheine+=$a->t_g;
+            $gutscheine_temp += Carbon::parse($a->start)->diffInMinutes(Carbon::parse($a->end))/60*$a->shift->gutscheine;
+        }
+        /*elseif($a->shift->confirmed && $a->confirmed && !$a->accepted) {
+            $confirmed[] = $a;
+            $t_available += Carbon::parse($a->start)->diffInMinutes(Carbon::parse($a->end));
+            $t_awe+=$a->t_a;
+            $t_gutscheine+=$a->t_g;
+        } */
+    }
+    //Gehe durch jede Reihe
+    
+    for($r = 0;$r<count($assignments_selected);$r++) {
+        
+        $a = $assignments_selected[$r];
+        $z = array_search($a->id,$checker);
+        $gutscheine_selectedMins =  TimecalcController::StringToMin($gutscheine_fields[$z]);
+        $awe_selectedMins = TimecalcController::StringToMin($awe_fields[$z]);
+        //Zeit ausgegeben für Reihe <= Zeit verfügbar für Reihe
+        $t_ausgegeben = 0;
+        $t_ausgegeben += $gutscheine_selectedMins;
+        $t_ausgegeben += $awe_selectedMins;
+        $t_available = Carbon::parse($a->start)->diffInMinutes(Carbon::parse($a->end));
+        if($t_ausgegeben > $t_available) {
+            $fehler[] = "Du hast mindestens für eine Schicht zu viel Zeit ausgegeben";
+        } 
+
+        //Collect t_gutscheine & t_awe
+        $t_gutscheine += $gutscheine_selectedMins;
+        $t_awe += $awe_selectedMins;
+
+        $gutscheine_temp += $gutscheine_selectedMins * $a->shift->gutscheine;
+    }
+
+    //Gehe erneut durch jede Reihe - zweite Iteration nötig, da beim ersten Mal erst die Daten gesammelt werden müssen (t_gutscheine, t_awe...)
+    for($x = 0;$x<count($assignments_selected);$x++) {
+        $a = $assignments_selected[$x];
+        $z = array_search($a->id, $checker);
+        $gutscheine_selectedMins =  TimecalcController::StringToMin($gutscheine_fields[$z]);
+        $awe_selectedMins = TimecalcController::StringToMin($awe_fields[$z]);
+
+        //If AWE, Pflicht an Gutscheinen erfüllt?
+        if($t_awe>0 && $t_gutscheine<($a->shift->p*60)) {
+            $fehler[] = "Du hast mindestens für eine Schicht zu früh AWE ausgewählt.";
+        }
+    }
+
+    //Gesamtzeit ausgegeben <= Gesamtzeit verfügbar
+    /*if($t_ausgegeben>$t_available) {
+        $fehler[] = "Du hast zu viel Zeit ausgegeben";
+    }*/
+
+    //Genug Gutscheine ausgewählt, da er ggf. schon welche hat?
+    if($gutscheine_temp<$gutscheine_gesamt) {
+        $fehler[] = "Du hast bereits Gutscheine erhalten und zu wenig Zeit für Gutscheine ausgewählt.";
+    }
+
+    //Pflichtschicht
+    if(Auth::user()->is_pflichtschicht) {
+        if($t_awe > 0 && $t_gutscheine<480) {
+            $fehler[] = "Als Teil deiner Pflichtschicht musst du mindestens 8h auf Gutscheine auswählen, bevor du AWE erhalten kannst.";
+        }
+    }
+
+    //Save
+    for($x = 0;$x<count($assignments_selected);$x++) {
+        try {
+            $a = $assignments_selected[$x];
+            $z = array_search($a->id,$checker);
+            $a->t_g = SalarygroupsController::StringToMin($gutscheine_fields[$z]);
+            $a->t_a = SalarygroupsController::StringToMin($awe_fields[$z]);
+            
+            if(empty($fehler) && $aktion=='Abschließen') {
+                $a->accepted = 1;
+            }
+            $a->save();
+        }
+        catch(Exception $e) {
+            return redirect('rewards')->with('danger','Es ist ein Fehler aufgetreten. Bitte folgende Fehlermeldung an jan.haehl@olylust.de senden.'.$e);
+        }
+    }
+    if($aktion=='Abschließen' && count($fehler)>0) {
+        $fehlerliste = "Es sind folgende Fehler aufgetreten: ";
+        for($t = 0;$t<count($fehler);$t++) {
+            $fehlerliste = $fehlerliste.$fehler[$t].", ";
+        }
+        $fehlerliste = $fehlerliste." Bitte überprüfe deine Angaben in der Tabelle!";
+        return redirect('rewards')->with('danger',$fehlerliste);
+    }
+    return redirect('rewards')->with('success','Erledigt.');
+}
 
 
 /**
+ * OLD!!!!!
  * Save Rewards
  * Zentrale Stelle um Eingaben zu SPEICHERN oder ABZUSCHLIESSEN
  * Wird über das Formular auf Rewards getriggert.
@@ -138,6 +286,75 @@ public function saveRewards(Request $request) {
 
     //Perform action
 }   
+
+//Ganz Neue Rewards
+public static function doRewards() {
+    //Assignments
+    $a_filter = ['user_id'=>Auth::user()->id];
+    $assignments = Assignment::where($a_filter)->get();
+    //Transaktionen
+    $t_filter = ['user_id'=>Auth::user()->id];
+    $transactions = Transaction::where($t_filter)->get();
+
+    $accepted = array();
+    $confirmed = array();
+    $not_confirmed = array();
+    $not_yet_confirmed = array();
+    $unclear = array();
+
+    $gutscheine_aus_assignments = 0;
+
+    foreach($assignments as $a) {
+        if($a->shift->confirmed && $a->confirmed && $a->accepted) {
+            $accepted[] = $a;
+        }
+        elseif($a->shift->confirmed && $a->confirmed && !$a->accepted) {
+            $confirmed[] = $a;
+        }
+        elseif($a->shift->confirmed && !$a->confirmed) {
+            $not_confirmed[] = $a;
+        }
+        elseif(!$a->shift->confirmed) {
+            $not_yet_confirmed[] = $a;
+        }
+        else {
+            $unclear[] = $a;
+        }
+        $a->gSingle = Carbon::parse($a->start)->diffInMinutes($a->end)/60*$a->shift->gutscheine;
+        $gutscheine_aus_assignments += $a->gSingle;
+    }
+    $gutscheine_issued = BenutzerController::gutscheineIssued(Auth::user()->id);
+    $gutscheine_gesamt = 0;
+    //Gesamtanspruch Gutscheine
+    foreach($transactions as $t) {
+        $gutscheine_gesamt+=$t->amount;
+    }
+
+    //Berechnungen
+    $t_for_pflicht = 0; //Pflichtstunden
+    $t_total = 0; //Bestätigt + Abgeschlossen
+    $t_total_confirmed = 0; //Bestätigte Zeit
+    $gutscheine_selected = 0;
+    $awe_selected = 0;
+
+    foreach($confirmed as $c) {
+       $t_total += Carbon::parse($c->start)->diffInMinutes(Carbon::parse($c->end));
+        $t_for_pflicht += Carbon::parse($c->shift->starts_at)->diffInMinutes(Carbon::parse($c->shift->ends_at));
+        $gutscheine_selected += $c->t_g/60 * $c->shift->gutscheine;
+        $awe_selected += $c->t_a/60 * $c->shift->awe;
+    }
+    foreach($accepted as $a) {
+        $t_total_confirmed += Carbon::parse($a->start)->diffInMinutes(Carbon::parse($a->end));
+        $t_for_pflicht += Carbon::parse($a->shift->starts_at)->diffInMinutes(Carbon::parse($a->shift->ends_at));
+        $t_total += Carbon::parse($a->start)->diffInMinutes(Carbon::parse($a->end));
+        $gutscheine_selected += $a->t_g/60 * $a->shift->gutscheine;
+        $awe_selected += $a->t_a/60 * $a->shift->awe;
+    }
+    
+    //Pflichtstunde
+
+    return view('rewards.user', compact('assignments','accepted','confirmed','not_confirmed','not_yet_confirmed','gutscheine_issued','transactions','gutscheine_aus_assignments','gutscheine_gesamt','t_total_confirmed','t_for_pflicht','t_total','gutscheine_selected','awe_selected'));
+}
 
 //Neue Rewards
 public static function rewarder() {
@@ -441,9 +658,11 @@ public static function rewarder() {
             $user->a_not_yet_confirmed = $not_yet_confirmed;
             $user->a_not_confirmed=$not_confirmed;
             
-            //Calculate Gutscheine
 
-        return view('user.show', compact('user'));
+            $shifts_all_filter = ['status'=>'Aktiv'];
+            $shifts_all = Shift::where($shifts_all_filter)->orderBy('starts_at')->get();
+
+        return view('user.show', compact('user','shifts_all'));
     }
 
     /**
@@ -458,10 +677,10 @@ public static function rewarder() {
         $gutscheine = 0;
         
         foreach($assignments as $a) {
-            if($a->shift->confirmed && $a->confirmed && $a->salarygroup->confirmed) {
-                $gutscheine += $a->salarygroup->t_g/60*$a->salarygroup->g;
+            if($a->shift->confirmed && $a->confirmed && $a->accepted) {
+                $gutscheine += $a->t_g/60*$a->shift->gutscheine;
             }
-            elseif($a->shift->confirmed && $a->confirmed && !$a->salarygroup->confirmed) {
+            elseif($a->shift->confirmed && $a->confirmed && !$a->accepted) {
                 $gutscheine += Carbon::parse($a->start)->diffInMinutes(Carbon::parse($a->end))/60*$a->shift->gutscheine;
             }
             elseif($a->shift->confirmed && !$a->confirmed) {
