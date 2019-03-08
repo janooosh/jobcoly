@@ -102,7 +102,7 @@ use \App\Http\Controllers\TimecalcController;
 @if(count($not_yet_confirmed)>0)
 <div class="row">
     <div class="col-md-12">
-        <h4>{{count($not_yet_confirmed)}} Unbestätigte Schichten</h4>
+        <h4>{{count($not_yet_confirmed)}} Offene Schichten</h4>
         <div class="alert alert-info">
             <i class="fa fa-info-circle"></i> <b>Aufwandsentschädigung (AWE)</b> kann ausgewählt werden, sobald die Schicht bestätigt wurde.
         </div>
