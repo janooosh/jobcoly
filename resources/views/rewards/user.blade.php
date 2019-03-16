@@ -126,7 +126,7 @@ use \App\Http\Controllers\TimecalcController;
                 @foreach($not_yet_confirmed as $a)
                 <tr>
                     <td>{{$a->shift->job->name}}</td>
-                    <td>{{Carbon::parse($a->date)->format('D d.m.Y')}}</td>
+                    <td>{{Carbon::parse($a->start)->format('D d.m.Y')}}</td>
                     <td>{{Carbon::parse($a->start)->format('H:i').' - '.Carbon::parse($a->end)->format('H:i')}}</td>
                     <td>{{Carbon::parse($a->start)->diff(Carbon::parse($a->end))->format('%H:%I')}}</td>
                     <td>{{$a->shift->gutscheine}}</td>
@@ -269,7 +269,7 @@ use \App\Http\Controllers\TimecalcController;
                 @foreach($not_confirmed as $a)
                 <tr>
                     <td>{{$a->shift->job->name}}</td>
-                    <td>{{Carbon::parse($a->date)->format('D d.m.Y')}}</td>
+                    <td>{{Carbon::parse($a->start)->format('D d.m.Y')}}</td>
                     <td>{{Carbon::parse($a->start)->format('H:i').' - '.Carbon::parse($a->end)->format('H:i')}}</td>
                     <td>{{Carbon::parse($a->start)->diff(Carbon::parse($a->end))->format('%H:%I')}}</td></tr>
                 @endforeach
