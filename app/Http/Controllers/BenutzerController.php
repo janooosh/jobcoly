@@ -316,12 +316,12 @@ public static function doRewards() {
         }
         elseif(!$a->shift->confirmed) {
             $not_yet_confirmed[] = $a;
+            $gutscheine_aus_assignments += Carbon::parse($a->start)->diffInMinutes($a->end)/60*$a->shift->gutscheine;
         }
         else {
             $unclear[] = $a;
         }
-        $a->gSingle = Carbon::parse($a->start)->diffInMinutes($a->end)/60*$a->shift->gutscheine;
-        $gutscheine_aus_assignments += $a->gSingle;
+
     }
     $gutscheine_issued = BenutzerController::gutscheineIssued(Auth::user()->id);
     $gutscheine_gesamt = 0;

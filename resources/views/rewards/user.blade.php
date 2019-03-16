@@ -137,7 +137,7 @@ use \App\Http\Controllers\TimecalcController;
             </tbody>
             <tfoot>
                 <tr style="border-top: solid 2px #aaa!important;">
-                    <td colspan="6" style="text-align:right;"><b>Σ Summe (Anspruch aus Gutscheinen)</b></td>
+                    <td colspan="6" style="text-align:right;"><b>Σ Summe (Erwarteter Anspruch aus Gutscheinen)</b></td>
                     <td class="linie_t"><b>{{round($gutscheine_aus_assignments)}}</b><small><i>{{' ('.$gutscheine_aus_assignments.')'}}</i></small></td>
                 </tr>
                 {{--<tr>
@@ -202,8 +202,8 @@ use \App\Http\Controllers\TimecalcController;
                         </td>
                         <td>{{$c->shift->job->name}}</td>
                         <td>{{Carbon::parse($c->start)->format('D d.m.Y')}}</td>
-                        <td>{{Carbon::parse($c->start)->format('H:i')}} - {{Carbon::parse($c->end)->format('H:i')}}<br /><small>Geplant: {{Carbon::parse($a->shift->starts_at)->format('H:i')}} - {{Carbon::parse($a->shift->ends_at)->format('H:i')}}</small></td>
-                        <td>{{Carbon::parse($c->start)->diff(Carbon::parse($c->end))->format('%H:%I')}}<br /><small>Geplant: {{Carbon::parse($a->shift->starts_at)->diff(Carbon::parse($a->shift->ends_at))->format('%H:%I')}}</small></td>
+                        <td>{{Carbon::parse($c->start)->format('H:i')}} - {{Carbon::parse($c->end)->format('H:i')}}<br /><small>Geplant: {{Carbon::parse($c->shift->starts_at)->format('H:i')}} - {{Carbon::parse($c->shift->ends_at)->format('H:i')}}</small></td>
+                        <td>{{Carbon::parse($c->start)->diff(Carbon::parse($c->end))->format('%H:%I')}}<br /><small>Geplant: {{Carbon::parse($c->shift->starts_at)->diff(Carbon::parse($c->shift->ends_at))->format('%H:%I')}}</small></td>
                         <td><input type="time" id="g{{$c->id}}" name="gutscheine[]" class="form-control" value="{{TimecalcController::MinToString($c->t_g)}}"><small><i>* {{$c->shift->gutscheine}} Gutscheine</i></small></td>
                         <td><input type="time" id="a{{$c->id}}" name="awe[]" class="form-control" value="{{TimecalcController::MinToString($c->t_a)}}"><small><i>* {{$c->shift->awe}} € (verfügbar nach {{$c->shift->p}} Stunden)</i></small></td>
                         <td style="border-left: solid 2px #aaa!important;"><span id="gc{{$c->id}}">{{round($c->shift->gutscheine*$c->t_g/60,2)}}</span></td>
