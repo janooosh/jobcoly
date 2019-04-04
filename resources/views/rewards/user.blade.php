@@ -160,6 +160,11 @@ use \App\Http\Controllers\TimecalcController;
     </div>
 </div>
 <div class="row">
+        <div class="alert alert-info">
+            <span class="fa fa-info"></span> Sämtliche Schichten, die vor dem 05.04., 08:00h, abgeschossen wurden, liegen der Buchhaltung zur AWE Auszahlung am 15.04.2019 vor. Alle noch nicht abgeschlossenen Schichten können bis zum 30.04.2019 bearbeitet und abgeschlossen werden (Auszahlung zum 15.05.).
+        </div>
+</div>
+<div class="row">
     <div class="col-md-6">
         <p>Alle Stunden: <b><span id='ttotal'>{{TimecalcController::MinToString($t_total)}}</b><small> (davon bereits abgeschlossen: {{TimecalcController::MinToString($t_total_confirmed)}})</small></span></p>
     </div>
@@ -184,7 +189,7 @@ use \App\Http\Controllers\TimecalcController;
                     @foreach($accepted as $a)
                     <tr style="background-color:#dff0d8;">
                         <td><span class="fa fa-thumbs-o-up  "></span></td>
-                        <td>{{$a->shift->job->name}}</td>
+                    <td>{{$a->shift->job->name}}<br/><small>Abgeschlossen am {{Carbon::parse($a->payout_created)->format('d.m.Y')}} *</small></td>
                         <td>{{Carbon::parse($a->start)->format('D d.m.Y')}}</td>
                         <td>{{Carbon::parse($a->start)->format('H:i')}} - {{Carbon::parse($a->end)->format('H:i')}}<br /><small>Geplant: {{Carbon::parse($a->shift->starts_at)->format('H:i')}} - {{Carbon::parse($a->shift->ends_at)->format('H:i')}}</small></td>
                         <td>{{Carbon::parse($a->start)->diff(Carbon::parse($a->end))->format('%H:%I')}}<br /><small>Geplant: {{Carbon::parse($a->shift->starts_at)->diff(Carbon::parse($a->shift->ends_at))->format('%H:%I')}}</small></td>
@@ -233,6 +238,9 @@ use \App\Http\Controllers\TimecalcController;
                 </tr>--}}
             </tfoot>
             </table>
+            @if(count($accepted)>0)
+            <small>* Alle Schichten, die von dir <i>vor</i> dem 5. April 2019, 08:00h abgeschlossen wurden, werden lt System zum 31.3.2019 abrechnungsrelevant erfasst und sind zur Auszahlung zum 15.04.2019 an die Buchhaltung weitergegeben. Die Erfassung des Zeitstempels der Schichtabschließung wurde erst am 6.4.2019 im System implementiert.</small> <br />
+            @endif
             <p>Ausgewählte Schichten ... </p>
             <input type="submit" name='saver[]' class='btn btn-primary' id='save' value="Speichern" alt='Eingaben Speichern'/>
             <input type="submit" name='saver[]' class='btn btn-success' id='submit' value="Abschließen" alt='Eingaben Abschließen'/>

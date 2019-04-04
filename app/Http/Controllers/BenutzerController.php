@@ -148,6 +148,7 @@ public function saveRewardsNew(Request $request) {
             
             if(empty($fehler) && $aktion=='Abschließen') {
                 $a->accepted = 1;
+                $a->payout_created = Carbon::now()->format('Y-m-d');
             }
             $a->save();
         }

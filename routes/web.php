@@ -85,7 +85,9 @@ Route::post('rewards/save','BenutzerController@saveRewardsNew')->name('rewards.s
 
 Route::post('privileges/update','PrivilegeController@update')->name('privilege.update');
 
-//Tr
+//Abrechnung
+Route::get('auszahlung/','TransactionController@auszahlung_start')->name('auszahlung.start');
+Route::post('auszahlung/','TransactionController@auszahlung_entry')->name('auszahlung.post');
 
 //Transaction Routes
 Route::get('transaction/','TransactionController@index')->name('transaction.browser');

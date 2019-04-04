@@ -156,9 +156,18 @@
                                     </li>
 
                                     @endif{{-- ENDE ADMIN --}}
+
+                                    {{-- START ABRECHNUNG --}}
+                                    @if(Auth::user()->is_buchhalter)
+                                    <li>
+                                        <a style="font-style:italic; color:black; text-align:center;">BUCHHALTUNG</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{route('auszahlung.start')}}"><i class="fa fa-money"></i> AWE Auszahlungen</a>
+                                    </li>
                                     @endif
                                     
-                                    
+                                    @endif
                                 @else
                                     <li>
                                         <a href="{{ route('login') }}"><i class="fa fa-home"></i> Login</a>

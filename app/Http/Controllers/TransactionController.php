@@ -20,6 +20,58 @@ class TransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function auszahlung_start() {
+        return view('transactions.awe_start');
+    }
+
+
+    public function auszahlung_entry(Request $request) {
+        $request->validate([
+            'start'=>'required|date',
+            'ende'=>'required|date',
+        ]);
+
+        $start = Carbon::parse($request->get('start'));
+        $ende = Carbon::parse($request->get('ende'));
+
+        if(!$ende->greaterThanOrEqualTo($start)) {
+            return view('transactions.awe_start')->with('warning','Ende muss vor dem Anfang liegen.');
+        }
+        
+        return TransactionController::auszahlung($start,$ende);
+    }
+
+     /** AWE Funktion -> Zeige alle Auszahlungen an */
+    public function auszahlung($from,$to) {
+        if(!Auth::user()->is_buchhalter) {
+            return redirect('home')->with('danger','Keine Berechtigung');
+        }
+        $user = User::all();
+        $awe_summe = 0;
+
+        foreach($user as $u) {
+            $u->awe = 0;
+
+            $payout_candidates = $u->acceptedAssignments;
+            foreach($payout_candidates as $p) {
+                //Zeitraum passt?
+                if(Carbon::parse($p->payout_created)->greaterThanOrEqualTo($from) && Carbon::parse($p->payout_created)->lessThanOrEqualTo($to)) {
+                    $u->awe += $p->t_a/60*$p->shift->awe;
+                }
+            }
+            $u->awe = round($u->awe,2);
+            $awe_summe+=$u->awe;
+        }
+        $paid_user = array();
+        foreach($user as $u) {
+            if($u->awe>0 && !$u->is_admin) {
+                $paid_user[] = $u;
+            }
+        }
+        return view('transactions.awe', compact('paid_user','awe_summe','from','to'));
+    }
+
     public function index()
     {   
         if(!Auth::user()->is_admin) {
