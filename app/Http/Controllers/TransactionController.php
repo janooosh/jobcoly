@@ -22,6 +22,9 @@ class TransactionController extends Controller
      */
 
     public function auszahlung_start() {
+        if(!Auth::user()->is_buchhalter) {
+            return redirect('home')->with('danger','Keine Berechtigung');
+        }
         return view('transactions.awe_start');
     }
 
