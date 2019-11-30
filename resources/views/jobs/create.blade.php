@@ -49,16 +49,6 @@ Abkürzungen müssen 2 Zeichen haben, Ziffern werden nicht akzeptiert.</p>
                 <option value="0">Nein</option>
             </select>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4 form-group" style="padding-bottom: 20px">
-            <label for="jobgutscheine">Gutscheine (/h) *</label>
-            <input class="form-control" type="number" id="jobgutscheine" name="jobgutscheine" value=3 required autofocus/>
-        </div>
-        <div class="col-md-4 form-group" style="padding-bottom: 20px">
-            <label for="jobawe">AWE (/h) *</label>
-            <input class="form-control" type="number" id="jobawe" name="jobawe" value=0 required autofocus/>
-        </div>
         <div class="col-md-2 form-group" style="padding-bottom: 20px">
             <label for="jobextern">Für Externe? *</label>
             <select class="form-control" id="jobextern" name="jobextern" autofocus>
@@ -73,6 +63,26 @@ Abkürzungen müssen 2 Zeichen haben, Ziffern werden nicht akzeptiert.</p>
             <label for="jobdescription">Beschreibung</label>
             <textarea class="form-control" id="jobdescription" name="jobdescription" rows="3" placeholder="Diese Beschreibung wird Bewerbern angezeigt. Optional. Schreibe hier doch was Lustiges rein :)"></textarea>
             <p class="help-block">Maximal 255 Zeichen.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h4>Entlohnung</h4>
+            <p>Die folgenden Werte werden als <i>Default</i> Werte für Schichten dieses Jobs zugewiesen. Als Berechnungsgrundlage der Entlohnung werden die Werte der jeweiligen Schicht übernommen.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 form-group" style="padding-bottom: 20px">
+            <label for="jobgutscheine">Gutscheine (/h) *</label>
+            <input class="form-control" type="number" id="jobgutscheine" name="jobgutscheine" placeholder="Standard 3" required autofocus/>
+        </div>
+        <div class="col-md-4 form-group" style="padding-bottom: 20px">
+            <label for="jobawe">AWE (/h) *</label>
+            <input class="form-control" type="number" id="jobawe" name="jobawe" placeholder="Standard 7" required autofocus/>
+        </div>
+        <div class="col-md-4 form-group" style="padding-bottom: 20px">
+            <label for="jobvorbehalt">AWE Vorbehalt (Stunden bevor AWE ausgewählt werden kann)</label>
+            <input class="form-control" type="number" id="jobvorbehalt" name="jobvorbehalt" placeholder="Standard 10" required autofocus/>
         </div>
     </div>
     <div class="row">

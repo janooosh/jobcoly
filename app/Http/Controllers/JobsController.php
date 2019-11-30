@@ -61,13 +61,15 @@ class JobsController extends Controller
             return redirect('home');
         }
         $request->validate([
-            'jobname' => 'required|unique:jobs,name',
-            'jobshort' => 'required|size:2|regex:/^[A-Za-z\s-_]+$/|unique:jobs,short',
+            'jobname' => 'required',
+            'jobshort' => 'required|size:2|unique:jobs,short',
             'jobdescription' => 'max:2000',
-            'jobgutscheine' => 'required|integer|min:0|max:20',
-            'jobawe' => 'required|integer|min:0|max:20',
+            'jobgutscheine' => 'required|integer|min:0',
+            'jobawe' => 'required|integer|min:0',
+            'jobvorbehalt' => 'required|integer|min:0',
             'jobextern'=>'required|in:0,1'
-          ]);
+          ]); 
+
           $newjob = new Job([
             'name' => $request->get('jobname'),
             'short'=> $request->get('jobshort'),
@@ -75,6 +77,7 @@ class JobsController extends Controller
             'gesundheitszeugnis'=>$request->get('jobgesundheitszeugnis'),
             'gutscheine'=>$request->get('jobgutscheine'),
             'awe'=>$request->get('jobawe'),
+            'p'=>$request->get('jobvorbehalt'),
             'is_extern'=>$request->get('jobextern'),
           ]);
           $newjob->save();
@@ -126,9 +129,10 @@ class JobsController extends Controller
         $job = Job::find($id);
         $request->validate([
             'jobname' => 'required|unique:jobs,name,'.$job->id,
-            'jobshort' => 'required|size:2|regex:/^[A-Za-z\s-_]+$/|unique:jobs,short,'.$job->id,
-            'jobgutscheine' => 'required|integer|min:0|max:20',
-            'jobawe' => 'required|integer|min:0|max:20',
+            'jobshort' => 'required|size:2|unique:jobs,short,'.$job->id,
+            'jobgutscheine' => 'required|integer|min:0',
+            'jobawe' => 'required|integer|min:0',
+            'jobvorbehalt' => 'required|integer|min:0',
             'jobextern' => 'required|in:0,1'
           ]);
     
@@ -139,6 +143,7 @@ class JobsController extends Controller
           $job->description = $request->get('jobdescription');
           $job->gutscheine = $request->get('jobgutscheine');
           $job->awe = $request->get('jobawe');
+          $job->p = $request->get('jobvorbehalt');
           $job->is_extern = $request->get('jobextern');
           $job->save(); 
           return redirect('jobs')->with('success', 'Job erledigt.');

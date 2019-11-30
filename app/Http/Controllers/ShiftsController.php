@@ -169,6 +169,7 @@ class ShiftsController extends Controller
             'status' => $request->get('shiftstatus'),
             'awe'=>$job->awe,
             'gutscheine'=>$job->gutscheine,
+            'p'=>$job->p,
             'description'=>$request->get('shiftdescription')
           ]);
 
@@ -198,7 +199,8 @@ class ShiftsController extends Controller
         }
 
           //Return
-          return redirect('/shifts/admin')->with('success', 'Schicht erstellt');
+          return route('shifts.edit')->with('success','Schicht erfolgreich erstellt');
+          
     }
 
     /**

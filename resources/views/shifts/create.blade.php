@@ -126,11 +126,18 @@
             </select>
         </div>
     </div>
+    
     <div class="row">
         <div class="col-lg-10" style="padding-bottom: 20px;">
             <label for="shiftdescription">Beschreibung</label>
             <textarea class="form-control" id="shiftdescription" name="shiftdescription" rows="3" placeholder="Diese Beschreibung wird Bewerbern angezeigt. Optional. Schreibe hier etwas Informatives/Lustiges rein."></textarea>
             <p class="help-block">Maximal 500 Zeichen.</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h4>Entlohnung</h4>
+            <p>Es werden die für den Job als Standard festgelegten Entlohnungswerte übernommen. Im nächsten Schritt kann die Entlohnung für diese Schicht angepasst werden.</p>
         </div>
     </div>
 
