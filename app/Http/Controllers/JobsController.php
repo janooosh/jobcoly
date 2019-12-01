@@ -62,7 +62,7 @@ class JobsController extends Controller
         }
         $request->validate([
             'jobname' => 'required|unique:jobs,name',
-            'jobshort' => 'required|size:2|regex:/^[A-Za-z\s-_]+$/|unique:jobs,short',
+            'jobshort' => 'required|size:2|unique:jobs,short',
             'jobdescription' => 'max:2000',
             'jobgutscheine' => 'required|integer|min:0|max:20',
             'jobawe' => 'required|integer|min:0|max:20',

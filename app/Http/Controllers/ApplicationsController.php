@@ -51,7 +51,7 @@ class ApplicationsController extends Controller
     {
         $shift = Shift::find($id);
         
-        return view('applications.create', compact('shift','entlohnung'));
+        return view('applications.create', compact('shift'));
     }
 
     /**
