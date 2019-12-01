@@ -27,7 +27,7 @@ class AddPFieldToShiftTable extends Migration
      */
     public function down()
     {
-        Schema::table('shift', function (Blueprint $table) {
+        Schema::table('shifts', function (Blueprint $table) {
             $table->dropColumn('p');
         });
     }

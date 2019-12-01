@@ -199,7 +199,7 @@ class ShiftsController extends Controller
         }
 
           //Return
-          return route('shifts.edit')->with('success','Schicht erfolgreich erstellt');
+          return redirect()->route('shifts.edit',$shift->id)->with('success','Schicht erfolgreich erstellt');
           
     }
 
@@ -299,6 +299,7 @@ class ShiftsController extends Controller
             'shiftendtime' => 'required|date_format:"H:i"',
             'shiftanzahl' => 'required|integer|max:99|min:1',
             'shiftstatus' => 'required',
+            'shiftvorbehalt' => 'required|integer',
             'shiftgutscheine'=>'required|integer|min:0|max:20',
             'shiftawe'=>'required|integer|min:0|max:20',
             'shiftdescription' => 'max:500'
@@ -347,6 +348,7 @@ class ShiftsController extends Controller
         $shift->ends_at = $ende;
         $shift->awe = $request->get('shiftawe');
         $shift->gutscheine = $request->get('shiftgutscheine');
+        $shift->p = $request->get('shiftvorbehalt');
         $shift->anzahl = $request->get('shiftanzahl');
         $shift->status = $request->get('shiftstatus');
         $shift->description = $request->get('shiftdescription');

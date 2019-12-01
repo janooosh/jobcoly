@@ -39,12 +39,17 @@ use Carbon\Carbon;
         <p>Du sammelst keine Pflichtstunden und erhälst folgende Entlohnung für deine Schicht:</p>
     @endif
      <ul>       
-    @if($shift->awe>0)
-    <li>{{$shift->awe}},00 € Aufwandsentschädigung pro Stunde (optional nach {{$shift->p}} Stunden)</li>
-    @endif
+
 
     @if($shift->gutscheine>0)
     <li>{{$shift->gutscheine}} Gutscheine pro Stunde</li>
+    oder
+    @endif
+    @if($shift->awe>0)
+    <li>{{$shift->awe}},00 € Aufwandsentschädigung pro Stunde</li>
+    @endif
+    @if($shift->p>0)
+    <li>AWE kann nach {{$shift->p}} Stunden ausgewählt werden. </li>
     @endif
 
      </ul>

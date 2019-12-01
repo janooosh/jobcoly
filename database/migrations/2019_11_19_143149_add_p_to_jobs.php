@@ -25,8 +25,6 @@ class AddPToJobs extends Migration
      */
     public function down()
     {
-        Schema::table('jobs', function (Blueprint $table) {
-            $table->dropColumn('p');
-        });
+
     }
 }
