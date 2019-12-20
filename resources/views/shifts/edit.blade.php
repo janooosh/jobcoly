@@ -178,14 +178,17 @@ use \App\Http\Controllers\PrivilegeController;
         <div class="col-md-3 form-group" style="padding-bottom: 20px;">
             <label for="shiftgutscheine">Gutscheine (/h)</label>
             <input class="form-control" id="shiftgutscheine" name="shiftgutscheine" type="number" value="{{$shift->gutscheine}}" required {{Auth::user()->is_admin==1?'':'disabled'}} autofocus />
+            <small>Default: {{$shift->job->gutscheine}}</small>
         </div>
         <div class="col-md-3 form-group" style="padding-bottom: 20px;">
             <label for="shiftawe">AWE (/h)</label>
             <input class="form-control" id="shiftawe" name="shiftawe" type="number" value="{{$shift->awe}}" required {{Auth::user()->is_admin==1?'':'disabled'}} autofocus />
+            <small>Default: {{$shift->job->awe}}</small>
         </div>
         <div class="col-md-4 form-group" style="padding-bottom: 20px">
             <label for="shiftvorbehalt">AWE Vorbehalt (Stunden bevor AWE ausgewählt werden kann)</label>
             <input class="form-control" type="number" id="shiftvorbehalt" name="shiftvorbehalt" value="{{$shift->p}}" required {{Auth::user()->is_admin==1?'':'disabled'}} autofocus />
+            <small>Default: {{$shift->job->p}}</small>
         </div>
 
     </div>
