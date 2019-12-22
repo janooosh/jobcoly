@@ -55,7 +55,7 @@ use \App\Http\Controllers\ShiftsController;
 <br />
 <div class="row">
     <div class="col-md-6">
-        <input type="checkbox" id='pflichtler' value=""> Nur Pflichtschichten anzeigen
+        <input type="checkbox" id='pflichtler' value=""> Nur Solidaritätsschichten anzeigen
     </div>
     <div class="col-md-6">
             <a href="{{route('users.export_all')}}" target="_blank" title="CSV Datei herunterladen"><button type="button" class="btn btn-outline btn-success btn-xs"><span class="fa fa-download"></span> Alle Benutzer herunterladen</button></a>   
@@ -67,7 +67,7 @@ use \App\Http\Controllers\ShiftsController;
             <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Name</th>
-                <th scope="col">Pflichtschichten?</th>
+                <th scope="col">Solidaritätsschichten?</th>
                 <th scope="col">Stunden (Aktiv)</th>
                 <th scope="col">Registriert</th>
                 <th scope="col"></th>

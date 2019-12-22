@@ -16,7 +16,7 @@ Meine Schichten <br/>
 Die Schicht wurde freigegeben. Falls du noch andere Schichten hast, sind diese davon nicht betroffen. Du kannst dich natürlich weiterhin auf alle anderen Schichten regulär bewerben. 
 Wir kontaktieren dich persönlich, um ggf. eine Ersatzschicht auszumachen. <br/><br />
 Gute Besserung, Liebe Grüße, <br />
-Katja & Nina <br />
-<small>Crew Leitung der OlyLust19</small>
+Leonard <br />
+<small>Crew Leitung der OlyLust2020</small>
 
 @endcomponent

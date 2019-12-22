@@ -124,7 +124,7 @@ function isVerein() {
 
         ausschusshinweisContainer.className = "alert alert-warning";
         var pBreak = document.createElement("BR");
-        var pText = document.createTextNode("Ausschuss: Bitte nur ordentliche Ausschussmitglieder, keine außerordentlichen/ehemaligen. Danach werden die Pflichtschichten ermittelt.");
+        var pText = document.createTextNode("Ausschuss: Bitte nur ordentliche Ausschussmitglieder, keine außerordentlichen/ehemaligen. Danach werden die Solidaritätsschichten ermittelt.");
         ausschusshinweisContainer.appendChild(pText);
         /* END AUSSCHUSS HINWEIS */
         vereinStatus=true;

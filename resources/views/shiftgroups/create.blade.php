@@ -36,7 +36,7 @@
         </div>
         <div class="col-md-6" style="padding-bottom: 20px;">
             <label for="shiftgroupsubtitle">Untertitel</label>
-            <input class="form-control" type="text" id="shiftgroupsubtitle" name="shiftgroupsubtitle" placeholder="Donnerstag, 28.02.2019" autofocus/>
+            <input class="form-control" type="text" id="shiftgroupsubtitle" name="shiftgroupsubtitle" placeholder="Donnerstag, 20.02.2020" autofocus/>
         </div>
     </div>
     <div class="row p-10">

@@ -29,7 +29,7 @@ class Absage extends Mailable
      */
     public function build()
     {
-        return $this->from('olylust2019@gmail.com', 'OlyLust')
+        return $this->from('crew@olylust.de', 'OlyLust')
         ->subject('Deine Schicht auf der OlyLust')
         ->markdown('mails.absage')
         ->with([

@@ -17,7 +17,7 @@ Meine Schichten <br/>
 Die Schicht wurde freigegeben. Falls du noch andere Schichten hast, sind diese davon nicht betroffen. Du kannst dich natürlich weiterhin auf alle anderen Schichten regulär bewerben. 
 
 Bis Bald, Liebe Grüße, <br />
-Katja & Nina <br />
-<small>Crew Leitung der #OlyLust19</small>
+Leonard <br />
+<small>Crew Leitung der #OlyLust2020</small>
 
 @endcomponent

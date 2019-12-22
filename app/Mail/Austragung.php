@@ -29,7 +29,7 @@ class Austragung extends Mailable
      */
     public function build()
     {
-        return $this->from('olylust2019@gmail.com', 'OlyLust')
+        return $this->from('crew@olylust.de', 'OlyLust')
         ->subject('Schicht ausgetragen / OlyLust')
         ->markdown('mails.austragung')
         ->with([

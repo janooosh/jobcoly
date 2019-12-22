@@ -29,7 +29,7 @@ class Bewerbung extends Mailable
      */
     public function build()
     {
-        return $this->from('olylust2019@gmail.com', 'OlyLust')
+        return $this->from('crew@olylust.de', 'OlyLust')
         ->subject('Vielen Dank für deine Bewerbung!')
         ->markdown('mails.bewerbung')
         ->with([

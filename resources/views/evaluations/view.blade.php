@@ -128,7 +128,7 @@ use Carbon\Carbon;
             @if($a->applicant->is_pflichtschicht=='1')
             <div class="row">
                 <div class="col-md-12">
-                    <h5 style="color:red;"><i class="fa fa-warning"></i> Pflichtschicht</h5>
+                    <h5 style="color:red;"><i class="fa fa-warning"></i> Solidaritätsschicht</h5>
                 </div>
             </div>
             @endif

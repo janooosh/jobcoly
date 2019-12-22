@@ -101,12 +101,6 @@
                                     <li>
                                         <a href="{{route('assignments.my')}}"><i class="fa fa-beer"></i> Schichten</a>
                                     </li>
-                                    <li>
-                                        <a href="{{route('rewards')}}"><i class="fa fa-trophy"></i> Rewards</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{route('faq')}}"><i class="fa fa-question-circle"></i> FAQs</a>
-                                    </li>
                                     {{-- START MANAGER --}}
                                     @if(count(Auth::user()->manager_shifts)>0)
                                     <li>
@@ -193,8 +187,8 @@
 
     <footer class="fixed-bottom">
     <div style="background-color:#f5f5f5; border: 1px solid #e3e3e3; text-align:center; color:#777;">
-    &copy; 2019 Studenten im Olympiazentrum e.V. | <a href="{{route('impressum')}}" title="Impressum">Impressum</a> | <a href="{{route('datenschutz')}}">Datenschutz</a>
-    <br /><small><i class="fa fa-heart"></i> <i class="fa fa-beer"></i> ~ <a href="https://github.com/janooosh/jobcoly" target="_blank">jobcly v.0.4</a> | Letztes Update: 05.04.2019 01:31</small>
+    &copy; 2020 Studenten im Olympiazentrum e.V. | <a href="{{route('impressum')}}" title="Impressum">Impressum</a> | <a href="{{route('datenschutz')}}">Datenschutz</a>
+    <br /><small><i class="fa fa-heart"></i> <i class="fa fa-beer"></i> ~ <a href="https://github.com/janooosh/jobcoly" target="_blank">jobcly v.0.4</a></small>
     </div>
     
     </footer> 

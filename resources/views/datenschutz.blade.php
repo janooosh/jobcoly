@@ -14,7 +14,7 @@
     </p><h3 id="dsg-general-controller">Verantwortlicher</h3><p><span class="tsmcontroller">Studenten im Olympiazentrum e.V.<br>
     Helene-Mayer-Ring 9<br>
     80809 München<br>
-    Gesetzliche Vertreter: Maximilian Lehmann, Luca Del Grande, Madeleine Kimmig<br>
+    Gesetzliche Vertreter: Katharina Prechtl, Lisa Rueß, Leonard Hoffmeier<br>
     vorstand@oly-dorf.de</span></p><h3 id="dsg-general-datatype">Arten der verarbeiteten Daten</h3><p>-	Bestandsdaten (z.B., Personen-Stammdaten, Namen oder Adressen).<br>
     -	Kontaktdaten (z.B., E-Mail, Telefonnummern).<br>
     -	Inhaltsdaten (z.B., Texteingaben, Fotografien, Videos).<br>

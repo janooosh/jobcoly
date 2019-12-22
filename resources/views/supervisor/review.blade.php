@@ -49,8 +49,8 @@ use \App\Http\Controllers\ShiftsController;
 <p>
     Bitte passe die Start - und Endzeiten der einzelnen Leute entsprechend an. Nach Möglichkeit gilt: <b>Bitte nicht runden</b> (weder auf - noch abrunden). <br/>
     Diese Zeiten dienen als Berechnungsgrundlage der Entlohnung.
-    Zur Berechnung der Pflichtschichten werden die geplanten Stunden berechnet. Unabhängig von der tatsächlich gearbeiteten Zeit erhält jeder der Mitarbeiter 
-    <b>{{$shift->duration}}</b> Pflichtstunden gutgeschrieben. <br /><br />
+    Zur Berechnung der Solidaritätsschichten werden die geplanten Stunden berechnet. Unabhängig von der tatsächlich gearbeiteten Zeit erhält jeder der Mitarbeiter
+    <b>{{$shift->duration}}</b> Solidaritätsstunden gutgeschrieben. <br /><br />
     Du kannst diese Angaben jederzeit aktualisieren. Wenn du fertig bist, klicke bitte auf "Schicht Abschließen". 
 </p> 
 

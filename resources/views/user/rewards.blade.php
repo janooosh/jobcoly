@@ -54,25 +54,25 @@
     <div class="col-md-12">
         @if($openFlag==0 && $pflichtstunden>=8 && Auth::user()->is_pflichtschicht==1)
                 <div class="alert alert-success">
-                        <i class="fa fa-check"></i> Pflichtschicht erfüllt.
+                        <i class="fa fa-check"></i> Solidaritätsschicht erfüllt.
                 </div>
         
         @elseif($openFlag>0 && $pflichtstunden>=8 && Auth::user()->is_pflichtschicht==1)
         <div class="alert alert-info">
-                Pflichtschichten nach erfolgreicher Bestätigung erfüllt.
+            Solidaritätsschichten nach erfolgreicher Bestätigung erfüllt.
         </div>
         @elseif($openFlag==0 && $pflichtstunden<8 && Auth::user()->is_pflichtschicht==1)
             <div class="alert alert-danger">
-                <i class="fa fa-frown-o"></i> Pflichtschichten nicht erreicht.
+                <i class="fa fa-frown-o"></i> Solidaritätsschichten nicht erreicht.
             </div>
         @elseif($openFlag>0 && $pflichtstunden<8 && Auth::user()->is_pflichtschicht==1)
             <div class="alert alert-warning">
-                <i class="fa fa-warning"></i> 8 Pflichtschichten noch nicht erreicht, aktuell bist du bei {{$pflichtstunden}} (Bestätigung vorausgesetzt)
+                <i class="fa fa-warning"></i> 8 Solidaritätsschichten noch nicht erreicht, aktuell bist du bei {{$pflichtstunden}} (Bestätigung vorausgesetzt)
             </div>
         @endif
     </div>
     <div class="col-md-12">
-        <p>Für die Berechnung der Pflichtstunden werden die geplanten Stunden berücksichtigt, auch wenn die Schicht nacher kürzer ist.
+        <p>Für die Berechnung der Solidaritätsstunden werden die geplanten Stunden berücksichtigt, auch wenn die Schicht nacher kürzer ist.
     </div>
 </div>
 

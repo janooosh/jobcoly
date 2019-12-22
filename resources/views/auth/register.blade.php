@@ -6,7 +6,7 @@
         <div class="py-5 text-center">
           <img class="d-block mx-auto mb-4" src="{{ asset('img/vereinlogo.png') }}" alt="" width="72" height="auto">
           <h2>{{ __('Neu hier?') }}</h2>
-          <p class="lead">Hier kannst du deinen Crew-Account für die OlyLust 2019 erstellen.<br/>Bei Fragen stehen wir dir jederzeit unter crew@olylust.de zur Verfügung.</p>
+          <p class="lead">Hier kannst du deinen Crew-Account für die OlyLust 2020 erstellen.<br/>Bei Fragen stehen wir dir jederzeit unter crew@olylust.de zur Verfügung.</p>
         </div>
   
         <div class="row">
@@ -117,7 +117,7 @@
                             </div>
                             <div class="modal-body">
                                 Du bist Mitglied im Verein der Studenten im Olympiazentrum e.V. wenn du einem Ausschuss als <b>ordentliches Mitglied</b> angehörst und/oder in einem <b>Betrieb</b> arbeitest, als <b>Dauerjobber</b> tätig bist und/oder im <b>Präsidium</b> sitzt. Als Bewohner des OlyDorfs (Studentenwohnheim) kannst du jederzeit kostenlos Mitglied werden, auch ohne ein Amt zu belegen. Mit deinem Einzug ins Wohnheim bist du jedoch nicht automatisch Mitglied. <br />
-                                <br />Falls du dir unsicher über deinen Status bist, kontaktiere bitte Madeleine (<a href="mailto:madeleine.kimmig@oly-dorf.de">madeleine.kimmig@oly-dorf.de</a>).<br />Bitte gebe im Folgenden unbedingt deinen Ausschuss bzw. deinen Betrieb an, damit dir die <b>Pflichtstunden</b> angerechnet werden können.
+                                <br />Falls du dir unsicher über deinen Status bist, kontaktiere bitte Leonard (<a href="mailto:leonard.hoffmeier@oly-dorf.de">leonard.hoffmeier@oly-dorf.de</a>).<br />Bitte gebe im Folgenden unbedingt deinen Ausschuss bzw. deinen Betrieb an, damit dir die <b>Solidaritätsstunden</b> angerechnet werden können.
                             </div>
                             <div class="modal-footer">
                               
@@ -198,7 +198,7 @@
         </div>
   
         <footer class="my-5 pt-5 text-muted text-center text-small">
-          <p class="mb-1">&copy; 2019 Studenten im Olympiazentrum e.V.</p>
+          <p class="mb-1">&copy; 2020 Studenten im Olympiazentrum e.V.</p>
           <ul class="list-inline">
             <li class="list-inline-item"><a href="{{route('impressum')}}">Impressum</a></li>
             <li class="list-inline-item"><a href="{{route('datenschutz')}}">Datenschutz</a></li>

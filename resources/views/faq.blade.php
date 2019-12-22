@@ -74,11 +74,11 @@ use Illuminate\Support\Facades\Auth;
     <div class="panel panel-default">
     <div class="panel-heading">
       <h4 class="panel-title">
-        <a data-toggle="collapse" href="#faq2">Wer/Was Pflichtstunden?</a>
+        <a data-toggle="collapse" href="#faq2">Wer/Was Solidaritätsstunden?</a>
       </h4>
     </div>
     <div id="faq2" class="panel-collapse collapse">
-      <div class="panel-body">Pflichtschichten betreffen nur ordentliche Ausschussmitglieder und Präsiden. <br />
+      <div class="panel-body">Solidaritätsschichten betreffen nur ordentliche Ausschussmitglieder und Präsiden. <br />
         Ausgenommen davon sind Ressortleiter.</div>
     </div>
   </div>
@@ -87,7 +87,7 @@ use Illuminate\Support\Facades\Auth;
     <div class="panel panel-default">
     <div class="panel-heading">
       <h4 class="panel-title">
-        <a data-toggle="collapse" href="#faq3">Kann ich meine Pflichtstunden auch aufteilen?</a>
+        <a data-toggle="collapse" href="#faq3">Kann ich meine Solidaritätsstunden auch aufteilen?</a>
       </h4>
     </div>
     <div id="faq3" class="panel-collapse collapse">
@@ -99,11 +99,11 @@ use Illuminate\Support\Facades\Auth;
 <div class="panel panel-default">
         <div class="panel-heading">
           <h4 class="panel-title">
-            <a data-toggle="collapse" href="#faq4">Was passiert mit meinen Pflichtschichten, wenn eine Schicht kürzer ist als geplant?</a>
+            <a data-toggle="collapse" href="#faq4">Was passiert mit meinen Solidaritätsschichten, wenn eine Schicht kürzer ist als geplant?</a>
           </h4>
         </div>
         <div id="faq4" class="panel-collapse collapse">
-          <div class="panel-body">Zur Berechnung der Pflichtschichten werden immer der geplanten Stunden herangezogen. Konkret heißt das: Wenn eine Schicht mit 4h geplant ist, sie aber nur 3h geht, bekommst du nach der Bestätigung trotzdem 4 Pflichtstunden gutgeschrieben. <br />
+          <div class="panel-body">Zur Berechnung der Solidaritätsschichten werden immer der geplanten Stunden herangezogen. Konkret heißt das: Wenn eine Schicht mit 4h geplant ist, sie aber nur 3h geht, bekommst du nach der Bestätigung trotzdem 4 Solidaritätsstunden gutgeschrieben. <br />
             
         </div>
         </div>

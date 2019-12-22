@@ -92,7 +92,7 @@ use \App\Http\Controllers\TimecalcController;
         <h4>Übersicht</h4>
         <p>Es wurden {{count($assignments)}} Schichten gefunden. Du hast bereits {{$gutscheine_gesamt}} Gutscheine in Form von Gutscheinen, Shirts und/oder Tickets erhalten (siehe unten).</p>
         @if(Auth::user()->is_pflichtschicht)
-        <p style="color:{{$t_for_pflicht>='480'?'green':'black'}};">Du hast bereits {{TimecalcController::MinToString($t_for_pflicht)}} Pflichtstunden erfolgreich absolviert.</p>
+        <p style="color:{{$t_for_pflicht>='480'?'green':'black'}};">Du hast bereits {{TimecalcController::MinToString($t_for_pflicht)}} Solidaritätsstunden erfolgreich absolviert.</p>
         @endif
         <hr />
     </div>
@@ -259,7 +259,7 @@ use \App\Http\Controllers\TimecalcController;
     <div class="col-md-12">
         <h4>{{count($not_confirmed)}} Nicht-Bestätigte Schichten</h4>
         <div class="alert alert-warning">
-            <i class="fa fa-info-circle"></i> Du wurdest für diese Schichten nicht bestätigt. Bitte halte bei Zwischenfragen Rücksprache mit uns. Es werden dir hierfür keine Pflichtstunden angerechnet.
+            <i class="fa fa-info-circle"></i> Du wurdest für diese Schichten nicht bestätigt. Bitte halte bei Zwischenfragen Rücksprache mit uns. Es werden dir hierfür keine Solidaritätsstunden angerechnet.
         </div>
     </div>
 </div>

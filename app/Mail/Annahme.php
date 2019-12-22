@@ -29,7 +29,7 @@ class Annahme extends Mailable
      */
     public function build()
     {
-        return $this->from('olylust2019@gmail.com', 'OlyLust')
+        return $this->from('crew@olylust.de', 'OlyLust')
         ->subject('Zusage deiner Schicht')
         ->markdown('mails.annahme')
         ->with([

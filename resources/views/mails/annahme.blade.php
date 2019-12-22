@@ -18,7 +18,7 @@ informiere uns bitte so früh wie möglich.<br />
 
 Bei Fragen erreichst du uns jederzeit unter crew@olylust.de. <br /><br />
 Bis Bald, Liebe Grüße, <br />
-Katja & Nina <br />
-<small>Crew Leitung der OlyLust19</small>
+Leonard <br />
+<small>Crew Leitung der OlyLust2020</small>
 
 @endcomponent

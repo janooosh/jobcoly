@@ -33,10 +33,10 @@ use Carbon\Carbon;
         von <b>{{Carbon::parse($shift->starts_at)->format('H:i')}}</b> bis <b>{{Carbon::parse($shift->ends_at)->format('H:i')}}</b>.</span></p>
 
     @if (Auth::user()->is_praside==1 || Auth::user()->ausschuss!="")
-        <p>Der Schicht entsprechen <b>{{Carbon::parse($shift->starts_at)->diff(Carbon::parse($shift->ends_at))->format('%H:%I')}} Pflichtstunden</b>.
+        <p>Der Schicht entsprechen <b>{{Carbon::parse($shift->starts_at)->diff(Carbon::parse($shift->ends_at))->format('%H:%I')}} Solidaritätsstunden</b>.
            Du erhälst folgende Entlohnung:</p>
     @else
-        <p>Du sammelst keine Pflichtstunden und erhälst folgende Entlohnung für deine Schicht:</p>
+        <p>Du sammelst keine Solidaritätsstunden und erhälst folgende Entlohnung für deine Schicht:</p>
     @endif
      <ul>       
 
