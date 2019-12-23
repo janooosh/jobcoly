@@ -51,8 +51,8 @@ use Illuminate\Support\Facades\Auth;
         </div>
         <div id="faq0" class="panel-collapse collapse">
           <div class="panel-body">
-            Aber natürlich! Allerdings muss sich deine Freundin/dein Freund auch über dieses Tool bewerben, am besten bewerbt ihr euch gleichzeitig. <br />
-            Gebt dann bei den Kommentaren in der Bewerbung unbedingt an, dass ihr gemeinsam arbeiten möchtet, dann geben wir unser Bestes dass das klappt. Versprechen können wir natürlich nichts, falls ihr eine größere Gruppe seid kündigt ihr uns das am besten auch schon im Vorraus unter <a href="mailto:crew@olylust.de">crew@olylust.de</a> an.
+              Aber natürlich! Allerdings muss sich deine Freundin/dein Freund auch über dieses Tool bewerben, am besten bewerbt ihr euch gleichzeitig.<br />
+              Gebt dann bei den Kommentaren in der Bewerbung unbedingt an, dass ihr gemeinsam arbeiten möchtet, dann geben wir unser Bestes dass das klappt. Versprechen können wir natürlich nichts, falls ihr eine größere Gruppe seid, kündigt ihr uns das am besten auch schon im Voraus unter <a href="mailto:crew@olylust.de">crew@olylust.de</a> an.
 
           </div>
         </div>
@@ -65,21 +65,24 @@ use Illuminate\Support\Facades\Auth;
       </h4>
     </div>
     <div id="faq1" class="panel-collapse collapse">
-      <div class="panel-body">Wir versuchen, die Bewerbungen innerhalb weniger Tage zu beantworten. 
-          Je nach Schicht und Anforderungen an die Schicht kann dies leider auch ein bisschen länger dauern, 
-          da wir bei einigen stressigen Schichten mit den Interessenten Rücksprache halten möchten.</div>
+      <div class="panel-body">
+          Wir versuchen, die Bewerbungen innerhalb weniger Tage zu beantworten.<br />
+          Je nach Schicht und Anforderungen an die Schicht kann dies leider auch ein bisschen länger dauern, da wir bei einigen stressigen Schichten mit den Interessenten Rücksprache halten möchten.
+      </div>
     </div>
   </div>
 
     <div class="panel panel-default">
     <div class="panel-heading">
       <h4 class="panel-title">
-        <a data-toggle="collapse" href="#faq2">Wer/Was Solidaritätsstunden?</a>
+        <a data-toggle="collapse" href="#faq2">Wer/Was sind Solidaritätsstunden?</a>
       </h4>
     </div>
     <div id="faq2" class="panel-collapse collapse">
-      <div class="panel-body">Solidaritätsschichten betreffen nur ordentliche Ausschussmitglieder und Präsiden. <br />
-        Ausgenommen davon sind Ressortleiter.</div>
+      <div class="panel-body">
+          Solidaritätsschichten betreffen nur ordentliche Ausschussmitglieder und Präsiden.<br />
+          Ausgenommen davon sind Ressortleiter.
+      </div>
     </div>
   </div>
 
@@ -112,23 +115,21 @@ use Illuminate\Support\Facades\Auth;
     <div class="panel panel-default">
             <div class="panel-heading">
               <h4 class="panel-title">
-                <a data-toggle="collapse" href="#faq5">Was hat es mit den Gutscheinen auf sich? Wo sind meine Streifenkarten?</a>
+                <a data-toggle="collapse" href="#faq5">Was hat es mit den Gutscheinen auf sich?</a>
               </h4>
             </div>
             <div id="faq5" class="panel-collapse collapse">
               <div class="panel-body">
-                  Die meisten Schichten bieten Gutscheine als Entlohnung, i.d.R. 3 Gutscheine/h. Wie viel das bei der jeweiligen Schicht genau ist, findest du auf der letzten Bewerbungsseite, unter "Schichten" oder auch unter "Rewards". <br />
-                Die Gutscheine sind so angepasst, dass sie dir stets <b>mehr</b> Wert als alte Streifen geben. Die Gutscheine werden minutengenau berechnet, dadurch also im Zweifelsfall auch aufgerundet. Du erhälst Gutscheine stets für den tatsächlich geleisteten Stundenaufwand. Falls eine Schicht also länger geht als geplant, 
-                erhälst du natürlich auch mehr Gutscheine. <br />
-
-                <a type="button" href="{{asset('doc/Crew.pdf')}}" target="_blank" class="btn btn-outline btn-primary "><span class="fa fa-file-pdf-o "></span> Entlohnungsmodell</a>
-                <br /><br />
-                Die Gutscheine werden nach der OlyLust auch in den Betrieben (Bierstube, Lounge, Disko) einsetzbar sein und <b>ersetzen damit die Streifenkarten</b>. <br />
-                1 Gutschein = 1 Bier, 1 Longdrink/Antialkoholisches Getränk, 1 große Portion Pommes (Bierstube) <br />
-                2 Gutscheine = 1 Cocktail (OlyLounge), 1 Salat (Bierstube) <br />
-                4 Gutscheine = 1 Tagesessen (Bierstube), inkl. Burgermontag sowie Schnitzel/Currywurst etc. <br />
-
-            </div>
+                  Die meisten Schichten bieten Gutscheine als Entlohnung, i.d.R. 3 Gutscheine/h. Wie viel das bei der jeweiligen Schicht genau ist, findest du auf der letzten Bewerbungsseite, unter "Schichten" oder auch unter "Rewards".<br />
+                  Die Gutscheine werden minutengenau berechnet, dadurch also im Zweifelsfall auch aufgerundet. Du erhältst Gutscheine stets für den tatsächlich geleisteten Stundenaufwand. Falls eine Schicht also länger geht als geplant, erhältst du natürlich auch mehr Gutscheine.<br />
+                  Die Gutscheine werden nach der OlyLust auch in den Betrieben (Bierstube, Lounge, Disco) einsetzbar sein und ersetzen damit die Streifenkarten.
+                  <ul>
+                      <li>1 Gutschein = 1 Bier, 1 Softdrink, 1 Shot, kleine Pommes</li>
+                      <li>2 Gutscheine = 1 große Portion Pommes (Bierstube), Longdrink (Lounge/Disco)</li>
+                      <li>3 Gutscheine = 1 Cocktail (Lounge)</li>
+                      <li>4 Gutscheine = 1 Tagesessen (Bierstube), inkl. Burgermontag sowie Schnitzel/Currywurst etc.</li>
+                  </ul>
+              </div>
             </div>
           </div>
 
@@ -139,7 +140,7 @@ use Illuminate\Support\Facades\Auth;
                 </h4>
               </div>
               <div id="faq99" class="panel-collapse collapse">
-                <div class="panel-body">Du kannst eine Aufwandsentschädigung (AWE) für deine Tätigkeit erhalten, i.d.r 7€/h nach 16 Stunden Tätigkeit. Genauere Infos findest du unter 'Rewards'.</div>
+                <div class="panel-body">Du kannst eine Aufwandsentschädigung (AWE) für deine Tätigkeit erhalten, i.d.R. 7€/h nach 28 Stunden Tätigkeit. Genauere Infos findest du unter "Rewards".</div>
               </div>
             </div>
           
@@ -165,10 +166,11 @@ use Illuminate\Support\Facades\Auth;
                     </div>
                     <div id="faq7" class="panel-collapse collapse">
                       <div class="panel-body">
-                         Ja! <br />
-                         Für 3 Gutscheine erhälst du eine Eintrittskarte für den Weiberfasching (Donnerstag), DER Studentenfasching (Freitag) und den Scavenger Monday (Montag). <br />
-                         Für 6 Gutscheine erhälst du eine Eintrittskarte für den Legendären Samstagsfasching (Samstag).
-                    </div>
+                          Ja!<br />
+                          Für 2 Gutscheine erhältst du eine Eintrittskarte für den Krückenmontag.<br />
+                          Für 3 Gutscheine erhältst du eine Eintrittskarte für den Weiberfasching (Donnerstag) und Studentenfasching (Freitag).<br />
+                          Für 6 Gutscheine erhältst du eine Eintrittskarte für den Samstagsfasching (Samstag).
+                      </div>
                     </div>
                   </div>
 
@@ -180,23 +182,11 @@ use Illuminate\Support\Facades\Auth;
                 </div>
                 <div id="faq8" class="panel-collapse collapse">
                   <div class="panel-body">
-                      Du kannst für 6 Gutscheine (2 Stunden) das Crew T-Shirt erhalten! Die Ausgaben erfolgen bei jedem Personalmeeting. Natürlich musst du das T-Shirt aber nicht nehmen.
-                </div>
+                      Damit es es einheitlich bleibt, erhält jeder der arbeitet ein T-Shirt von uns. Im Gegensatz zu den letzten Jahren berechnen wir hierfür jedoch nur eine Arbeitsstunde.
+
+                  </div>
                 </div>
               </div>
-
-              <div class="panel panel-default">
-                    <div class="panel-heading">
-                      <h4 class="panel-title">
-                        <a data-toggle="collapse" href="#faq9">Sind die T-Shirts 2019 cooler als 2018?</a>
-                      </h4>
-                    </div>
-                    <div id="faq9" class="panel-collapse collapse">
-                      <div class="panel-body">
-                     Ja! Weniger OlyLust Werbung, besserer Schnitt (andere Druckerei) und auf jeden Fall ein cooles Design :)
-                    </div>
-                    </div>
-                  </div>
 
     </div>
 

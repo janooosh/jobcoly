@@ -53,7 +53,7 @@ use Carbon\Carbon;
     @endif
 
      </ul>
-     <a type="button" href="{{asset('doc/Crew.pdf')}}" target="_blank" class="btn btn-outline btn-primary "><span class="fa fa-file-pdf-o "></span> Entlohnung</a>
+     <a type="button" href="{{asset('doc/rewards.pdf')}}" target="_blank" class="btn btn-outline btn-primary "><span class="fa fa-file-pdf-o "></span> Entlohnung</a>
      <br /><br />
     @if($shift->shiftgroup->description!="")
     <h4>{{$shift->shiftgroup->name}}<small> {{$shift->shiftgroup->subtitle}}</small></h4>

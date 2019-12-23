@@ -4,7 +4,7 @@
 
 <form class="form-signin" method="POST" action="{{ route('login') }}">
 @csrf    
-    <img class="mb-4" src="{{ asset('img/zauberwald.png') }}" alt="" width="100" height="auto">
+    <img class="mb-4" src="{{ asset('img/zauberwald.png') }}" alt="" width="150" height="auto">
     <h1 class="h3 mb-3 font-weight-normal">{{ __('#OlyLust2020 - Login') }}</h1>
         <input id="email" type="email" placeholder="{{ __('E-Mail Adresse') }}"class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
             @if ($errors->has('email'))

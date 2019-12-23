@@ -59,7 +59,7 @@ use Carbon\Carbon;
 </div>
     </div>
     <div class="col-md-3">
-            <a type="button" href="{{asset('doc/Crew.pdf')}}" target="_blank" class="btn btn-outline btn-primary btn-lg btn-block"><span class="fa fa-file-pdf-o "></span> Entlohnung</a>
+            <a type="button" href="{{asset('doc/rewards.pdf')}}" target="_blank" class="btn btn-outline btn-primary btn-lg btn-block"><span class="fa fa-file-pdf-o "></span> Entlohnung</a>
     </div>
 </div>
 <hr />
