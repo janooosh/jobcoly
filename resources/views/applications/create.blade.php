@@ -42,7 +42,11 @@ use Carbon\Carbon;
 
 
     @if($shift->gutscheine>0)
-    <li>{{$shift->gutscheine}} Gutscheine pro Stunde</li>
+             @if (Auth::user()->is_praside==1 || Auth::user()->ausschuss!="")
+                 <li>bis zu {{$shift->gutscheine}} Gutscheine pro Stunde</li>
+             @else
+                 <li>{{$shift->gutscheine}} Gutscheine pro Stunde</li>
+             @endif
     oder
     @endif
     @if($shift->awe>0)
