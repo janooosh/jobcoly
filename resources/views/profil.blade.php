@@ -198,7 +198,7 @@ use Carbon\Carbon;
                         <option value="WA" {{$user->ausschuss=='WA' ? 'selected':''}}>Werkstattausschuss</option>
                         
                         <option value="VA" {{$user->ausschuss=='VA' ? 'selected':''}}>Veranstaltungsausschuss</option>
-                        <option value="MTA" {{$user->ausschuss=='MTA'?'selected':''}}>Miet - & Ausländerausschuss</option>
+                        <option value="MTA" {{$user->ausschuss=='ICO'?'selected':''}}>International Committee of Olydorf</option>
                         <option value="KOMITEE" {{$user->ausschuss=='KOMITEE' ? 'selected':''}}>Olympisches Komitee</option>
                         <option value="FA" {{$user->ausschuss=='FA'?'selected':''}}>Finanzausschuss</option>
                         <option value="TA" {{$user->ausschuss=='TA' ? 'selected':''}}>Töpferausschuss</option>

@@ -110,8 +110,8 @@ function isVerein() {
         /* START AUSSCHUSS */
         var ausschussContainer = document.getElementById("ausschussDiv");
 
-        var ausschussTexts = ["Kein ordentliches Mitglied","Controlling/Consulting","Fotoclub","Kult","Film & Theater","Gras","Veranstaltungsausschuss","Werkstattausschuss","Miet - & Ausländerausschuss","Olympisches Komitee","Finanzausschuss","Töpferausschuss","Kicker-Ausschuss"];
-        var ausschussVals = ["0","CTA","FOTO","KULT","FTA","GRAS","VA","WA","MTA","KOMITEE","FA","TA","KICKER"];
+        var ausschussTexts = ["Kein ordentliches Mitglied","Controlling/Consulting","Fotoclub","Kult","Film & Theater","Gras","Veranstaltungsausschuss","Werkstattausschuss","International Committee of Olydorf","Olympisches Komitee","Finanzausschuss","Töpferausschuss","Kicker-Ausschuss"];
+        var ausschussVals = ["0","CTA","FOTO","KULT","FTA","GRAS","VA","WA","ICO","KOMITEE","FA","TA","KICKER"];
 
         var ausschussLabel = makeLabel("ausschussSelect","Ausschuss...");
         var ausschussSelect = makeSelect("ausschussSelect","ausschussSelect",selecterClass,false,ausschussTexts,ausschussVals);
