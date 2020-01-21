@@ -62,6 +62,7 @@
                 <option value="" selected>Keine Area</option>
                 <option value="Bierstube">Bierstube</option>
                 <option value="Lounge">Lounge</option>
+                <option value="Shotbar">Shotbar</option>
                 <option value="Disco">Disco</option>
                 <option value="Mensa">Mensa</option>
                 <option value="Taverne">Taverne</option>

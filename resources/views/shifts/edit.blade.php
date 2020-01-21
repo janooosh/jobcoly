@@ -85,9 +85,10 @@ use \App\Http\Controllers\PrivilegeController;
                 <option value="" {{$shift->area == '' ? 'selected' : ''}}>Keine Area</option>
                 <option value="Bierstube" {{$shift->area == 'Bierstube' ? 'selected' : ''}}>Bierstube</option>
                 <option value="Lounge" {{$shift->area == 'Lounge' ? 'selected' : ''}}>Lounge</option>
+                <option value="Shotbar" {{$shift->area == 'Shotbar' ? 'selected' : ''}}>Shotbar</option>
                 <option value="Disco" {{$shift->area == 'Disco' ? 'selected' : ''}}>Disco</option>
                 <option value="Mensa" {{$shift->area == 'Mensa' ? 'selected' : ''}}>Mensa</option>
-                <option value="Taverne" {{$shift->area == 'Taverne' ? 'selected' : ''}}>Shotbar</option>
+                <option value="Taverne" {{$shift->area == 'Taverne' ? 'selected' : ''}}>Taverne</option>
                 <option value="Haupteingang" {{$shift->area == 'Haupteingang' ? 'selected' : ''}}>Haupteingang</option>
                 <option value="Foyer" {{$shift->area == 'Foyer' ? 'selected' : ''}}>Foyer</option>
             </select>
