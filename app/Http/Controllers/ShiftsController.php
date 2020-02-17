@@ -255,6 +255,10 @@ class ShiftsController extends Controller
         $shift->duration =  Carbon::parse($shift->starts_at)->diff(Carbon::parse($shift->ends_at))->format('%H:%I');
         $shift->starts_at = Carbon::parse($shift->starts_at)->format('D, d.m.y H:i');
         $shift->ends_at = Carbon::parse($shift->ends_at)->format('D, d.m.y H:i');
+
+        //Get users to be added to the shift
+        $users = user::all();
+        $shift->candidates = $users;
     
         return view('shifts.show', compact('shift'));
     }

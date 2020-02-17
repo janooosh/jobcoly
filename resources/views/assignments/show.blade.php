@@ -71,7 +71,7 @@
                     <h5>Schichtmanager (Allgemeine Fragen, Zulassung, ...)</h5>
                     <ul>
                     @foreach($assignment->shift->managers as $manager)
-                        <li>{{$manager->user->firstname}} {{$manager->user->surname}} (<a href="mailto:{{$manager->user->email}}">{{$manager->user->email}}</a>)</li>
+                        <li>{{$manager->user->firstname}} {{$manager->user->surname}} (<a href="mailto:{{$manager->user->email}}">{{$manager->user->email}}</a> | {{$manager->user->mobile}})</li>
                     @endforeach
                     </ul>
                 </div>
@@ -84,7 +84,7 @@
                     @else
                     <ul>
                     @foreach($assignment->shift->supervisors as $supervisor)
-                        <li>{{$supervisor->user->firstname}} {{$supervisor->user->surname}} (<a href="mailto:{{$supervisor->user->email}}">{{$supervisor->user->email}}</a>)</li>
+                        <li>{{$supervisor->user->firstname}} {{$supervisor->user->surname}} (<a href="mailto:{{$supervisor->user->email}}">{{$supervisor->user->email}}</a> | {{$supervisor->user->mobile}}))</li>
                     @endforeach
                     </ul>
                     @endif

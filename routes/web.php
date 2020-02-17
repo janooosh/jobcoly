@@ -51,6 +51,7 @@ Route::get('applications/create/{id}', 'ApplicationsController@create'); //Final
 
 Route::get('assignments/my','AssignmentsController@my')->name('assignments.my');
 Route::post('assignments/assign','AssignmentsController@assign')->name('assignment.assign'); //Manuelle Zuweisung
+Route::post('assignments/assign/user','AssignmentsController@neuer_mitarbeiter')->name('assignment.neuer_mitarbeiter'); //Mitarbeiter zur SChicht hinzufügen, von Mitarbeiter Seite aus..
 Route::post('assignments/reject','EvaluationsController@reject')->name('reject'); //Manager turns application down
 Route::post('applications/reject','ApplicationsController@reject')->name('applications.reject'); //Applicant rejects
 

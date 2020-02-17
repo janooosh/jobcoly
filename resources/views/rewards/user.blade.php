@@ -91,6 +91,7 @@ use \App\Http\Controllers\TimecalcController;
     <div class="col-md-12">
         <h4>Übersicht</h4>
         <p>Es wurden {{count($assignments)}} Schichten gefunden. Du hast bereits {{$gutscheine_gesamt}} Gutscheine in Form von Gutscheinen, Shirts und/oder Tickets erhalten (siehe unten).</p>
+        
         @if(Auth::user()->is_pflichtschicht)
         <p style="color:{{$t_for_pflicht>='480'?'green':'black'}};">Du hast bereits {{TimecalcController::MinToString($t_for_pflicht)}} Solidaritätsstunden erfolgreich absolviert.</p>
         @endif
@@ -140,6 +141,7 @@ use \App\Http\Controllers\TimecalcController;
                     <td colspan="6" style="text-align:right;"><b>Σ Summe (Erwarteter Anspruch aus Gutscheinen)</b></td>
                     <td class="linie_t"><b>{{round($gutscheine_aus_assignments)}}</b><small><i>{{' ('.$gutscheine_aus_assignments.')'}}</i></small></td>
                 </tr>
+
                 {{--<tr>
                     <td colspan="6" style="text-align:right;">Freigegeben</td>
                     <td class="linie_t">{{round(0.7*$gutscheine_aus_assignments)}}</td>

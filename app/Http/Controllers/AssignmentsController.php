@@ -283,6 +283,48 @@ class AssignmentsController extends Controller
         return redirect('users/'.$user->id)->with('success','Zuweisung gespeichert');
     }
 
+    public function neuer_mitarbeiter(Request $request) {
+        $request->validate([   
+            'userselect.*'=>'required|exists:users,id',
+            'shiftToAssign'=>'required|exists:shifts,id'
+        ]);
+        $shift = Shift::find($request->get('shiftToAssign'));
+        //Darf er das? Admin Rights or Manager required
+        if(Auth::user()->is_admin==0 && !PrivilegeController::isManager(Auth::user()->id,$shift->id)) {
+            return back()->with('danger','Keine Berechtigung.');
+        }
+
+        //Validate inputs
+        $request->validate([   
+            'userselect.*'=>'required|exists:users,id',
+            'shiftToAssign'=>'required|exists:shifts,id'
+        ]);
+
+        //Get Users
+        $users = $request->get('userselect');
+
+        //Get Shift
+        
+        if(empty($users)) {
+            return back()->with('info','Kein Mitarbeiter ausgewählt');
+        }
+        foreach($users as $u) {
+            $user = Shift::find($u);
+            //New Assignment
+            $assignment = new Assignment([
+                'shift_id'=>$shift->id,
+                'user_id'=>$user->id,
+                'application_id'=>0,
+                'status'=>'Aktiv',
+                'start'=>$shift->starts_at,
+                'end'=>$shift->ends_at,
+                'notes_manager'=>'Nachträglich Zugelassen von '.Auth::user()->firstname.' '.Auth::user()->surname.'.'
+            ]);
+            $assignment->save();
+        }
+        return back()->with('success','Zuweisung gespeichert');
+    }
+
     /**
      * Checks if a given user is already accepted for a certain shift.
      * Returns:

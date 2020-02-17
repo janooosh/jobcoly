@@ -134,7 +134,7 @@ public function saveRewardsNew(Request $request) {
     //Pflichtschicht
     if(Auth::user()->is_pflichtschicht) {
         if($t_awe > 0 && $t_gutscheine<480) {
-            $fehler[] = "Als Teil deiner Solidaritätsschicht musst du mindestens 8h auf Gutscheine auswählen, bevor du AWE erhalten kannst.";
+            $fehler[] = "Als Teil deiner Solidaritätsschicht musst du mindestens 28h auf Gutscheine auswählen, bevor du AWE erhalten kannst.";
         }
     }
 
@@ -290,6 +290,17 @@ public function saveRewards(Request $request) {
 
 //Ganz Neue Rewards
 public static function doRewards() {
+    //Muss Pflichtstunden machen?
+    $pflichtstunden = false;
+    if((Auth::user()->is_praside == 1) || (Auth::user()->ausschussSelect)) {
+        $pflichtstunden = true;
+    }
+    $time_for_pflicht = 0;
+    $gutscheine_for_pflicht = 0;
+    //Gutscheine die abgezogen werden.
+    $abzug_erwartet = 0; //Vor bestätigung
+    
+
     //Assignments
     $a_filter = ['user_id'=>Auth::user()->id];
     $assignments = Assignment::where($a_filter)->get();
@@ -308,22 +319,34 @@ public static function doRewards() {
     foreach($assignments as $a) {
         if($a->shift->confirmed && $a->confirmed && $a->accepted) {
             $accepted[] = $a;
+            $time_for_pflicht += Carbon::parse($a->start)->diffInMinutes($a->end);
         }
         elseif($a->shift->confirmed && $a->confirmed && !$a->accepted) {
             $confirmed[] = $a;
+            $time_for_pflicht += Carbon::parse($a->start)->diffInMinutes($a->end);
         }
         elseif($a->shift->confirmed && !$a->confirmed) {
             $not_confirmed[] = $a;
+            $time_for_pflicht += Carbon::parse($a->start)->diffInMinutes($a->end);
         }
         elseif(!$a->shift->confirmed) {
             $not_yet_confirmed[] = $a;
+            $time_for_pflicht += Carbon::parse($a->shift->start)->diffInMinutes($a->shift->end);
             $gutscheine_aus_assignments += Carbon::parse($a->start)->diffInMinutes($a->end)/60*$a->shift->gutscheine;
         }
         else {
             $unclear[] = $a;
         }
 
+        //Berechnung Pflicht
+        if($a->shift->confirmed) {
+            $gutscheine_for_pflicht += Carbon::parse($a->start)->diffInMinutes($a->end)/60*$a->shift->gutscheine;
+        }
+        else {
+            $gutscheine_for_pflicht += Carbon::parse($a->shift->start)->diffInMinutes($a->shift->end)/60*$a->shift->gutscheine;
+        }
     }
+    #return $gutscheine_for_pflicht;
     $gutscheine_issued = BenutzerController::gutscheineIssued(Auth::user()->id);
     $gutscheine_gesamt = 0;
     //Gesamtanspruch Gutscheine
@@ -343,6 +366,7 @@ public static function doRewards() {
         $t_for_pflicht += Carbon::parse($c->shift->starts_at)->diffInMinutes(Carbon::parse($c->shift->ends_at));
         $gutscheine_selected += $c->t_g/60 * $c->shift->gutscheine;
         $awe_selected += $c->t_a/60 * $c->shift->awe;
+        //$gutscheine_for_pflicht += Carbon::parse($c->start)->diffInMinutes($->end)/60*$a->shift->gutscheine;
     }
     foreach($accepted as $a) {
         $t_total_confirmed += Carbon::parse($a->start)->diffInMinutes(Carbon::parse($a->end));
@@ -351,10 +375,14 @@ public static function doRewards() {
         $gutscheine_selected += $a->t_g/60 * $a->shift->gutscheine;
         $awe_selected += $a->t_a/60 * $a->shift->awe;
     }
+    //Werden Gutscheine abgezogen?
+    if($time_for_pflicht < (29*60) && $pflichtstunden) {
+        $abzug_erwartet = $gutscheine_for_pflicht / 2;
+    }
     
     //Pflichtstunde
 
-    return view('rewards.user', compact('assignments','accepted','confirmed','not_confirmed','not_yet_confirmed','gutscheine_issued','transactions','gutscheine_aus_assignments','gutscheine_gesamt','t_total_confirmed','t_for_pflicht','t_total','gutscheine_selected','awe_selected'));
+    return view('rewards.user', compact('assignments','accepted','confirmed','not_confirmed','not_yet_confirmed','gutscheine_issued','transactions','gutscheine_aus_assignments','gutscheine_gesamt','t_total_confirmed','t_for_pflicht','t_total','gutscheine_selected','awe_selected','pflichtstunden','abzug_erwartet'));
 }
 
 //Neue Rewards
