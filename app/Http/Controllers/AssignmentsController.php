@@ -163,18 +163,21 @@ class AssignmentsController extends Controller
      */
     public function krankmeldung($id) { 
 
+        $assignment = Assignment::find($id);
+        $shift = $assignment->shift;
+
         //Only Admins
-        if(Auth::user()->is_admin!=1) {
+        if(Auth::user()->is_admin!=1 && !PrivilegeController::isManager(Auth::user()->id, $shift->id)) {
             return redirect('home')->with('danger','Keine Berechtigung');
         }
 
-        $assignment = Assignment::find($id);
+        
 
         $assignment->status="Krank";
         $assignment->save();
         Mail::to($assignment->user->email)->send(new Krankmeldung()); 
 
-        return redirect('shifts/'.$assignment->shift->id)->with('success','Krankmeldung gespeichert, Zuweisung gelöscht.');
+        return back()->with('success','Krankmeldung gespeichert, Zuweisung gelöscht.');
 
     }
 
@@ -183,8 +186,11 @@ class AssignmentsController extends Controller
      */
     public function absage(Request $request) { 
 
+        $assignment = Assignment::find($request->get('assignment_id'));
+        $shift = $assignment->shift;
+
         //Only Admins
-        if(Auth::user()->is_admin!=1) {
+        if(Auth::user()->is_admin!=1 && !PrivilegeController::isManager(Auth::user()->id, $shift->id)) {
             return redirect('home')->with('danger','Keine Berechtigung');
         }
 
@@ -193,13 +199,13 @@ class AssignmentsController extends Controller
             'absagengrund'=>'max:255'
         ]);
 
-        $assignment = Assignment::find($request->get('assignment_id'));
+       
 
         $assignment->status=$request->get('absagengrund');
         $assignment->save();
         Mail::to($assignment->user->email)->send(new Austragung()); 
 
-        return redirect('shifts/'.$assignment->shift->id)->with('success','Absage gespeichert, Zuweisung gelöscht.');
+        return back()->with('success','Absage gespeichert, Zuweisung gelöscht.');
 
     }
 

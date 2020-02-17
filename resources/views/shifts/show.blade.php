@@ -87,7 +87,7 @@ use Illuminate\Support\Facades\Auth;
                                         <ul class="listgroup">
                                             @foreach($shift->activeAssignments as $assignment)
                                                 <li class="list-group-item">{{$assignment->user->firstname}} {{$assignment->user->surname}} (<a href='mailto:{{$assignment->user->email}}' title='E-Mail schreiben'>{{$assignment->user->email}}</a>)
-                                                    @if(Auth::user()->is_admin==1)
+                                                    @if(Auth::user()->is_admin==1 || PrivilegeController::isManager(Auth::user()->id, $shift->id))
                                                         <button data-toggle="modal" data-target="#krankmelden{{$assignment->id}}" type="button" class="btn btn-danger btn-xs"><i class="fa fa-ambulance"></i> Krank Melden</button>
                                                         <button data-toggle="modal" data-target="#absagen{{$assignment->id}}" type="button" class="btn btn-danger btn-xs"><i class="fa fa-times"></i> Absagen</button>
                                                         
