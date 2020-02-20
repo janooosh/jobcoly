@@ -264,6 +264,17 @@ use Carbon\Carbon;
 </div> {{-- Ende Major Row --}}
 <hr />
 <div class="row">
+        <div class="col-md-12">
+        @if($abzug)
+            <div class="alert alert-danger">
+  
+                    <p>{{$user->firstname}} sammelt Solidaritätsstunden und hat weniger als 16 Stunden gearbeitet. Bitte bei der Ausgabe berücksichtigen!</p>
+
+            </div>
+            @endif
+        </div>
+</div>
+<div class="row">
     <div class="col-md-8">
         <div class="row">
             <div class="col-md-7">
