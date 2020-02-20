@@ -211,8 +211,11 @@ class TransactionController extends Controller
         $value=0;
         $day = $request->get('ticketday');
 
-        if($day==='do'||$day==='fr'||$day==='mo') {
+        if($day==='do'||$day==='fr') {
             $value=3;
+        }
+        elseif($day==='mo') {
+            $value=2;
         }
         elseif($day==='sa') {
             $value=6;

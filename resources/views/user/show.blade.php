@@ -548,7 +548,7 @@ use Carbon\Carbon;
                             <option value="do"> Weiberfasching (Donnerstag), 3 Gutscheine</option>
                             <option value="fr"> DER Studentenfasching (Freitag), 3 Gutscheine</option>
                             <option value="sa"> Legendärer Samstagsfasching (Samstag), 6 Gutscheine</option>
-                            <option value="mo"> Scavenger Monday (Montag), 3 Gutscheine</option>
+                            <option value="mo"> Krückenmontag (Montag), 2 Gutscheine</option>
                             <option value="fm"> Full Madness (4 Tage), 10 Gutscheine</option>
                         </select>
                         <small><b>Achtung, eine nachträgliche Korrektur ist nicht möglich.</b></small>
