@@ -160,7 +160,7 @@ class TransactionController extends Controller
             return redirect('home')->with('warning','Kein Zugriff');
         }
 
-        $shirt_value = 6;
+        $shirt_value = 3;
         $shirt_beschreibung = 'Schnitt: '.$request->get('shirtcut').', Größe: '.$request->get('shirtsize');
 
         $request->validate([
