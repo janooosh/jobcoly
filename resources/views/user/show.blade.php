@@ -510,7 +510,7 @@ use Carbon\Carbon;
                             @if($user->shirt_size=='XS')
                                 <p style='color:red;'><small>XS ist nicht verfügbar!</small></p>
                             @endif
-                            <p><small>Für das T-Shirt werden 6 Gutscheine berechnet. Bitte hier keine Leihshirts eintragen!</small></p>
+                            <p><small>Für das T-Shirt werden 3 Gutscheine berechnet. Bitte hier keine Leihshirts eintragen!</small></p>
                         </div>
                     </div>
                 
