@@ -170,9 +170,9 @@
 @if($openFlag>0)
 <div class="row">
     <div class="col-xs-12">
-        <span style="color:red;"><small><i class="fa fa-warning"></i> 30% Vorbehalt mit einberechnet, da Schichten noch nicht bestätigt sind, und sich die Anzahl der Gutscheine nach den bestätigten (= tatsächlichen) Stunden richtet, und nicht nach den geplanten Stunden.</small></span>
+        <span style="color:red;"><small><i class="fa fa-warning"></i> 60% Vorbehalt mit einberechnet, da Schichten noch nicht bestätigt sind, und sich die Anzahl der Gutscheine nach den bestätigten (= tatsächlichen) Stunden richtet, und nicht nach den geplanten Stunden.</small></span>
         <br />
-        <small>6 Gutscheine wurden für das T-Shirt bereits abgezogen.</small>
+        <small>1 Stunde wurden für das T-Shirt bereits abgezogen.</small>
     </div>
 </div>
 

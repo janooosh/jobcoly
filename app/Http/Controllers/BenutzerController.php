@@ -134,7 +134,7 @@ public function saveRewardsNew(Request $request) {
     //Pflichtschicht
     if(Auth::user()->is_pflichtschicht) {
         if($t_awe > 0 && $t_gutscheine<480) {
-            $fehler[] = "Als Teil deiner Solidaritätsschicht musst du mindestens 8h auf Gutscheine auswählen, bevor du AWE erhalten kannst.";
+            $fehler[] = "Als Teil deiner Solidaritätsschicht musst du mindestens 28h auf Gutscheine auswählen, bevor du AWE erhalten kannst.";
         }
     }
 
