@@ -123,7 +123,7 @@ use Carbon\Carbon;
                 </tr>
                 {{--<tr>
                     <td colspan="6" style="text-align:right;">Freigegeben</td>
-                    <td class="linie_t">{{round(0.7*$ausstehend_gutscheine)}}</td>
+                    <td class="linie_t">{{round(0.4*$ausstehend_gutscheine)}}</td>
                 </tr>--}}
             </tfoot>
         </table>

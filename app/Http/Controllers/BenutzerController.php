@@ -134,7 +134,7 @@ public function saveRewardsNew(Request $request) {
     //Pflichtschicht
     if(Auth::user()->is_pflichtschicht) {
         if($t_awe > 0 && $t_gutscheine<480) {
-            $fehler[] = "Als Teil deiner Solidaritätsschicht musst du mindestens 28h auf Gutscheine auswählen, bevor du AWE erhalten kannst.";
+            $fehler[] = "Als Teil deiner Solidaritätsschicht musst du mindestens 8h auf Gutscheine auswählen, bevor du AWE erhalten kannst.";
         }
     }
 
@@ -145,7 +145,7 @@ public function saveRewardsNew(Request $request) {
             $z = array_search($a->id,$checker);
             $a->t_g = SalarygroupsController::StringToMin($gutscheine_fields[$z]);
             $a->t_a = SalarygroupsController::StringToMin($awe_fields[$z]);
-            
+
             if(empty($fehler) && $aktion=='Abschließen') {
                 $a->accepted = 1;
                 $a->payout_created = Carbon::now()->format('Y-m-d');
@@ -212,7 +212,7 @@ public function saveRewards(Request $request) {
 
             //return;
             return redirect('rewards/')->with('info','Eingaben gespeichert, jedoch ohne Überprüfung. Schließe die Schicht ab sobald du fertig bist.');
-        
+
         }
 
         /**
@@ -225,7 +225,7 @@ public function saveRewards(Request $request) {
 
          //WERTE
             //Gesamtzeit verfügbar [MINUTEN]
-            $errors = 0; 
+            $errors = 0;
             $prepared_for_save = array(); //Salarygroups, bereit zu speichern wenn keine errors auftauchen
             $t_gesamt_available = 0;
 
@@ -239,7 +239,7 @@ public function saveRewards(Request $request) {
                 $t_a+=SalarygroupsController::StringToMin($a);
             }
             $t_gesamt_spent = $t_g + $t_a;
-            
+
             $g_counter=0; //Iteriert, da die gut[] und awe[] Arrays nicht synchron mit den si indeze laufen
             $a_counter=0;
             $salarygroups = array();
@@ -248,7 +248,7 @@ public function saveRewards(Request $request) {
                 $awe_used = 0; // mins / Hat er AWE genutzt?
                 $salarygroup = Salarygroup::find($si);
                 $salarygroup->available += AssignmentsController::getDurationInMinutesOfConfirmedAssignments($salarygroup->assignments);
-                $t_gesamt_available += $salarygroup->available; 
+                $t_gesamt_available += $salarygroup->available;
 
                 //2a) Zeit ausgegeben für Reihe <= Zeit verfügbar für Reihe?
                 $salarygroup->ausgegeben = 0;
@@ -276,7 +276,7 @@ public function saveRewards(Request $request) {
                     return redirect('Unzulässiger Gebrauch von AWE');
                 }
             }
-            
+
 
             //1.) Gesamtzeit ausgegeben <= Gesamtzeit verfügbar?
             if($t_gesamt_spent>$t_gesamt_available) {
@@ -286,27 +286,10 @@ public function saveRewards(Request $request) {
 
 
     //Perform action
-}   
+}
 
 //Ganz Neue Rewards
 public static function doRewards() {
-    //Muss Pflichtstunden machen?
-    $pflichtstunden = false;
-    $has_valid_ausschuss = false;
-    if(Auth::user()->ausschuss != "0" && !is_null(Auth::user()->ausschuss)) {
-        $has_valid_ausschuss = true;
-    }
-    if((Auth::user()->is_praside == 1) || $has_valid_ausschuss ) {
-        $pflichtstunden = true;
-    }
-    $time_for_pflicht = 0;
-    $time_basis_for_pflicht = 0;
-    $time_real_for_pflicht = 0;
-    $gutscheine_for_pflicht = 0;
-    //Gutscheine die abgezogen werden.
-    $abzug_erwartet = 0; //Vor bestätigung
-    
-
     //Assignments
     $a_filter = ['user_id'=>Auth::user()->id];
     $assignments = Assignment::where($a_filter)->get();
@@ -323,38 +306,24 @@ public static function doRewards() {
     $gutscheine_aus_assignments = 0;
 
     foreach($assignments as $a) {
-        $time_basis_for_pflicht += Carbon::parse($a->shift->starts_at)->diffInMinutes($a->shift->ends_at);
-        $time_real_for_pflicht += Carbon::parse($a->start)->diffInMinutes($a->end);
         if($a->shift->confirmed && $a->confirmed && $a->accepted) {
             $accepted[] = $a;
-            $time_for_pflicht += Carbon::parse($a->start)->diffInMinutes($a->end);
         }
         elseif($a->shift->confirmed && $a->confirmed && !$a->accepted) {
             $confirmed[] = $a;
-            $time_for_pflicht += Carbon::parse($a->start)->diffInMinutes($a->end);
         }
         elseif($a->shift->confirmed && !$a->confirmed) {
             $not_confirmed[] = $a;
-            $time_for_pflicht += Carbon::parse($a->start)->diffInMinutes($a->end);
         }
         elseif(!$a->shift->confirmed) {
             $not_yet_confirmed[] = $a;
-            $time_for_pflicht += Carbon::parse($a->shift->start)->diffInMinutes($a->shift->end);
-            $gutscheine_aus_assignments += Carbon::parse($a->start)->diffInMinutes($a->end)/60*$a->shift->gutscheine;
+            $gutscheine_aus_assignments += Carbon::parse($a->start)->diffInMinutes($a->end)/60 * $a->shift->gutscheine;
         }
         else {
             $unclear[] = $a;
         }
 
-        //Berechnung Pflicht
-        if($a->shift->confirmed) {
-            $gutscheine_for_pflicht += Carbon::parse($a->start)->diffInMinutes($a->end)/60*$a->shift->gutscheine;
-        }
-        else {
-            $gutscheine_for_pflicht += Carbon::parse($a->shift->start)->diffInMinutes($a->shift->end)/60*$a->shift->gutscheine;
-        }
     }
-    #return $gutscheine_for_pflicht;
     $gutscheine_issued = BenutzerController::gutscheineIssued(Auth::user()->id);
     $gutscheine_gesamt = 0;
     //Gesamtanspruch Gutscheine
@@ -372,32 +341,22 @@ public static function doRewards() {
     foreach($confirmed as $c) {
        $t_total += Carbon::parse($c->start)->diffInMinutes(Carbon::parse($c->end));
         $t_for_pflicht += Carbon::parse($c->shift->starts_at)->diffInMinutes(Carbon::parse($c->shift->ends_at));
-        $gutscheine_selected += $c->t_g/60 * $c->shift->gutscheine;
+        $gutscheine_selected += Carbon::parse($c->start)->diffInMinutes(Carbon::parse($c->end)) / 60 * $c->shift->gutscheine;
         $awe_selected += $c->t_a/60 * $c->shift->awe;
-        //$gutscheine_for_pflicht += Carbon::parse($c->start)->diffInMinutes($->end)/60*$a->shift->gutscheine;
     }
     foreach($accepted as $a) {
         $t_total_confirmed += Carbon::parse($a->start)->diffInMinutes(Carbon::parse($a->end));
         $t_for_pflicht += Carbon::parse($a->shift->starts_at)->diffInMinutes(Carbon::parse($a->shift->ends_at));
         $t_total += Carbon::parse($a->start)->diffInMinutes(Carbon::parse($a->end));
-        $gutscheine_selected += $a->t_g/60 * $a->shift->gutscheine;
+        $gutscheine_selected += Carbon::parse($a->start)->diffInMinutes(Carbon::parse($a->end)) / 60 * $a->shift->gutscheine;
         $awe_selected += $a->t_a/60 * $a->shift->awe;
     }
-    //Werden Gutscheine abgezogen?
-    $gutschein_grenze = 16*60;
-    $abzug = false; //Asume false
-    if(min($time_basis_for_pflicht, $time_real_for_pflicht) <= $gutschein_grenze && $pflichtstunden) {
-        $abzug = true;
-    }
-    #if($time_basis_for_pflich)
 
-    if($time_for_pflicht < (29*60) && $pflichtstunden) {
-        $abzug_erwartet = $gutscheine_for_pflicht / 2;
-    }
-    
+    $abzug = BenutzerController::calculateAbzug(Auth::user());
+
     //Pflichtstunde
 
-    return view('rewards.user', compact('abzug','assignments','accepted','confirmed','not_confirmed','not_yet_confirmed','gutscheine_issued','transactions','gutscheine_aus_assignments','gutscheine_gesamt','t_total_confirmed','t_for_pflicht','t_total','gutscheine_selected','awe_selected','pflichtstunden','abzug_erwartet'));
+    return view('rewards.user', compact('assignments','accepted','confirmed','not_confirmed','not_yet_confirmed','gutscheine_issued','transactions','gutscheine_aus_assignments','gutscheine_gesamt','t_total_confirmed','t_for_pflicht','t_total','gutscheine_selected','awe_selected','abzug'));
 }
 
 //Neue Rewards
@@ -431,7 +390,7 @@ public static function rewarder() {
             $a->gutscheine_summe = number_format($a->gutscheine*$a->faktor,2);
             $ausstehend_gutscheine += $a->gutscheine_summe;
         }
-    
+
     //Berechnungen für Bestätigt
         $zero = Carbon::createFromTimestamp(0);
         $t_max = 0; //In Minutes
@@ -474,7 +433,7 @@ public static function rewarder() {
             /*if($s->t - $s->t_vergeben < 0){
                 $s->t_verfuegbar = $s->t_verfuegbar.'- ';
             }*/
-            
+
             $s->t_verfuegbar = $s->t_verfuegbar.SalarygroupsController::MinToString($s->t - $s->t_vergeben);
             //return $s->t_verfuegbar;
             $s->t_vergeben = date('H:i',mktime(0,$s->t_vergeben));
@@ -491,7 +450,7 @@ public static function rewarder() {
             //Felder Verteilung G/AWE
             $s->t_g_nice = date('H:i',mktime(0,$s->t_g));
             $s->t_a_nice = date('H:i',mktime(0,$s->t_a));
-            
+
             $s->awe_available = false;
             //return SalarygroupsController::countAttemptGutscheine($salarygroups);
             if($t_vergeben>=$s->p*60 && $s->t_g<$s->t && SalarygroupsController::countAttemptGutscheine($salarygroups)>=SalarygroupsController::getLowestp($salarygroups) ) {
@@ -509,7 +468,7 @@ public static function rewarder() {
         //date('H:i',mktime(0,$t_vergeben));
         $t_total = SalarygroupsController::MinToString($t_total);
         //date('H:i',mktime(0,$t_total));
-        
+
 
         //Transaktionen
         $transaction_filter = ['user_id'=>Auth::user()->id];
@@ -578,7 +537,7 @@ public static function rewarder() {
      */
     public function updateProfile(Request $request) {
 
-        
+
         //Validate
         $request->validate([
             'firstname' => 'required|string|max:50',
@@ -617,7 +576,7 @@ public static function rewarder() {
         //$user->shirt_cut=$request->get('shirtCut');
         //$user->shirt_size=$request->get('shirtSize');
         $user->has_gesundheitszeugnis=$request->get('gesundheitszeugnis');
-        
+
         $user->save();
         echo("passt");
         return redirect('profil')->with('success','Profil aktualisiert');
@@ -638,7 +597,7 @@ public static function rewarder() {
             $duration = 0;
             foreach($u->activeAssignments as $x) {
                 $duration += Carbon::parse($x->shift->starts_at)->diffInHours(Carbon::parse($x->shift->ends_at));
-            
+
             }
             $u->working = $duration;
         }
@@ -653,25 +612,12 @@ public static function rewarder() {
         }
         $user = User::find($id);
         $user->registriert = Carbon::parse($user->created_at)->format('D d.m.y H:i');
-        
-        $time_basis_for_pflicht = 0;
-        $time_real_for_pflicht = 0;
-
-        //Pflichtmitglied?
-        $is_ausschuss = false;
-        $abzug = false;
-        
-        if($user->ausschuss && $user->ausschuss != "0") {
-            $is_ausschuss = true;
-        }
 
         //ZUGESAGTE STUNDEN
         $duration = 0;
-
         foreach($user->activeAssignments as $x) {
             $duration += Carbon::parse($x->shift->starts_at)->diffInHours(Carbon::parse($x->shift->ends_at));
-            $time_basis_for_pflicht += Carbon::parse($x->shift->starts_at)->diffInMinutes($x->shift->ends_at);
-            $time_real_for_pflicht += Carbon::parse($x->start)->diffInMinutes($x->end);
+
         }
         $user->working = $duration;
 
@@ -688,7 +634,6 @@ public static function rewarder() {
             $not_confirmed = array(); //Array of Assignments
             $unclear = array(); //Array of assignments
             foreach($assignments as $a) {
-
                 //Schicht bestätigt & Assignment Bestätigt (==1 nicht benötigt, hab ich getestet)
                 if($a->shift->confirmed && $a->confirmed) {
                     $confirmed[] = $a;
@@ -700,14 +645,6 @@ public static function rewarder() {
                 //Schicht NOCH nicht bestätigt
                 elseif(!$a->shift->confirmed) {
                     $not_yet_confirmed[] = $a;
-                }
-            }
-
-            if($user->is_praside || $is_ausschuss) {
-                $gutschein_grenze = 16*60;
-                if(min($time_basis_for_pflicht,$time_real_for_pflicht) < $gutschein_grenze) {
-
-                    $abzug = true;
                 }
             }
 
@@ -723,12 +660,12 @@ public static function rewarder() {
             $user->a_confirmed = $confirmed;
             $user->a_not_yet_confirmed = $not_yet_confirmed;
             $user->a_not_confirmed=$not_confirmed;
-            
+
 
             $shifts_all_filter = ['status'=>'Aktiv'];
             $shifts_all = Shift::where($shifts_all_filter)->orderBy('starts_at')->get();
 
-        return view('user.show', compact('user','shifts_all','abzug'));
+        return view('user.show', compact('user','shifts_all'));
     }
 
     /**
@@ -758,6 +695,68 @@ public static function rewarder() {
 
         }   
         return $gutscheine;
+    }
+
+    /**
+     * Berechnet den Stundenabzug wenn man im Ausschuss ist und nicht mehr als 16 Stunden gearbeitet hat
+     */
+    public static function calculateAbzug($user) {
+        if ($user->is_praside == '0' && ($user->ausschuss == '' || $user->ausschuss == '0')) {
+            // Nur Ausschussmitglieder und Präsiden müssen Solidaritätsstunden leisten
+            return 0;
+        }
+
+        $assignments = $user->activeAssignments;
+
+        // Wie viele Stunden ein Ausschussmitglied arbeiten muss
+        $soli_hours = 8;
+        // Grenze ab wann die Stunden rückwirkend voll bezahlt werden sollen
+        $threshold_hours = 16;
+        // Wie viele Stunden geplant waren. Nehme hier den geplanten Wert und nicht den echten geleisteten, da man sich bei der Bewerbung drauf verlassen hat, dass man so über die Grenze kommt ab wann rückwirkend vergütet wird
+        $planned_hours = 0;
+        // Wie viele Stunden man wirklich gearbeitet hat (bzw bei unbestätigten Schichten noch die erwartete Zahl)
+        $worked_hours = 0;
+
+        $gutschein_values = array();
+
+        foreach($assignments as $a) {
+            $planned_hours += Carbon::parse($a->shift->starts_at)->diffInHours(Carbon::parse($a->shift->ends_at));
+
+            $real_hours = Carbon::parse($a->start)->diffInHours(Carbon::parse($a->end));
+            $worked_hours += $real_hours;
+            array_push($gutschein_values, array('hours' => $real_hours, 'gutschein' => $a->shift->gutscheine));
+        }
+
+        if (max($planned_hours, $worked_hours) >= $threshold_hours) {
+            return 0;
+        }
+
+        // Man bekommt die Solidaritätsstunden nicht voll bezahlt
+
+        // Es werden zur Berechnung zuerst die Schichten verwendet bei denen man am wenigsten Gutscheine pro Stunde bekommt
+        usort($gutschein_values, function($a, $b) {
+            if ($a['gutschein'] == $b['gutschein']) {
+                return 0;
+            }
+            return ($a['gutschein'] < $b['gutschein']) ? -1 : 1;
+        });
+
+        // Wie viele von den Solidaritätsstunden man wirklich gearbeitet hat
+        $worked_soli_hours = $worked_hours > $soli_hours ? $soli_hours : $worked_hours;
+        // Eine Stunde wird für das T-Shirt abgezogen
+        $worked_soli_hours_shirt = $worked_soli_hours - 1;
+
+        $gutschein_abzug = 0;
+
+        while ($worked_soli_hours_shirt > 0) {
+            $gutschein_value = array_shift($gutschein_values);
+            $abzug_hours = min($worked_soli_hours_shirt, $gutschein_value['hours']);
+
+            $gutschein_abzug += $abzug_hours * $gutschein_value['gutschein'] * 0.5;
+            $worked_soli_hours_shirt -= $abzug_hours;
+        }
+
+        return $gutschein_abzug;
     }
 
     /**
@@ -852,7 +851,7 @@ public static function rewarder() {
         //
         $ist_h = $ist->diffInHours($zero);
         $ist_m = $ist->minute;
-        $shirt_ist_h = ($ist_h-2);
+        $shirt_ist_h = ($ist_h-1);
         if(strlen($ist_m)==1) {
             $ist_m = '0'.$ist_m;
         }
@@ -863,7 +862,7 @@ public static function rewarder() {
 
         $plan_h = $plan->diffInHours($zero);
         $plan_m = $plan->minute;
-        $shirt_plan_h = $plan_h -2;
+        $shirt_plan_h = $plan_h -1;
         if(strlen($plan_m)==1) {
             $plan_m = '0'.$plan_m   ;
         }
@@ -874,7 +873,7 @@ public static function rewarder() {
 
 
         //$pflichtstunden = $plan->diffInHours($zero);
-        if($shirt_ist_h<2) {
+        if($shirt_ist_h<1) {
             $shirt_ist = '00:00';
         }
         else {
@@ -884,7 +883,7 @@ public static function rewarder() {
             $shirt_ist = $shirt_ist_h.':'.$ist_m;
         }
 
-        if($shirt_plan_h<2) {
+        if($shirt_plan_h<1) {
             $shirt_plan = '00:00';
         }
         else {
@@ -967,7 +966,7 @@ public static function rewarder() {
         $gutscheine = $gutscheine - 6;
 
         if($flag>0) {
-            $gutscheine = 0.7*$gutscheine;
+            $gutscheine = 0.4*$gutscheine;
         }
         $gutscheine = round($gutscheine);
         return $gutscheine;

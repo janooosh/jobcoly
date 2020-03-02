@@ -264,29 +264,20 @@ use Carbon\Carbon;
 </div> {{-- Ende Major Row --}}
 <hr />
 <div class="row">
-        <div class="col-md-12">
-        @if($abzug)
-            <div class="alert alert-danger">
-  
-                    <p>{{$user->firstname}} sammelt Solidaritätsstunden und hat weniger als 16 Stunden gearbeitet. Bitte bei der Ausgabe berücksichtigen!</p>
-
-            </div>
-            @endif
-        </div>
-</div>
-<div class="row">
     <div class="col-md-8">
         <div class="row">
             <div class="col-md-7">
-                Anspruch aus bestätigten Schichten <br />
-                Empfehlung aus offenen Schichten <br />
+                Anspruch aus bestätigten Schichten: <br />
+                Empfehlung aus offenen Schichten: <br />
+                Abzug Solidaritätsstunden: <br />
                 Bereits erhaltene Gutscheine: <br />
                 Gutscheine aus Waren: 
 
             </div>
             <div class="col-md-5">
                 {{BenutzerController::calculateGutscheine($user->a_confirmed)}}<br />
-                {{round(0.7*BenutzerController::calculateGutscheine($user->a_not_yet_confirmed),2)}} <small>({{BenutzerController::calculateGutscheine($user->a_not_yet_confirmed)}})</small><br />
+                {{round(0.4*BenutzerController::calculateGutscheine($user->a_not_yet_confirmed),2)}} <small>({{BenutzerController::calculateGutscheine($user->a_not_yet_confirmed)}})</small><br />
+                - {{BenutzerController::calculateAbzug($user)}} <br />
                 - {{$user->gutscheine_issued}} <br />
                 - {{$user->gutscheine_gesamt - $user->gutscheine_issued}} <br />
             </div>
@@ -298,8 +289,8 @@ use Carbon\Carbon;
                 <small>Maximal Mögliche Ausgabe:</small>
             </div>
             <div class="col-md-5">
-                <b>{{round(BenutzerController::calculateGutscheine($user->a_confirmed) + 0.7*BenutzerController::calculateGutscheine($user->a_not_yet_confirmed) - $user->gutscheine_gesamt)}}</b><br />
-                <small>{{round(BenutzerController::calculateGutscheine($user->a_confirmed) + BenutzerController::calculateGutscheine($user->a_not_yet_confirmed) - $user->gutscheine_gesamt)}}</small>
+                <b>{{ceil(BenutzerController::calculateGutscheine($user->a_confirmed) + 0.4*BenutzerController::calculateGutscheine($user->a_not_yet_confirmed) - $user->gutscheine_gesamt - BenutzerController::calculateAbzug($user))}}</b><br />
+                <small>{{ceil(BenutzerController::calculateGutscheine($user->a_confirmed) + BenutzerController::calculateGutscheine($user->a_not_yet_confirmed) - $user->gutscheine_gesamt - BenutzerController::calculateAbzug($user))}}</small>
             </div>
         </div>
 
@@ -427,7 +418,7 @@ use Carbon\Carbon;
                 @endforeach
                 <tr>
                     <td colspan="2"></td>
-                    <td colspan="3"><small>Empfohlene Ausgabe: {{round(0.7*BenutzerController::calculateGutscheine($user->a_not_yet_confirmed))}} Gutscheine</small></td>
+                    <td colspan="3"><small>Empfohlene Ausgabe: {{round(0.4*BenutzerController::calculateGutscheine($user->a_not_yet_confirmed))}} Gutscheine</small></td>
                     <td><b>Σ Summe</b></td>
                     <td>{{BenutzerController::calculateGutscheine($user->a_not_yet_confirmed)}}</td>
                 </tr>
@@ -510,16 +501,16 @@ use Carbon\Carbon;
                             @if($user->shirt_size=='XS')
                                 <p style='color:red;'><small>XS ist nicht verfügbar!</small></p>
                             @endif
-                            <p><small>Für das T-Shirt werden 3 Gutscheine berechnet. Bitte hier keine Leihshirts eintragen!</small></p>
+                            <p><small>Für das T-Shirt wird 1 Stunde berechnet. Bitte hier keine Leihshirts eintragen!</small></p>
                         </div>
                     </div>
-                
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Schließen</button>
-                <button type="submit" class="btn btn-primary btn-success"><i class="fa fa-save"></i> Speichersn</button>
+                <button type="submit" class="btn btn-primary btn-success"><i class="fa fa-save"></i> Speichern</button>
             </div>
-            </form>
+
         </div>
             <!-- /.modal-content -->
     </div>
@@ -554,15 +545,12 @@ use Carbon\Carbon;
                         <small><b>Achtung, eine nachträgliche Korrektur ist nicht möglich.</b></small>
                     </div>
                 </div>
-
-
-                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Schließen</button>
+                    <button type="submit" class="btn btn-primary btn-success"><i class="fa fa-save"></i> Speichern</button>
+                </div>
+                </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Schließen</button>
-                <button type="submit" class="btn btn-primary btn-success"><i class="fa fa-save"></i> Speichersn</button>
-            </div>
-            </form>
         </div>
             <!-- /.modal-content -->
     </div>
@@ -594,17 +582,16 @@ use Carbon\Carbon;
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <p><small>Max 200</p>
+                        <p><small>Max 200</small></p>
                     </div>
                 </div>
+                </form>
             </div>
-
-            
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Schließen</button>
-                <button type="submit" class="btn btn-primary btn-success"><i class="fa fa-save"></i> Speichersn</button>
+                <button type="submit" class="btn btn-primary btn-success"><i class="fa fa-save"></i> Speichern</button>
             </div>
-            </form>
+
         </div>
             <!-- /.modal-content -->
     </div>
@@ -661,7 +648,6 @@ use Carbon\Carbon;
                     </div>
                 </div>
             </div>
-        </form>
             <div class="modal-footer">
             </div>
         </div>

@@ -160,7 +160,20 @@ class TransactionController extends Controller
             return redirect('home')->with('warning','Kein Zugriff');
         }
 
-        $shirt_value = 3;
+        $user = User::find($request->get('receiver'));
+
+        if ($user->is_praside == '0' && ($user->ausschuss == '' || $user->ausschuss == '0')) {
+            // Nur Ausschussmitglieder und Präsiden müssen Solidaritätsstunden leisten
+            $shirt_value = 3;
+        } else {
+            $soli_hours = 8;
+            $worked_hours = 0;
+            foreach($user->activeAssignments as $a) {
+                $worked_hours += Carbon::parse($a->start)->diffInHours(Carbon::parse($a->end));
+            }
+            $shirt_value = $worked_hours > $soli_hours ? 3 : 1.5;
+        }
+
         $shirt_beschreibung = 'Schnitt: '.$request->get('shirtcut').', Größe: '.$request->get('shirtsize');
 
         $request->validate([
@@ -214,11 +227,11 @@ class TransactionController extends Controller
         if($day==='do'||$day==='fr') {
             $value=3;
         }
-        elseif($day==='mo') {
-            $value=2;
-        }
         elseif($day==='sa') {
             $value=6;
+        }
+        elseif($day==='mo') {
+            $value=2;
         }
         else{
             $value=10; //Full Madness
