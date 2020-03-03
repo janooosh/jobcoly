@@ -561,39 +561,40 @@ use Carbon\Carbon;
 {{-- Gutschein Allgemein--}}
 <div class="modal fade" id="gutscheine" tabindex="-1" role="dialog" aria-labelledby="gutscheine" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title" id="shirt"> Gutschein-Ausgabe</h4>
-            </div>
-            <div class="modal-body">
-                <form method="POST" action="{{route('transaction.gutscheinPost')}}">
-                    @csrf
-                <input type="hidden" id="receiver" name="receiver" value="{{$user->id}}"/> 
-                <div class="row">
-                    <div class="col-md-4">
-                        <label for='gutscheinanzahl' max='99'>Anzahl</label>
-                        <input type='number' class='form-control' name='gutscheinanzahl' id='gutscheinanzahl' required>
-                    </div>
-                    <div class="col-md-8">
-                            <label for='gutscheinbeschreibung'>Beschreibung</label>
-                            <input type='text' class='form-control' name='gutscheinbeschreibung' id='gutscheinbeschreibung' placeholder='Optional'>
-                    </div>
+        <form method="POST" action="{{route('transaction.gutscheinPost')}}">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="shirt"> Gutschein-Ausgabe</h4>
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <p><small>Max 200</small></p>
-                    </div>
-                </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Schließen</button>
-                <button type="submit" class="btn btn-primary btn-success"><i class="fa fa-save"></i> Speichern</button>
-            </div>
+                <div class="modal-body">
 
-        </div>
+                        @csrf
+                    <input type="hidden" id="receiver" name="receiver" value="{{$user->id}}"/>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for='gutscheinanzahl' max='99'>Anzahl</label>
+                            <input type='number' class='form-control' name='gutscheinanzahl' id='gutscheinanzahl' required>
+                        </div>
+                        <div class="col-md-8">
+                                <label for='gutscheinbeschreibung'>Beschreibung</label>
+                                <input type='text' class='form-control' name='gutscheinbeschreibung' id='gutscheinbeschreibung' placeholder='Optional'>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p><small>Max 200</small></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Schließen</button>
+                    <button type="submit" class="btn btn-primary btn-success"><i class="fa fa-save"></i> Speichern</button>
+                </div>
+
+            </div>
             <!-- /.modal-content -->
+        </form>
     </div>
     <!-- /.modal-dialog -->
 </div>
